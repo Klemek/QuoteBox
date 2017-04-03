@@ -1,4 +1,4 @@
-# QuoteTube
+# QuoteTube Beta 1.3
 ## Description
 QuoteTube is a simple soundbox tool in which you can extract a part of a youtube video and play "quotes" (the extracted sound) indefinitely without Internet. QuoteTube doesn't use a server for processing the different steps but will use instead Youtube-dl (through QPython app) and FFmpeg libs.
 ## Current features
