@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <ImageView
+            android:id="@+id/channel_thumbnail"
+            android:layout_width="@dimen/thumbnail_height"
+            android:layout_height="@dimen/thumbnail_height"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            app:srcCompat="@color/colorBackground" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/channel_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="Channel"
+                android:textAppearance="@android:style/TextAppearance.Material.Title"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/channel_desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Description"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                android:textColor="@color/textColorTertiary"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>

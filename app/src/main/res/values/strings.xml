@@ -1,0 +1,112 @@
+<resources>
+    <!-- App -->
+    <string name="app_name">QuoteTube Beta</string>
+    <string name="app_id">fr.klemek.quotetube</string>
+
+    <!-- Activities titles -->
+    <string name="title_activity_main">Your quotes</string>
+    <string name="title_activity_search">Search for video</string>
+    <string name="title_activity_quote_editor">Create new quote</string>
+
+    <!-- Splash texts -->
+    <string name="splash_loading_start">Loading…</string>
+    <string name="splash_loading_perm">Checking permissions…</string>
+    <string name="splash_loading_qpy">Checking QPython…</string>
+    <string name="splash_loading_qpy2">Please install QPython</string>
+    <string name="splash_loading_dir">Checking folders</string>
+    <string name="splash_loading_data">Loading user\'s data</string>
+    <string name="splash_loading_ytdl">Checking Youtube-dl…</string>
+    <string name="splash_loading_ytdl2">Installing Youtube-dl…</string>
+    <string name="splash_loading_ffmpeg">Loading FFmpeg…</string>
+    <string name="splash_loading_done">Launching…</string>
+
+    <!-- Quote list -->
+    <string name="action_about">About</string>
+    <string name="quote_list_empty">Your quote list is empty,\ntry creating a new quote with the button below.</string>
+    <string name="delete_quote_title">Delete quote ?</string>
+    <string name="delete_quote_content" formatted="false">Do you really want to delete the quote \'%s\' ?</string>
+    <string name="about_title">About QuoteTube</string>
+    <string name="about_content" formatted="false">
+        Version : %s\n
+        Developer : Klemek\n
+        Icons : FontAwesome\n
+        Libs : \n
+        -GeometricProgressView (Bohush)\n
+        -FFmpegAndroid (Writingminds)\n
+        -Colorpicker (Jrummyapps)\n
+        -Material-dialogs (Afollestad)\n
+        -Picasso (Squareup)\n
+    </string>
+
+    <!-- Search texts -->
+    <string name="action_search">Search for video</string>
+    <string name="youtube_search_hint1">Please search something with the bar above</string>
+    <string name="youtube_search_hint2">You don\'t seem to be connected</string>
+    <string name="youtube_search_hint3">There is no results for this search</string>
+    <string name="video_views" formatted="false">%s views</string>
+    <string name="video_upvotes" formatted="false">%s &#11014;</string>
+    <string name="video_downvotes" formatted="false">%s &#11015;</string>
+
+    <!-- Quote edition texts -->
+    <string name="editor_title1">Limits</string>
+    <string name="editor_title2">Options</string>
+    <string name="editor_title3">Button preview</string>
+    <string name="quote_fade_out">Fade out 1 second before end</string>
+    <string name="default_quote_name">Set name</string>
+    <string name="quote_start">Start at :</string>
+    <string name="quote_start_button">Set start</string>
+    <string name="quote_goto_button">Go to</string>
+    <string name="quote_stop">Stop at :</string>
+    <string name="quote_stop_button">Set stop</string>
+    <string name="quote_current">Position :</string>
+    <string name="quote_duration">Duration :</string>
+    <string name="quote_try">Try quote</string>
+    <string name="quote_try_2">Stop</string>
+    <string name="quote_create">Create quote</string>
+
+    <string name="player_back_1">-0.2s</string>
+    <string name="player_back_2">-0.5s</string>
+    <string name="player_back_3">-1s</string>
+    <string name="player_forw_1">+0.2s</string>
+    <string name="player_forw_2">+0.5s</string>
+    <string name="player_forw_3">+1s</string>
+
+    <!-- Quote creation texts -->
+    <string name="creation_start">Creating…</string>
+    <string name="creation_dl">Downloading…\n(This might take a while)</string>
+    <string name="creation_extract">Extracting…</string>
+    <string name="creation_cutting">Cutting…</string>
+    <string name="creation_clean">Cleaning…</string>
+    <string name="creation_done">Adding to list…</string>
+
+    <!--dialog buttons-->
+    <string name="dialog_close">Close</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+
+    <!-- Errors dialogs and toasts -->
+    <string name="error_noqpy_title">QPython not installed</string>
+    <string name="error_noqpy_content">In order to run this app you must install QPython and launch a script in it once.</string>
+    <string name="error_noqpy_positive">Install</string>
+
+    <string name="error_nointernet_title">Not connected</string>
+    <string name="error_nointernet_content">You need to be connected to the Internet to finish installing</string>
+    <string name="error_nointernet_content2">You need to be connected to the Internet to downloading the sound</string>
+
+    <string name="error_noffmpeg_title">FFmpeg failed loading</string>
+    <string name="error_noffmpeg_content">Your device does not support FFmpeg, you will not be able to create new quotes.</string>
+
+    <string name="error_ytdlfail_title">Youtube-dl installation failed</string>
+    <string name="error_ytdlfail_content">Please check the following:\n
+        -You are connected to the Internet.\n
+        -You have enough space on your device.</string>
+
+    <string name="error_quote_duration" formatted="false">The quote length must be less than %.1f s</string>
+    <string name="error_quote_name">Please set a name to your quote</string>
+
+    <string name="error_generic_title">Error</string>
+    <string name="error_generic_content" formatted="false">Error %d : \n%s</string>
+
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/quote_size"
+    android:layout_height="@dimen/quote_size"
+    android:elevation="12dp"
+    app:cardCornerRadius="@dimen/round_corner"
+    android:innerRadius="0dp"
+    android:shape="ring"
+    android:thicknessRatio="1.9"
+    android:id="@+id/quote_image_view">
+
+    <ImageView
+        android:id="@+id/quote_image"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/rounded_rect"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tint="@color/colorAccent"
+        android:layout_margin="@dimen/quote_border">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/quote_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/quote_border"
+        app:srcCompat="@drawable/quotes" />
+
+</android.support.v7.widget.CardView>

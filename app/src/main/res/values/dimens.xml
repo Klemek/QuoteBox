@@ -1,0 +1,24 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin2">8dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="quote_size">80dp</dimen>
+    <dimen name="quote_grid_size">90dp</dimen>
+    <dimen name="quote_progress_size">200dp</dimen>
+    <dimen name="round_corner">20dp</dimen>
+    <dimen name="quote_border">2dp</dimen>
+    <dimen name="quote_spacing_v">5dp</dimen>
+    <dimen name="quote_spacing_h">5dp</dimen>
+    <dimen name="text_spacing_h">5dp</dimen>
+    <dimen name="thumbnail_width">128dp</dimen>
+    <dimen name="thumbnail_height">72dp</dimen>
+    <dimen name="editor_button_text">12sp</dimen>
+    <dimen name="editor_button_width">60dp</dimen>
+    <dimen name="editor_button_text2">12sp</dimen>
+    <dimen name="figure_padding">2dp</dimen>
+</resources>

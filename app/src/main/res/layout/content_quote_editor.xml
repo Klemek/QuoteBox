@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_quote_editor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fr.klemek.quotetube.quote.QuoteEditorActivity"
+    tools:showIn="@layout/activity_quote_editor">
+
+    <fragment
+        android:id="@+id/youtube_fragment"
+        android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_back_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/player_back_3"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/editor_button_text2"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button_back_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/player_back_2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/editor_button_text2"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button_back_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/player_back_1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/editor_button_text2"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button_forw_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/player_forw_1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/editor_button_text2"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button_forw_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/player_forw_2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/editor_button_text2"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button_forw_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/player_forw_3"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/editor_button_text2"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_vertical_margin2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/text_spacing_h"
+                    android:text="@string/quote_current"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/quote_current"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="00:00.000"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/editor_title1"
+                android:textAppearance="@style/EditorTitleText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/text_spacing_h"
+                    android:text="@string/quote_start"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/quote_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="00:00.000"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <Button
+                    android:id="@+id/button_quote_start"
+                    android:layout_width="@dimen/editor_button_width"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/quote_start_button"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/editor_button_text" />
+
+                <Button
+                    android:id="@+id/button_quote_tostart"
+                    android:layout_width="@dimen/editor_button_width"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/quote_goto_button"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/editor_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/text_spacing_h"
+                    android:text="@string/quote_stop"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/quote_stop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="00:01.000"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <Button
+                    android:id="@+id/button_quote_stop"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="@dimen/editor_button_width"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/quote_stop_button"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/editor_button_text" />
+
+                <Button
+                    android:id="@+id/button_quote_tostop"
+                    android:layout_width="@dimen/editor_button_width"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/quote_goto_button"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/editor_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/text_spacing_h"
+                    android:text="@string/quote_duration"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/quote_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="00:01.000"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <Button
+                    android:id="@+id/button_quote_try"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/quote_try"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/editor_title2"
+                android:textAppearance="@style/EditorTitleText" />
+
+            <CheckBox
+                android:id="@+id/quote_fade_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/quote_fade_out" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/editor_title3"
+                android:textAppearance="@style/EditorTitleText" />
+
+            <LinearLayout
+                android:id="@+id/quote_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <include layout="@layout/quote_image_view" />
+
+                <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+
+                <EditText
+                    android:id="@+id/quote_name_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="textPersonName"
+                    android:nextFocusLeft="@id/quote_name_preview"
+                    android:nextFocusUp="@id/quote_name_preview"
+                    android:text="@string/default_quote_name"
+                    android:textAppearance="@style/QuoteText" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_quote_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/quote_create" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
