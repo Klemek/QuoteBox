@@ -3,27 +3,32 @@ package fr.klemek.quotetube.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 /**
- * Created by klemek on 16/03/17.
+ * Created by klemek on 16/03/17 !
  */
 
 public abstract class QPyUtils {
 
+    public static int QPY_NOT_INSTALLED = 0;
+    public static int QPY_INSTALLED = 1;
+    public static int QPY_WRONG_VERSION = 2;
 
-    public static boolean checkQPyInstalled(Context context) {
+    public static int checkQPyInstalled(Context context) {
         try {
-            context.getPackageManager().getApplicationInfo(
-                    Constants.QPYTHON_PACKAGE, PackageManager.GET_UNINSTALLED_PACKAGES);
-
-            Utils.debugLog(QPyUtils.class,  "QPython installed",0);
-            return true;
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(Constants.QPYTHON_PACKAGE, 0);
+            Utils.debugLog(QPyUtils.class,  "QPython "+pInfo.versionName+" ("+pInfo.versionCode+") installed",0);
+            if(pInfo.versionCode == Constants.QPYTHON_REQUIRED_VERSION)
+                return QPY_INSTALLED;
+            else
+                return QPY_WRONG_VERSION;
         } catch (PackageManager.NameNotFoundException e) {
             Utils.debugLog(QPyUtils.class,  "QPython not installed",0);
-            return false;
+            return QPY_NOT_INSTALLED;
         }
     }
 
@@ -36,10 +41,7 @@ public abstract class QPyUtils {
         Bundle mBundle = new Bundle();
         mBundle.putString("app", Constants.APP_ID);
         mBundle.putString("act", Constants.QPYTHON_BUNDLE_ACT);
-        mBundle.putString("flag", Constants.QPYTHON_BUNDLE_FLAG);
-        /*
-         * The String Python code, you can put your py file in res or raw or intenet, so that you can get it the same way, which can make it scalable
-         */
+        //mBundle.putString("param","");
         if(addHeader){
             script = Constants.QPYTHON_SCRIPT_HEADER+script;
         }
@@ -49,6 +51,14 @@ public abstract class QPyUtils {
         intent.putExtras(mBundle);
 
         a.startActivityForResult(intent, requestCode);
+    }
+
+    public static boolean QPyExecFile(int requestCode, Activity a, String file, String code, boolean rewrite) {
+        if(FileUtils.writeFile(file,code, rewrite)) {
+            QPyUtils.QPyExecFile(requestCode, a, file);
+            return true;
+        }
+        return false;
     }
 
     public static void QPyExecFile(int requestCode, Activity a, String file) {
@@ -81,14 +91,17 @@ public abstract class QPyUtils {
 
 
     public static void getResult(int requestCode, OnQPyResultListener resultListener,Intent data, boolean endFlag){
+        ResultTask task = new ResultTask(requestCode, resultListener, endFlag);
         if (data!=null) {
             Bundle bundle = data.getExtras();
             String resultFile = bundle.getString("log");
             /*for(String key:bundle.keySet()){
                 Utils.debugLog(QPyUtils.class,key+":"+bundle.get(key),0);
             }*/
-            ResultTask task = new ResultTask(requestCode, resultListener, endFlag);
             task.execute(resultFile);
+        }else{
+            Utils.debugLog(QPyUtils.class,"Null results, checking default log file",0);
+            task.execute(Constants.QPYTHON_DEFAULT_LOG_FILE);
         }
     }
 
@@ -102,7 +115,7 @@ public abstract class QPyUtils {
         private int requestCode;
         private boolean endFlag;
 
-        public ResultTask(int requestCode, OnQPyResultListener listener, boolean endFlag){
+        ResultTask(int requestCode, OnQPyResultListener listener, boolean endFlag){
             this.listener = listener;
             this.requestCode = requestCode;
             this.endFlag = endFlag;
@@ -118,7 +131,7 @@ public abstract class QPyUtils {
         }
 
         protected void onPostExecute(String result){
-            if(result != null && !endFlag || !result.contains(Constants.QPY_LOG_ERROR_FLAG)){
+            if(result != null && (!endFlag || !result.contains(Constants.QPY_LOG_ERROR_FLAG))){
                 Utils.debugLog(this,  "Request "+requestCode+" success:"+result);
                 listener.onQPyResult(requestCode,true,result);
             }else if(result == null){
@@ -128,6 +141,9 @@ public abstract class QPyUtils {
                 Utils.debugLog(this,  "Request "+requestCode+" error:"+result);
                 listener.onQPyResult(requestCode,false,result);
             }
+
+            if(result != null)//TODO remove
+                FileUtils.writeFile(Constants.DIR_BASE + "temp" + System.currentTimeMillis() + ".txt", result, false);
 
         }
     }

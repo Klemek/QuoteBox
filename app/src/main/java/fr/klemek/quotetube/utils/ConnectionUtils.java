@@ -7,22 +7,25 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by klemek on 17/03/17.
+ * Created by klemek on 17/03/17 !
  */
 
 public abstract class ConnectionUtils {
@@ -31,7 +34,7 @@ public abstract class ConnectionUtils {
 
         String result = null;
         URL url;
-        int responseCode = 0;
+        int responseCode;
 
         if (isOnline(ctx)) {
             try {
@@ -104,6 +107,50 @@ public abstract class ConnectionUtils {
             Picasso.with(ctx).load(url).placeholder(placeholder).error(error).into(view);
         } else {
             Picasso.with(ctx).load(error).into(view);
+        }
+    }
+
+    public static boolean downloadFile(String strUrl, String path){
+        int count;
+        try {
+            Utils.debugLog(ConnectionUtils.class,"Downloading file from "+strUrl,0);
+
+            File f = new File(path);
+            if(!f.exists()) {
+
+                URL url = new URL(strUrl);
+                URLConnection conection = url.openConnection();
+                conection.connect();
+
+                // download the file
+                InputStream input = new BufferedInputStream(url.openStream(),
+                        8192);
+
+                // Output stream
+                OutputStream output = new FileOutputStream(path);
+
+                byte data[] = new byte[1024];
+
+                while ((count = input.read(data)) != -1) {
+
+                    // writing data to file
+                    output.write(data, 0, count);
+                }
+
+                // flushing output
+                output.flush();
+
+                // closing streams
+                output.close();
+                input.close();
+                Utils.debugLog(ConnectionUtils.class,"File successfully downloaded",0);
+            }else{
+                Utils.debugLog(ConnectionUtils.class,"File already downloaded",0);
+            }
+            return true;
+        } catch (Exception e) {
+            Utils.debugLog(ConnectionUtils.class,e.getMessage(),0);
+            return false;
         }
     }
 }

@@ -23,7 +23,7 @@
                 android:id="@+id/channel_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:text="Channel"
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:textColor="@color/textColorPrimary"

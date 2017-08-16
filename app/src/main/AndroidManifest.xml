@@ -37,6 +37,11 @@
             android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize|keyboardHidden" >
         </activity>
+        <activity
+            android:name=".quote.QuoteFinishActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize|keyboardHidden" >
+        </activity>
         <activity android:name=".quote.QuoteCreationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
     </application>

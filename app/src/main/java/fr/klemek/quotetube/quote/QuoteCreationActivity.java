@@ -3,18 +3,23 @@ package fr.klemek.quotetube.quote;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 
 import net.bohush.geometricprogressview.GeometricProgressView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import fr.klemek.quotetube.R;
 import fr.klemek.quotetube.utils.ConnectionUtils;
@@ -24,7 +29,11 @@ import fr.klemek.quotetube.utils.FileUtils;
 import fr.klemek.quotetube.utils.QPyUtils;
 import fr.klemek.quotetube.utils.Utils;
 
-public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils.OnQPyResultListener  {
+/**
+ * Created by klemek on ? !
+ */
+
+public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils.OnQPyResultListener{
 
     private int tquoteStart, tquoteStop, tquoteDuration, quotecolor;
     private boolean quotefadeout;
@@ -32,6 +41,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
     private WorkTask task;
     private FFmpeg ffmpeg;
     private int nangles = 12;
+    private Timer timeout;
 
     private static final int YTDL_SCRIPT_RESULT= 2;
 
@@ -69,6 +79,8 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
         ffmpeg =  FFmpeg.getInstance(getApplicationContext());
 
         soundfile = FileUtils.generateFileName(videoid,".mp3");
+
+        timeout = new Timer();
 
         task = new WorkTask(WorkState.START);
         task.execute();
@@ -114,9 +126,28 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
                     if(ConnectionUtils.isOnline(getApplicationContext())) {
                         String script = Constants.QPY_SCRIPT_DL_VIDEO.replace(Constants.QPY_SCRIPT_TAG_VIDEOID,videoid);
                         Utils.debugLog(this,"Creating script file");
-                        if(FileUtils.writeFile(Constants.SCRIPT_YTDL_PATH,script)) {
+                        if(FileUtils.writeFile(Constants.SCRIPT_YTDL_PATH,script,true)) {
                             Utils.debugLog(this, "Downloading "+videoid+" ...");
                             QPyUtils.QPyExecFile(YTDL_SCRIPT_RESULT, QuoteCreationActivity.this, Constants.SCRIPT_YTDL_PATH);
+
+                            timeout.schedule(new TimerTask(){
+                                @Override
+                                public void run() {
+                                    new MaterialDialog.Builder(QuoteCreationActivity.this)
+                                            .title(R.string.error_generic_title)
+                                            .content(getResources().getString(R.string.error_generic_content,
+                                                    Constants.ERROR_QPY_TIMEOUT,
+                                                    ""))
+                                            .positiveText(R.string.dialog_ok)
+                                            .cancelable(false)
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    finish();
+                                                }
+                                            }).show();
+                                }
+                            }, Constants.MAX_QPY_WAIT);
                             return true;
                         }else{
                             Utils.debugLog(this,"Could not create script file");
@@ -158,10 +189,9 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
                                                                 message))
                                         .positiveText(R.string.dialog_ok)
                                         .cancelable(false)
-                                        .callback(new MaterialDialog.ButtonCallback() {
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
                                             @Override
-                                            public void onPositive(MaterialDialog dialog) {
-                                                super.onPositive(dialog);
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                                 finish();
                                             }
                                         }).show();
@@ -209,10 +239,9 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
                                                 message))
                                         .positiveText(R.string.dialog_ok)
                                         .cancelable(false)
-                                        .callback(new MaterialDialog.ButtonCallback() {
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
                                             @Override
-                                            public void onPositive(MaterialDialog dialog) {
-                                                super.onPositive(dialog);
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                                 finish();
                                             }
                                         }).show();
@@ -268,10 +297,9 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
                                 .content(R.string.error_nointernet_content2)
                                 .positiveText(R.string.dialog_ok)
                                 .cancelable(false)
-                                .callback(new MaterialDialog.ButtonCallback() {
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
                                     @Override
-                                    public void onPositive(MaterialDialog dialog) {
-                                        super.onPositive(dialog);
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         finish();
                                     }
                                 }).show();
@@ -291,10 +319,9 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
                                         ""))
                                 .positiveText(R.string.dialog_ok)
                                 .cancelable(false)
-                                .callback(new MaterialDialog.ButtonCallback() {
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
                                     @Override
-                                    public void onPositive(MaterialDialog dialog) {
-                                        super.onPositive(dialog);
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         finish();
                                     }
                                 }).show();
@@ -308,6 +335,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
         switch (requestCode) {
             case YTDL_SCRIPT_RESULT:
                 QPyUtils.getResult(YTDL_SCRIPT_RESULT,this,data,true);
+                timeout.cancel();
                 break;
         }
     }
@@ -330,10 +358,9 @@ public class QuoteCreationActivity extends AppCompatActivity implements QPyUtils
                                     result))
                             .positiveText(R.string.dialog_ok)
                             .cancelable(false)
-                            .callback(new MaterialDialog.ButtonCallback() {
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
-                                public void onPositive(MaterialDialog dialog) {
-                                    super.onPositive(dialog);
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     finish();
                                 }
                             }).show();

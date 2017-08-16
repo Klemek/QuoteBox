@@ -13,12 +13,12 @@ import java.io.IOException;
 import static fr.klemek.quotetube.utils.Utils.debugLog;
 
 /**
- * Created by klemek on 30/03/17.
+ * Created by klemek on 30/03/17 !
  */
 
 public abstract class FileUtils {
 
-    public static String readFile(String path){
+    static String readFile(String path){
         StringBuilder text = new StringBuilder();
         File f = new File(Constants.DIR_EXT_STORAGE +path.replace("/storage/emulated/0",""));
         try {
@@ -41,8 +41,10 @@ public abstract class FileUtils {
         return text.toString();
     }
 
-    public static boolean writeFile(String path,String content){
+    public static boolean writeFile(String path,String content,boolean replace){
         File f = new File(Constants.DIR_EXT_STORAGE +path.replace("/storage/emulated/0",""));
+        if(f.exists() && !replace)
+            return true;
         try {
             if(f.exists() || f.createNewFile()) {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(f));
@@ -58,13 +60,16 @@ public abstract class FileUtils {
         return false;
     }
 
-    public static String readFileForce(String path){
+    static String readFileForce(String path){
         return readFileForce(path,null);
     }
 
-    public static String readFileForce(String path, String[] end){
+    static String readFileForce(String path, String[] end){
         StringBuilder text = new StringBuilder();
         File f = new File(Constants.DIR_EXT_STORAGE +path.replace("/storage/emulated/0",""));
+        if(!f.exists())
+            return null;
+        debugLog(FileUtils.class,"Accessing : " + f.getAbsolutePath() + " ...",0);
         long t0 = System.currentTimeMillis();
         while(f.length() == 0 && System.currentTimeMillis()-t0<Constants.MAX_QPY_WAIT){
             try {

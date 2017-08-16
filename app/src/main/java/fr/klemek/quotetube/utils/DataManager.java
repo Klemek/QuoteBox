@@ -1,18 +1,13 @@
 package fr.klemek.quotetube.utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-
-import fr.klemek.quotetube.R;
-import fr.klemek.quotetube.quote.Quote;
 import fr.klemek.quotetube.quote.QuoteList;
 
 /**
- * Created by klemek on 30/03/17.
+ * Created by klemek on 30/03/17 !
  */
 
 public class DataManager {
@@ -29,7 +24,7 @@ public class DataManager {
         //SharedPreferences sharedPref = c.getSharedPreferences(c.getString(R.string.preference_file_key),Context.MODE_PRIVATE);
         //String quotesjson = sharedPref.getString(c.getString(R.string.saved_quotes_key),null);
         String quotesjson = FileUtils.readFile(Constants.LIST_FILE);
-        if(quotesjson == null || quotesjson.trim().length()==0){
+        if(quotesjson.trim().length()==0){
             quoteList = new QuoteList();
         }else{
             quoteList = new Gson().fromJson(quotesjson,QuoteList.class);
@@ -50,7 +45,7 @@ public class DataManager {
 
     public void saveList(Context c){
         String quotesjson = (new Gson().toJson(quoteList));
-        FileUtils.writeFile(Constants.LIST_FILE,quotesjson);
+        FileUtils.writeFile(Constants.LIST_FILE,quotesjson,true);
         //SharedPreferences sharedPref = c.getSharedPreferences(c.getString(R.string.preference_file_key),Context.MODE_PRIVATE);
         //SharedPreferences.Editor prefsEditor = sharedPref.edit();
         //prefsEditor.putString(c.getString(R.string.saved_quotes_key),quotesjson);

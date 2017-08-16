@@ -6,17 +6,19 @@
     <!-- Activities titles -->
     <string name="title_activity_main">Your quotes</string>
     <string name="title_activity_search">Search for video</string>
-    <string name="title_activity_quote_editor">Create new quote</string>
+    <string name="title_activity_quote_editor">Create new quote (1/2)</string>
+    <string name="title_activity_quote_finish">Create new quote (2/2)</string>
 
     <!-- Splash texts -->
     <string name="splash_loading_start">Loading…</string>
     <string name="splash_loading_perm">Checking permissions…</string>
     <string name="splash_loading_qpy">Checking QPython…</string>
-    <string name="splash_loading_qpy2">Please install QPython</string>
+    <string name="splash_loading_qpy2">Downloading QPython…</string>
     <string name="splash_loading_dir">Checking folders</string>
     <string name="splash_loading_data">Loading user\'s data</string>
-    <string name="splash_loading_ytdl">Checking Youtube-dl…</string>
+    <string name="splash_loading_ytdl">Checking Youtube-dl… (long)</string>
     <string name="splash_loading_ytdl2">Installing Youtube-dl…</string>
+    <string name="splash_loading_ytdl3">Upgrading Youtube-dl…</string>
     <string name="splash_loading_ffmpeg">Loading FFmpeg…</string>
     <string name="splash_loading_done">Launching…</string>
 
@@ -51,6 +53,7 @@
     <string name="editor_title1">Limits</string>
     <string name="editor_title2">Options</string>
     <string name="editor_title3">Button preview</string>
+    <string name="editor_tip1">When you try the quote, the stop position may not be accurate because of the youtube player. You may have to adjust by creating the quote again.</string>
     <string name="quote_fade_out">Fade out 1 second before end</string>
     <string name="default_quote_name">Set name</string>
     <string name="quote_start">Start at :</string>
@@ -62,6 +65,7 @@
     <string name="quote_duration">Duration :</string>
     <string name="quote_try">Try quote</string>
     <string name="quote_try_2">Stop</string>
+    <string name="quote_validate">Validate positions</string>
     <string name="quote_create">Create quote</string>
 
     <string name="player_back_1">-0.2s</string>
@@ -87,13 +91,13 @@
     <string name="dialog_no">No</string>
 
     <!-- Errors dialogs and toasts -->
-    <string name="error_noqpy_title">QPython not installed</string>
-    <string name="error_noqpy_content">In order to run this app you must install QPython and launch a script in it once.</string>
-    <string name="error_noqpy_positive">Install</string>
+    <string name="error_noqpy_title">QPython 1.2.5 not installed</string>
+    <string name="error_noqpy_content">In order to run this app you must install a specific version of QPython that will be downloaded now.</string>
+    <string name="error_noqpy_positive">Ok, do it !</string>
 
     <string name="error_nointernet_title">Not connected</string>
     <string name="error_nointernet_content">You need to be connected to the Internet to finish installing</string>
-    <string name="error_nointernet_content2">You need to be connected to the Internet to downloading the sound</string>
+    <string name="error_nointernet_content2">You need to be connected to the Internet to download the sound</string>
 
     <string name="error_noffmpeg_title">FFmpeg failed loading</string>
     <string name="error_noffmpeg_content">Your device does not support FFmpeg, you will not be able to create new quotes.</string>
@@ -108,5 +112,12 @@
 
     <string name="error_generic_title">Error</string>
     <string name="error_generic_content" formatted="false">Error %d : \n%s</string>
+    <string name="error_wrongqpy_content">You have another version of QPython, please uninstall it in order to use this app. (We need the version 1.2.5 that will be downloaded after)</string>
+    <string name="error_wrongqpy_title">Wrong version of QPython</string>
+    <string name="error_wrongqpy_negative">Never !</string>
+    <string name="splash_loading_qpy3">Please uninstall QPython</string>
+    <string name="splash_loading_qpy4">Installing QPython…</string>
+    <string name="error_unknown_title">Unexpected error.</string>
+    <string name="error_unkown_content">An unexpected error has occured : %s</string>
 
 </resources>

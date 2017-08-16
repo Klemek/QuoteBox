@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import fr.klemek.quotetube.R;
 import fr.klemek.quotetube.quote.QuoteEditorActivity;
@@ -205,7 +206,7 @@ public class YoutubeSearchActivity extends AppCompatActivity {
 
             String result = ConnectionUtils.getServerData(Constants.GET_SEARCH_URL,getParams,getApplicationContext());
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
 
             if(result != null){
                 try {

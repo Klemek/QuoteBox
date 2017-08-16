@@ -6,7 +6,7 @@ import java.io.Serializable;
 import fr.klemek.quotetube.utils.Constants;
 
 /**
- * Created by klemek on 16/03/17.
+ * Created by klemek on 16/03/17 !
  */
 
 public class Quote implements Serializable{

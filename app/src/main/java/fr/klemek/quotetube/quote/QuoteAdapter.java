@@ -8,12 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import fr.klemek.quotetube.R;
 
 /**
- * Created by klemek on 16/03/17.
+ * Created by klemek on 16/03/17 !
  */
 
 public class QuoteAdapter extends BaseAdapter {

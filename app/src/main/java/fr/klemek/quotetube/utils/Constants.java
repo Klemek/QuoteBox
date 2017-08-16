@@ -5,21 +5,20 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Locale;
 
 /**
- * Created by klemek on 14/03/17.
+ * Created by klemek on 14/03/17 !
  */
 
 public abstract class Constants {
 
-    public static final boolean DEBUG = true;
+    static final boolean DEBUG = true;
 
     public static final String APP_ID = "fr.klemek.quotetube";
-    public static final String VERSION_ID = "Beta 1.2";
+    public static final String VERSION_ID = "Beta 1.3";
     public static final int VERSION = 1;
     public static final int LIST_VERSION = 1;
 
@@ -107,10 +106,17 @@ public abstract class Constants {
 
     //QPython API
 
-    public static final long MAX_QPY_WAIT = 100000;
+    public static final String QPYTHON_DL_URL = "https://klemek.fr/quotetube/qpython1.2.5.apk";
+    public static final String QPYTHON_DL_PATH = DIR_BASE + "/qpython1.2.5.apk";
 
-    public final static String QPYTHON_PACKAGE = "org.qpython.qpy";
-    public final static String QPYTHON_CLASS = "org.qpython.qpylib.MPyApi";
+    public static final long MAX_QPY_WAIT = 20 * 1000; //20 sec timeout
+
+    public final static String QPYTHON_PACKAGE = "com.hipipal.qpyplus";//"org.qpython.qpy";
+    public static final int QPYTHON_REQUIRED_VERSION = 127;
+
+    public static final String QPYTHON_DEFAULT_LOG_FILE = DIR_EXT_STORAGE + "/" + QPYTHON_PACKAGE + "/.run/.run.log";//"/qpython/.run/.run.log";
+
+    public final static String QPYTHON_CLASS = "com.hipipal.qpyplus.MPyApi";//"org.qpython.qpylib.MPyApi";
     public final static String QPYTHON_ACTION = QPYTHON_PACKAGE + ".action.MPyApi";
     public final static String QPYTHON_BUNDLE_ACT = "onPyApi";
     public final static String QPYTHON_BUNDLE_FLAG = "onQPyExec";
@@ -126,20 +132,29 @@ public abstract class Constants {
      */
 
     public static final String QPY_SCRIPT_YTDL_CHECK = "" +
-            "import imp\n" +
+            "#qpy:qpyapp\n" +
             "try:\n" +
-            "    imp.find_module('youtube_dl')\n" +
-            "    print 'done'\n" +
-            "except ImportError:\n" +
-            "    print 'not found'";
+            "    import youtube_dl\n"+
+            "    print('done')\n" +
+            "except:\n" +
+            "    print('not found')";
+    public static final String QPY_SCRIPT_YTDL_UPGR = "" +
+            "#qpy:qpyapp\n" +
+            "try:\n" +
+            "    import pip\n" +
+            "    pip.main(['install','--upgrade','youtube_dl'])\n" +
+            "    print('itisdone')\n" +
+            "except:\n" +
+            "    print('itiserror')\n";
     public static final String QPY_SCRIPT_YTDL_INST = "" +
+            "#qpy:qpyapp\n" +
             "try:\n" +
             "    import pip\n" +
             "    pip.main(['install','youtube_dl'])\n" +
-            "    print 'itisdone'\n" +
+            "    print('itisdone')\n" +
             "except:\n" +
-            "    print 'itiserror'\n";
-    public static final String QPY_SCRIPT_CONSOLE = "" +
+            "    print('itiserror')\n";
+    public static final String QPY_INIT_SCRIPT = "" +
             "#qpy:console";
     public static final String QPY_SCRIPT_DL_VIDEO = "" +
             "from __future__ import unicode_literals\n" +
@@ -153,13 +168,17 @@ public abstract class Constants {
             "    }\n" +
             "    with youtube_dl.YoutubeDL(ydl_opts) as ydl:\n" +
             "        ydl.download(['https://www.youtube.com/watch?v=%VIDEOID%'])\n" +
-            "    print 'itisdone'\n" +
+            "    print('itisdone')\n" +
             "except:\n" +
-            "    print 'itiserror'\n";
+            "    print('itiserror')\n";
 
     public static final String QPY_SCRIPT_TAG_VIDEOID = "%VIDEOID%";
 
     public static final String SCRIPT_YTDL_PATH = DIR_SCRIPTS+"ytdl.py";
+    public static final String SCRIPT_YTDL_CHECK_PATH = DIR_SCRIPTS+"ytdl_check.py";
+    public static final String SCRIPT_YTDL_INST_PATH = DIR_SCRIPTS+"ytdl_install.py";
+    public static final String SCRIPT_YTDL_UPGR_PATH = DIR_SCRIPTS+"ytdl_upgrade.py";
+    public static final String SCRIPT_TEMP_PATH = DIR_SCRIPTS+"temp.py";
 
     //Links
     public static final String QPYTHON_MARKET = "market://details?id=org.qpython.qpy";
@@ -180,5 +199,6 @@ public abstract class Constants {
     public static final int ERROR_YTDL = 21;
     public static final int ERROR_YTFRAG_INIT = 31;
     public static final int ERROR_YTFRAG = 32;
+    public static final int ERROR_QPY_TIMEOUT = 41;
 
 }

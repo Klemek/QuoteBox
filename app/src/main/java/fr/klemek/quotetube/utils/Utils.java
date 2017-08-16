@@ -1,31 +1,14 @@
 package fr.klemek.quotetube.utils;
 
-import android.content.Context;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.util.Log;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.math.BigDecimal;
-import java.util.Calendar;
-
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.Duration;
-
-import fr.klemek.quotetube.MainActivity;
+import java.util.Locale;
 
 /**
- * Created by klemek on 16/03/17.
+ * Created by klemek on 16/03/17 !
  */
 
 public abstract class Utils {
@@ -61,14 +44,14 @@ public abstract class Utils {
         long seconds = millis/1000;
         if(seconds/3600>0){
             if(showMillis) {
-                return String.format(
+                return String.format(Locale.getDefault(),
                         "%d:%02d:%02d.%03d",
                         seconds / 3600,
                         (seconds % 3600) / 60,
                         seconds % 60,
                         millis%1000);
             }else{
-                return String.format(
+                return String.format(Locale.getDefault(),
                         "%d:%02d:%02d",
                         seconds / 3600,
                         (seconds % 3600) / 60,
@@ -76,13 +59,13 @@ public abstract class Utils {
             }
         }else{
             if(showMillis) {
-                return String.format(
+                return String.format(Locale.getDefault(),
                         "%02d:%02d.%03d",
                         (seconds % 3600) / 60,
                         seconds % 60,
                         millis%1000);
             }else {
-                return String.format(
+                return String.format(Locale.getDefault(),
                         "%02d:%02d",
                         seconds / 60,
                         seconds % 60);
@@ -92,7 +75,7 @@ public abstract class Utils {
 
     public static String formatDurationInSeconds(long millis){
         long seconds = millis/1000;
-        return String.format(
+        return String.format(Locale.getDefault(),
                 "%02d.%03d",
                 seconds,
                 millis%1000);
@@ -104,11 +87,11 @@ public abstract class Utils {
         String time = sduration.substring(2);
         long duration = 0L;
         Object[][] indexs = new Object[][]{{"H", 3600}, {"M", 60}, {"S", 1}};
-        for(int i = 0; i < indexs.length; i++) {
-            int index = time.indexOf((String) indexs[i][0]);
-            if(index != -1) {
+        for (Object[] index1 : indexs) {
+            int index = time.indexOf((String) index1[0]);
+            if (index != -1) {
                 String value = time.substring(0, index);
-                duration += Integer.parseInt(value) * (int) indexs[i][1] * 1000;
+                duration += Integer.parseInt(value) * (int) index1[1] * 1000;
                 time = time.substring(value.length() + 1);
             }
         }

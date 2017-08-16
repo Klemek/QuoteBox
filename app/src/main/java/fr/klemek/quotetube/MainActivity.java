@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +16,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.klemek.quotetube.quote.Quote;
 import fr.klemek.quotetube.quote.QuoteAdapter;
@@ -29,12 +33,16 @@ import fr.klemek.quotetube.youtube.YoutubeSearchActivity;
 
 import static fr.klemek.quotetube.utils.Utils.debugLog;
 
+/**
+ * Created by klemek on ? !
+ */
+
 public class MainActivity extends AppCompatActivity{
 
     private QuoteList quotes;
     private QuoteAdapter adapter;
 
-    private ArrayList<MediaPlayer> players;
+    private SparseArray<MediaPlayer> players;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +74,7 @@ public class MainActivity extends AppCompatActivity{
 
         quotes = DataManager.getInstance(getApplicationContext()).getQuoteList();
 
-        players = new ArrayList<>();
-        for(int i = 0; i < quotes.size(); i++)
-            players.add(null);
+        players = new SparseArray<>();
 
         if(!quotes.isEmpty())
             findViewById(R.id.quote_list_empty_tv).setVisibility(View.GONE);
@@ -82,7 +88,6 @@ public class MainActivity extends AppCompatActivity{
                                     int position, long id) {
                 Quote q = quotes.get(position);
                 MediaPlayer mp = players.get(position);
-                debugLog(MainActivity.this,q.getName());
                 if(mp == null) {
                     mp = FileUtils.loadSound(q.getFile());
                     if(mp != null){
@@ -93,14 +98,16 @@ public class MainActivity extends AppCompatActivity{
                             ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.quotes));
                         }
                     });
-                    players.set(position, mp);}
+                    players.put(position, mp);}
+                    mp.prepareAsync();
+                    ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.play));
+                }else if(mp.isPlaying()){
+                    mp.stop();
+                    ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.quotes));
                 }else{
-                    if(mp.isPlaying())
-                        mp.stop();
-
+                    mp.prepareAsync();
+                    ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.play));
                 }
-                mp.prepareAsync();
-                ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.play));
             }
         });
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -114,21 +121,16 @@ public class MainActivity extends AppCompatActivity{
                                 .positiveText(R.string.dialog_yes)
                                 .negativeText(R.string.dialog_no)
                                 .cancelable(true)
-                                .callback(new MaterialDialog.ButtonCallback() {
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
                                     @Override
-                                    public void onPositive(MaterialDialog dialog) {
-                                        super.onPositive(dialog);
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         quotes.remove(i2);
                                         adapter.notifyDataSetChanged();
                                         FileUtils.tryDelete(q.getFile().getAbsolutePath());
                                         DataManager.getInstance(getApplicationContext()).saveList(getApplicationContext());
                                     }
-
-                                    @Override
-                                    public void onNegative(MaterialDialog dialog) {
-                                        super.onNegative(dialog);
-                                    }
-                                }).show();
+                                })
+                                .show();
                 return true;
             }
         });
@@ -160,8 +162,10 @@ public class MainActivity extends AppCompatActivity{
     protected void onPause() {
         super.onPause();
         if(players != null)
-            for(MediaPlayer mp:players)
-                if(mp != null)
-                    mp.release();
+            for(int i = 0; i < players.size(); i++) {
+                int key = players.keyAt(i);
+                // get the object by the key.
+                players.get(key).release();
+            }
     }
 }

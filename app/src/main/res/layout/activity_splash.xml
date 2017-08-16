@@ -20,8 +20,6 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/title"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:id="@+id/quote_image"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
@@ -30,8 +28,6 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/quote_image"
-            android:layout_centerHorizontal="true"
             android:id="@+id/splash_progress"
             android:progressTint="@color/colorPrimary" />
 
@@ -39,8 +35,6 @@
             android:id="@+id/splash_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
-            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="TextView"
             android:textAppearance="@style/HintText"

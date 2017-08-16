@@ -1,40 +1,35 @@
 package fr.klemek.quotetube.quote;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.jrummyapps.android.colorpicker.ColorPickerDialog;
-import com.jrummyapps.android.colorpicker.ColorPickerDialogListener;
-
-import java.util.Random;
 
 import fr.klemek.quotetube.R;
 import fr.klemek.quotetube.utils.Constants;
 import fr.klemek.quotetube.utils.Utils;
 
-public class QuoteEditorActivity extends AppCompatActivity implements ColorPickerDialogListener, YouTubePlayer.PlayerStateChangeListener, YouTubePlayer.PlaybackEventListener, YouTubePlayer.OnInitializedListener {
+/**
+ * Created by klemek on ? !
+ */
+
+public class QuoteEditorActivity extends AppCompatActivity implements YouTubePlayer.PlayerStateChangeListener, YouTubePlayer.PlaybackEventListener, YouTubePlayer.OnInitializedListener {
 
     private YouTubePlayer yp;
     private int tquoteStart, tquoteStop, tquoteDuration;
@@ -45,9 +40,6 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
     private boolean ready;
 
     private final Handler handler = new Handler();
-
-
-    private int quote_color;
 
     private boolean trying;
 
@@ -80,10 +72,6 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
 
         update();
 
-        Random r = new Random();
-        quote_color = Color.argb(255, r.nextInt(256), r.nextInt(256), r.nextInt(256));
-        ((ImageView) findViewById(R.id.quote_image)).setColorFilter(quote_color);
-
         findViewById(R.id.button_quote_start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +82,8 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
                     else
                         tquoteDuration = tquoteStop - tquoteStart;
                     update();
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -102,7 +92,12 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (ready && !trying) {
+                    boolean play = yp.isPlaying();
                     yp.seekToMillis(tquoteStart);
+                    if(!play)
+                        yp.pause(); //to prevent restart
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -117,6 +112,8 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
                     else
                         tquoteDuration = tquoteStop - tquoteStart;
                     update();
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -125,7 +122,12 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (ready && !trying) {
+                    boolean play = yp.isPlaying();
                     yp.seekToMillis(tquoteStop);
+                    if(!play)
+                        yp.pause(); //to prevent restart
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -134,8 +136,13 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (ready && !trying) {
+                    boolean play = yp.isPlaying();
                     yp.seekRelativeMillis(-1000);
+                    if(!play)
+                        yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-1000,0));
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -144,8 +151,13 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (ready && !trying) {
+                    boolean play = yp.isPlaying();
                     yp.seekRelativeMillis(-500);
+                    if(!play)
+                        yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-1000,0));
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -154,8 +166,13 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (ready && !trying) {
+                    boolean play = yp.isPlaying();
                     yp.seekRelativeMillis(-200);
+                    if(!play)
+                        yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-500,0));
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -164,8 +181,13 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (ready && !trying) {
+                    boolean play = yp.isPlaying();
                     yp.seekRelativeMillis(200);
+                    if(!play)
+                        yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+500,yp.getDurationMillis()));
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -174,8 +196,13 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (ready && !trying) {
+                    boolean play = yp.isPlaying();
                     yp.seekRelativeMillis(500);
+                    if(!play)
+                        yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+1000,yp.getDurationMillis()));
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -184,8 +211,13 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (ready && !trying) {
+                    boolean play = yp.isPlaying();
                     yp.seekRelativeMillis(1000);
+                    if(!play)
+                        yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+1000,yp.getDurationMillis()));
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
             }
         });
@@ -206,37 +238,18 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             public void onClick(View view) {
                 if (ready && !trying) {
                     if (tquoteDuration <= Constants.MAX_QUOTE_DURATION) {
-                        String quotename = ((EditText)findViewById(R.id.quote_name_preview)).getText().toString();
-                        if(!quotename.equals(getString(R.string.default_quote_name))) {
-                            Intent i = new Intent(QuoteEditorActivity.this, QuoteCreationActivity.class);
-                            i.putExtra(Constants.EXTRA_VIDEOID, videoId);
-
-                            i.putExtra(Constants.EXTRA_QUOTENAME, quotename);
-                            i.putExtra(Constants.EXTRA_QUOTECOLOR, quote_color);
-                            i.putExtra(Constants.EXTRA_QUOTESTART, tquoteStart);
-                            i.putExtra(Constants.EXTRA_QUOTESTOP, tquoteStop);
-                            i.putExtra(Constants.EXTRA_QUOTETIME, tquoteDuration);
-                            i.putExtra(Constants.EXTRA_QUOTEFADEOUT, ((CheckBox)findViewById(R.id.quote_fade_out)).isChecked());
-                            startActivityForResult(i, QUOTE_CREATION_RESULT);
-                        }else{
-                            Toast.makeText(getApplicationContext(), R.string.error_quote_name, Toast.LENGTH_SHORT).show();
-                        }
+                        Intent i = new Intent(QuoteEditorActivity.this, QuoteFinishActivity.class);
+                        i.putExtra(Constants.EXTRA_VIDEOID, videoId);
+                        i.putExtra(Constants.EXTRA_QUOTESTART, tquoteStart);
+                        i.putExtra(Constants.EXTRA_QUOTESTOP, tquoteStop);
+                        i.putExtra(Constants.EXTRA_QUOTETIME, tquoteDuration);
+                        startActivityForResult(i, QUOTE_CREATION_RESULT);
                     } else {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_quote_duration,(Constants.MAX_QUOTE_DURATION / 1000f)), Toast.LENGTH_SHORT).show();
                     }
-
+                }else{
+                    Utils.debugLog(this,"Not ready");
                 }
-            }
-        });
-
-        findViewById(R.id.quote_preview).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-                ColorPickerDialog.newBuilder().setColor(quote_color).show(QuoteEditorActivity.this);
             }
         });
     }
@@ -253,6 +266,7 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                setResult(RESULT_CANCELED);
                 finish();
                 return true;
         }
@@ -305,6 +319,7 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
 
     @Override
     public void onVideoStarted() {
+        ready = true;
     }
 
     @Override
@@ -313,6 +328,8 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
 
     @Override
     public void onError(YouTubePlayer.ErrorReason errorReason) {
+        yp = null;
+        ready = false;
         Utils.debugLog(this, "YoutubeError:" + errorReason.name());
         new MaterialDialog.Builder(this)
                 .title(R.string.error_generic_title)
@@ -321,10 +338,9 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
                         errorReason.name()))
                 .positiveText(R.string.dialog_ok)
                 .cancelable(false)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         finish();
                     }
                 }).show();
@@ -332,6 +348,7 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
 
     @Override
     public void onPlaying() {
+        ready = true;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -351,7 +368,6 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
 
     @Override
     public void onStopped() {
-        ready = false;
     }
 
     @Override
@@ -389,7 +405,11 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
             YouTubePlayerSupportFragment frag =
                     (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
             frag.initialize(Constants.GOOGLE_API_KEY, this);
+            yp = null;
+            ready = false;
         }else{
+            yp = null;
+            ready = false;
             new MaterialDialog.Builder(this)
                     .title(R.string.error_generic_title)
                     .content(getResources().getString(R.string.error_generic_content,
@@ -397,10 +417,9 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
                             ""))
                     .positiveText(R.string.dialog_ok)
                     .cancelable(false)
-                    .callback(new MaterialDialog.ButtonCallback() {
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            super.onPositive(dialog);
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             finish();
                         }
                     }).show();
@@ -408,22 +427,13 @@ public class QuoteEditorActivity extends AppCompatActivity implements ColorPicke
     }
 
     @Override
-    public void onColorSelected(int dialogId, @ColorInt int color) {
-        quote_color = color;
-        ((ImageView) findViewById(R.id.quote_image)).setColorFilter(quote_color);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == QUOTE_CREATION_RESULT && resultCode == RESULT_OK){
             setResult(RESULT_OK);
             finish();
+        }else if(yp != null){
+            ready = true;
         }
-    }
-
-    @Override
-    public void onDialogDismissed(int dialogId) {
-
     }
 
     @Override

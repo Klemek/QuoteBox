@@ -22,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
@@ -109,14 +109,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/text_spacing_h"
+                    android:layout_marginEnd="@dimen/text_spacing_h"
                     android:text="@string/quote_current"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/quote_current"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="00:00.000"
@@ -138,7 +138,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/text_spacing_h"
+                    android:layout_marginEnd="@dimen/text_spacing_h"
                     android:text="@string/quote_start"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textStyle="bold" />
@@ -178,7 +178,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/text_spacing_h"
+                    android:layout_marginEnd="@dimen/text_spacing_h"
                     android:text="@string/quote_stop"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textStyle="bold" />
@@ -220,7 +220,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/text_spacing_h"
+                    android:layout_marginEnd="@dimen/text_spacing_h"
                     android:text="@string/quote_duration"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textStyle="bold" />
@@ -242,56 +242,6 @@
                     android:textAllCaps="false" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin2"
-                android:text="@string/editor_title2"
-                android:textAppearance="@style/EditorTitleText" />
-
-            <CheckBox
-                android:id="@+id/quote_fade_out"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/quote_fade_out" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin2"
-                android:text="@string/editor_title3"
-                android:textAppearance="@style/EditorTitleText" />
-
-            <LinearLayout
-                android:id="@+id/quote_preview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <include layout="@layout/quote_image_view" />
-
-                <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
-
-                <EditText
-                    android:id="@+id/quote_name_preview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="textPersonName"
-                    android:nextFocusLeft="@id/quote_name_preview"
-                    android:nextFocusUp="@id/quote_name_preview"
-                    android:text="@string/default_quote_name"
-                    android:textAppearance="@style/QuoteText" />
-            </LinearLayout>
-
             <Button
                 android:id="@+id/button_quote_create"
                 android:layout_width="match_parent"
@@ -300,7 +250,13 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin2"
-                android:text="@string/quote_create" />
+                android:text="@string/quote_validate" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/editor_tip1" />
 
         </LinearLayout>
 
