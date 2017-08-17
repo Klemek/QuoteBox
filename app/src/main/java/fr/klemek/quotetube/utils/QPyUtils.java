@@ -141,10 +141,10 @@ public abstract class QPyUtils {
                 Utils.debugLog(this,  "Request "+requestCode+" error:"+result);
                 listener.onQPyResult(requestCode,false,result);
             }
-
+            /*
             if(result != null)//TODO remove
                 FileUtils.writeFile(Constants.DIR_BASE + "temp" + System.currentTimeMillis() + ".txt", result, false);
-
+            */
         }
     }
 

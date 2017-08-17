@@ -68,7 +68,7 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
         DATA_LOAD(90,R.string.splash_loading_data,DONE),
         YTDL_INST(70,R.string.splash_loading_ytdl2,DATA_LOAD),
         YTDL_UPGR(70,R.string.splash_loading_ytdl3,DATA_LOAD),
-        YTDL_CHECK(65,R.string.splash_loading_ytdl,YTDL_UPGR,YTDL_INST),
+        YTDL_CHECK(65,R.string.splash_loading_ytdl,YTDL_UPGR,YTDL_INST), //TODO init Qpython with dummy script
         QPY_INST(45,R.string.splash_loading_qpy4,YTDL_CHECK),
         QPY_DL(25,R.string.splash_loading_qpy2,QPY_INST),
         QPY_CHECK(20,R.string.splash_loading_qpy,YTDL_CHECK, QPY_DL),
@@ -335,8 +335,9 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                     if(result) {
                         task = new SplashTask(state.next);
                         task.execute();
+                    }else{
+                        return;
                     }
-                    break;
                 case FFMPEG_LOAD:
                     if(!result) {
                         new MaterialDialog.Builder(SplashActivity.this)
