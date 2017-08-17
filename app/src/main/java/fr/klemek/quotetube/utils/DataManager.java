@@ -1,7 +1,5 @@
 package fr.klemek.quotetube.utils;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 
 import fr.klemek.quotetube.quote.QuoteList;
@@ -16,11 +14,11 @@ public class DataManager {
 
     private QuoteList quoteList;
     
-    private DataManager(Context c){
-        loadList(c);
+    private DataManager(){
+        loadList();
     }
 
-    private void loadList(Context c){
+    private void loadList(){
         //SharedPreferences sharedPref = c.getSharedPreferences(c.getString(R.string.preference_file_key),Context.MODE_PRIVATE);
         //String quotesjson = sharedPref.getString(c.getString(R.string.saved_quotes_key),null);
         String quotesjson = FileUtils.readFile(Constants.LIST_FILE);
@@ -43,7 +41,7 @@ public class DataManager {
         }
     }
 
-    public void saveList(Context c){
+    public void saveList(){
         String quotesjson = (new Gson().toJson(quoteList));
         FileUtils.writeFile(Constants.LIST_FILE,quotesjson,true);
         //SharedPreferences sharedPref = c.getSharedPreferences(c.getString(R.string.preference_file_key),Context.MODE_PRIVATE);
@@ -51,9 +49,9 @@ public class DataManager {
         //prefsEditor.putString(c.getString(R.string.saved_quotes_key),quotesjson);
     }
     
-    public static DataManager getInstance(Context c){
+    public static DataManager getInstance(){
         if(instance == null)
-            instance = new DataManager(c);
+            instance = new DataManager();
         return instance;
     }
 

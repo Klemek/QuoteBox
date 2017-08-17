@@ -17,6 +17,7 @@
     <dimen name="thumbnail_height">72dp</dimen>
     <dimen name="editor_button_text">12sp</dimen>
     <dimen name="editor_button_width">60dp</dimen>
+    <dimen name="editor_small_button_width">180dp</dimen>
     <dimen name="editor_button_text2">12sp</dimen>
     <dimen name="figure_padding">2dp</dimen>
 </resources>

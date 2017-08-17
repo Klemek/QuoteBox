@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import fr.klemek.quotetube.R;
-import fr.klemek.quotetube.quote.QuoteEditorActivity;
+import fr.klemek.quotetube.quote.QuoteCreationActivity;
 import fr.klemek.quotetube.utils.ConnectionUtils;
 import fr.klemek.quotetube.utils.Constants;
 import fr.klemek.quotetube.utils.Utils;
@@ -78,9 +79,14 @@ public class YoutubeSearchActivity extends AppCompatActivity {
                     Intent intent = null;
                     switch(e.getType()){
                         case VIDEO:
-                            intent = new Intent(YoutubeSearchActivity.this, QuoteEditorActivity.class);
+                            intent = new Intent(YoutubeSearchActivity.this, QuoteCreationActivity.class);
                             intent.putExtra(Constants.EXTRA_VIDEOID,((YoutubeVideo)e).getVideoId());
-
+                            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                            String[] videoInfo = new String[]{((YoutubeVideo) e).getVideoId(),
+                                    ((YoutubeVideo)e).getVideoTitle(),
+                                    e.getChannelTitle(),
+                                    dateFormat.format(((YoutubeVideo)e).getPublishedAt())};
+                            intent.putExtra(Constants.EXTRA_VIDEOINFO, videoInfo);
                             break;
                         case CHANNEL:
                             intent = new Intent(YoutubeSearchActivity.this, YoutubeSearchActivity.class);

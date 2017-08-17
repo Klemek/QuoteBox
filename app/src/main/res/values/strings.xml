@@ -6,14 +6,18 @@
     <!-- Activities titles -->
     <string name="title_activity_main">Your quotes</string>
     <string name="title_activity_search">Search for video</string>
-    <string name="title_activity_quote_editor">Create new quote (1/2)</string>
-    <string name="title_activity_quote_finish">Create new quote (2/2)</string>
+    <string name="title_activity_quote_creation">Create new quote (1/2)</string>
+    <string name="title_activity_quote_creation2">Create new quote (2/2)</string>
+    <string name="title_activity_quote_edition">Edit quote</string>
 
     <!-- Splash texts -->
     <string name="splash_loading_start">Loading…</string>
     <string name="splash_loading_perm">Checking permissions…</string>
     <string name="splash_loading_qpy">Checking QPython…</string>
     <string name="splash_loading_qpy2">Downloading QPython…</string>
+    <string name="splash_loading_qpy3">Please uninstall QPython</string>
+    <string name="splash_loading_qpy4">Installing QPython…</string>
+    <string name="splash_loading_qpy5">Initializing QPython…</string>
     <string name="splash_loading_dir">Checking folders</string>
     <string name="splash_loading_data">Loading user\'s data</string>
     <string name="splash_loading_ytdl">Checking Youtube-dl… (long)</string>
@@ -49,13 +53,15 @@
     <string name="video_upvotes" formatted="false">%s &#11014;</string>
     <string name="video_downvotes" formatted="false">%s &#11015;</string>
 
-    <!-- Quote edition texts -->
-    <string name="editor_title1">Limits</string>
-    <string name="editor_title2">Options</string>
-    <string name="editor_title3">Button preview</string>
-    <string name="editor_tip1">When you try the quote, the stop position may not be accurate because of the youtube player. You may have to adjust by creating the quote again.</string>
-    <string name="quote_fade_out">Fade out 1 second before end</string>
-    <string name="default_quote_name">Set name</string>
+    <!-- Quote creation 1 texts -->
+    <string name="player_back_1">-0.2s</string>
+    <string name="player_back_2">-0.5s</string>
+    <string name="player_back_3">-1s</string>
+    <string name="player_forw_1">+0.2s</string>
+    <string name="player_forw_2">+0.5s</string>
+    <string name="player_forw_3">+1s</string>
+    <string name="creation_title1">Limits</string>
+    <string name="creation_tip1">When you try the quote, the stop position may not be accurate because of the youtube player. You may have to adjust by creating the quote again.</string>
     <string name="quote_start">Start at :</string>
     <string name="quote_start_button">Set start</string>
     <string name="quote_goto_button">Go to</string>
@@ -66,22 +72,30 @@
     <string name="quote_try">Try quote</string>
     <string name="quote_try_2">Stop</string>
     <string name="quote_validate">Validate positions</string>
+
+
+    <!-- Quote creation 2 texts -->
+    <string name="creation2_title1">Options</string>
+    <string name="creation2_title2">Button preview</string>
+    <string name="quote_fade_out">Fade out 1 second before end</string>
+    <string name="null_quote_name">Set name</string>
     <string name="quote_create">Create quote</string>
 
-    <string name="player_back_1">-0.2s</string>
-    <string name="player_back_2">-0.5s</string>
-    <string name="player_back_3">-1s</string>
-    <string name="player_forw_1">+0.2s</string>
-    <string name="player_forw_2">+0.5s</string>
-    <string name="player_forw_3">+1s</string>
+    <!-- Quote factory texts -->
+    <string name="factory_start">Creating…</string>
+    <string name="factory_dl">Downloading…\n(This might take a while)</string>
+    <string name="factory_extract">Extracting…</string>
+    <string name="factory_cutting">Cutting…</string>
+    <string name="factory_clean">Cleaning…</string>
+    <string name="factory_done">Adding to list…</string>
 
-    <!-- Quote creation texts -->
-    <string name="creation_start">Creating…</string>
-    <string name="creation_dl">Downloading…\n(This might take a while)</string>
-    <string name="creation_extract">Extracting…</string>
-    <string name="creation_cutting">Cutting…</string>
-    <string name="creation_clean">Cleaning…</string>
-    <string name="creation_done">Adding to list…</string>
+    <!-- Quote edition texts -->
+    <string name="edition_title1">Source video</string>n
+    <string name="video_info" formatted="false"><![CDATA[<p><b>Title : </b>%s<br/><b>Author : </b>%s<br/><b>Date : </b>%s</p>]]></string>
+    <string name="video_watch">Watch</string>
+    <string name="edition_title2">Appearance</string>
+    <string name="quote_delete">Delete</string>
+    <string name="quote_save">Save</string>
 
     <!--dialog buttons-->
     <string name="dialog_close">Close</string>
@@ -112,12 +126,18 @@
 
     <string name="error_generic_title">Error</string>
     <string name="error_generic_content" formatted="false">Error %d : \n%s</string>
+
     <string name="error_wrongqpy_content">You have another version of QPython, please uninstall it in order to use this app. (We need the version 1.2.5 that will be downloaded after)</string>
     <string name="error_wrongqpy_title">Wrong version of QPython</string>
     <string name="error_wrongqpy_negative">Never !</string>
-    <string name="splash_loading_qpy3">Please uninstall QPython</string>
-    <string name="splash_loading_qpy4">Installing QPython…</string>
-    <string name="error_unknown_title">Unexpected error.</string>
+
+    <string name="error_unknown_title">Unexpected error</string>
     <string name="error_unkown_content">An unexpected error has occured : %s</string>
+
+    <string name="error_permission_title">Storage permission denied</string>
+    <string name="error_permission_content">QuoteTube need storage permission to store the quotes and execute python scripts. Are you sure you want to deny this permission ?</string>
+    <string name="error_permission_content2">QuoteTube need storage permission to store the quotes and execute python scripts. Pease go to your settings to change it.</string>
+    <string name="error_permission_positive">Re-Try</string>
+    <string name="error_permission_negative">I\'m sure</string>
 
 </resources>

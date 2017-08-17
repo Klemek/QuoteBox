@@ -15,10 +15,13 @@ public class Quote implements Serializable{
     private String name;
     private String soundFile;
 
-    public Quote(int color, String name, String soundFile) {
+    private String[] videoInfo;
+
+    public Quote(int color, String name, String soundFile, String[] videoInfo) {
         this.color = color;
         this.name = name;
         this.soundFile = soundFile;
+        this.videoInfo = videoInfo;
     }
 
     public int getColor() {
@@ -39,5 +42,13 @@ public class Quote implements Serializable{
 
     public File getFile(){
         return new File(Constants.DIR_QUOTES +soundFile);
+    }
+
+    public String[] getVideoInfo() {
+        return videoInfo;
+    }
+
+    public void setVideoInfo(String[] videoInfo) {
+        this.videoInfo = videoInfo;
     }
 }

@@ -50,10 +50,12 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
     private static final int CHECK_YTDL_RESULT= 3;
     private static final int INST_YTDL_RESULT = 4;
     private static final int UPGR_YTDL_RESULT = 5;
+    private static final int QPY_INIT_RESULT= 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.debugLog(this, "QuoteTube " + Constants.VERSION_ID + " ("+Constants.VERSION+")");
         setContentView(R.layout.activity_splash);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         info = (TextView) findViewById(R.id.splash_info);
@@ -65,13 +67,14 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
 
     private enum LoadState {
         DONE(100,R.string.splash_loading_done,null),
-        DATA_LOAD(90,R.string.splash_loading_data,DONE),
-        YTDL_INST(70,R.string.splash_loading_ytdl2,DATA_LOAD),
-        YTDL_UPGR(70,R.string.splash_loading_ytdl3,DATA_LOAD),
-        YTDL_CHECK(65,R.string.splash_loading_ytdl,YTDL_UPGR,YTDL_INST), //TODO init Qpython with dummy script
-        QPY_INST(45,R.string.splash_loading_qpy4,YTDL_CHECK),
-        QPY_DL(25,R.string.splash_loading_qpy2,QPY_INST),
-        QPY_CHECK(20,R.string.splash_loading_qpy,YTDL_CHECK, QPY_DL),
+        DATA_LOAD(95,R.string.splash_loading_data,DONE),
+        YTDL_INST(75,R.string.splash_loading_ytdl2,DATA_LOAD),
+        YTDL_UPGR(75,R.string.splash_loading_ytdl3,DATA_LOAD),
+        YTDL_CHECK(55,R.string.splash_loading_ytdl,YTDL_UPGR,YTDL_INST),
+        QPY_INIT(50,R.string.splash_loading_qpy5,YTDL_CHECK),
+        QPY_INST(40,R.string.splash_loading_qpy4,QPY_INIT),
+        QPY_DL(20,R.string.splash_loading_qpy2,QPY_INST),
+        QPY_CHECK(15,R.string.splash_loading_qpy,QPY_INIT, QPY_DL),
         FFMPEG_LOAD(10,R.string.splash_loading_ffmpeg,QPY_CHECK,DATA_LOAD),
         DIR_CHECK(5,R.string.splash_loading_dir,FFMPEG_LOAD),
         PERM_CHECK(0,R.string.splash_loading_perm,DIR_CHECK),
@@ -114,6 +117,7 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
         @Override
         protected void onPreExecute(){
             info.setText(state.idtext);
+            Utils.debugLog(this, getResources().getString(state.idtext));
             if(state.percent >= 0) {
                 progress.setIndeterminate(false);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -129,7 +133,6 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
         protected Boolean doInBackground(Void... params) {
             switch(state){
                 case START:
-                    Utils.debugLog(this, "QuoteTube " + Constants.VERSION_ID + " ("+Constants.VERSION+")");
                     /*try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -213,13 +216,30 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                     intent.setDataAndType(Uri.fromFile(new File(Constants.QPYTHON_DL_PATH)), "application/vnd.android.package-archive");
                     startActivity(intent);
                     return true;
-                case YTDL_CHECK:
-                    if(QPyUtils.QPyExecFile(CHECK_YTDL_RESULT, SplashActivity.this, Constants.SCRIPT_YTDL_CHECK_PATH,Constants.QPY_SCRIPT_YTDL_CHECK, false)){
+                case QPY_INIT:
+                    if(QPyUtils.QPyExecFile(QPY_INIT_RESULT, SplashActivity.this, Constants.QPY_TEMP_SCRIPT_PATH,Constants.QPY_INIT_SCRIPT, true)){
                         timeout = new Timer();
                         timeout.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                task.execute(); //TODO test retry
+                                task = new SplashTask(state);
+                                task.execute();
+                            }
+                        }, Constants.MAX_QPY_WAIT);
+                        return true;
+                    }
+                    else{
+                        Utils.debugLog(this,"Could not create qpy init script file");
+                        return false;
+                    }
+                case YTDL_CHECK:
+                    if(QPyUtils.QPyExecFile(CHECK_YTDL_RESULT, SplashActivity.this, Constants.QPY_SCRIPT_YTDL_CHECK_PATH,Constants.QPY_SCRIPT_YTDL_CHECK, false)){
+                        timeout = new Timer();
+                        timeout.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                task = new SplashTask(state);
+                                task.execute();
                             }
                         }, Constants.MAX_QPY_WAIT);
                         return true;
@@ -237,7 +257,8 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                             timeout.schedule(new TimerTask() {
                                 @Override
                                 public void run() {
-                                    task.execute(); //TODO test retry
+                                    task = new SplashTask(state);
+                                    task.execute();
                                 }
                             }, Constants.MAX_QPY_WAIT);
                             return true;
@@ -255,7 +276,8 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                             timeout.schedule(new TimerTask() {
                                 @Override
                                 public void run() {
-                                    task.execute(); //TODO test retry
+                                    task = new SplashTask(state);
+                                    task.execute();
                                 }
                             }, Constants.MAX_QPY_WAIT);
                             return true;
@@ -311,9 +333,18 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                         } else
                             Utils.debugLog(this, "Scripts folder created");
                     }
+                    File flogs = new File(Constants.DIR_LOGS);
+                    Utils.debugLog(this, "Checking "+flogs.getAbsolutePath());
+                    if(!flogs.exists()) {
+                        if (!flogs.mkdir()) {
+                            Utils.debugLog(this, "Couldn't create logs folder");
+                            return false;
+                        } else
+                            Utils.debugLog(this, "Logs folder created");
+                    }
                     return true;
                 case DATA_LOAD:
-                    DataManager.getInstance(getApplicationContext());
+                    DataManager.getInstance();
                     return true;
                 case DONE:
                     /*try {
@@ -432,6 +463,8 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                 case QPY_INST:
                     task = new SplashTask(LoadState.QPY_CHECK);
                     return;
+                case QPY_INIT:
+                    return;
                 case YTDL_CHECK:
                     return;
                 case YTDL_UPGR:
@@ -461,7 +494,7 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                     break;
                 case DONE:
                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                    /*i = new Intent(SplashActivity.this, QuoteEditorActivity.class);
+                    /*i = new Intent(SplashActivity.this, QuoteCreationActivity.class);
                     i.putExtra(Constants.EXTRA_VIDEOID,"s5-nUCSXKac");*/
                     startActivity(i);
                     finish();
@@ -499,8 +532,43 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                     task = new SplashTask(LoadState.PERM_CHECK.next);
                     task.execute();
                 } else {
-                    Utils.debugLog(this,"Permissions denied by user");
-                    System.exit(0);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !shouldShowRequestPermissionRationale(permissions[0])){
+                        Utils.debugLog(this,"Permissions strongly denied by user");
+                        new MaterialDialog.Builder(SplashActivity.this)
+                                .title(R.string.error_permission_title)
+                                .content(R.string.error_permission_content2)
+                                .positiveText(R.string.dialog_ok)
+                                .cancelable(false)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        System.exit(0);
+                                    }
+                                })
+                                .show();
+                    }else{
+                        Utils.debugLog(this,"Permissions denied by user");
+                        new MaterialDialog.Builder(SplashActivity.this)
+                                .title(R.string.error_permission_title)
+                                .content(R.string.error_permission_content)
+                                .positiveText(R.string.error_permission_positive)
+                                .negativeText(R.string.error_permission_negative)
+                                .cancelable(false)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        task = new SplashTask(LoadState.PERM_CHECK);
+                                        task.execute();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        System.exit(0);
+                                    }
+                                })
+                                .show();
+                    }
                 }
                 break;
             }
@@ -513,6 +581,15 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
             timeout.cancel();
         switch(requestCode){
             case FIRST_SCRIPT_RESULT:
+                task = new SplashTask(LoadState.YTDL_CHECK);
+                task.execute();
+                break;
+            case QPY_INIT_RESULT:
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 task = new SplashTask(LoadState.YTDL_CHECK);
                 task.execute();
                 break;
@@ -545,8 +622,8 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                     task.execute();
                 }else{ //Contains 'ReferenceTable' : python libs not initialized, launching console once
                     Utils.debugLog(this,"Python libs not initialized");
-                    //QPyUtils.QPyExec(FIRST_SCRIPT_RESULT,SplashActivity.this,Constants.QPY_INIT_SCRIPT,false);
-                    if(!QPyUtils.QPyExecFile(FIRST_SCRIPT_RESULT, SplashActivity.this, Constants.SCRIPT_TEMP_PATH,Constants.QPY_INIT_SCRIPT, true))
+                    //QPyUtils.QPyExec(FIRST_SCRIPT_RESULT,SplashActivity.this,Constants.QPY_FIRST_SCRIPT,false);
+                    if(!QPyUtils.QPyExecFile(FIRST_SCRIPT_RESULT, SplashActivity.this, Constants.QPY_TEMP_SCRIPT_PATH,Constants.QPY_FIRST_SCRIPT, true))
                         Utils.debugLog(this,"Could not create first script file");
                 }
                 break;

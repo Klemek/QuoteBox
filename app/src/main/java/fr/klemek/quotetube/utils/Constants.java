@@ -18,9 +18,9 @@ public abstract class Constants {
     static final boolean DEBUG = true;
 
     public static final String APP_ID = "fr.klemek.quotetube";
-    public static final String VERSION_ID = "Beta 1.3";
+    public static final String VERSION_ID = "Beta 1.4";
     public static final int VERSION = 1;
-    public static final int LIST_VERSION = 1;
+    public static final int LIST_VERSION = 2;
 
     public static final long MAX_QUOTE_DURATION = 20000L;
 
@@ -36,6 +36,7 @@ public abstract class Constants {
     public static final String DIR_BASE = DIR_EXT_STORAGE +"/quotetube/";
     public static final String DIR_QUOTES = DIR_BASE+"quotes/";
     public static final String DIR_SCRIPTS = DIR_BASE+"scripts/";
+    public static final String DIR_LOGS = DIR_BASE+"logs/";
 
     public static final String LIST_FILE = DIR_QUOTES+"list.json";
 
@@ -75,6 +76,7 @@ public abstract class Constants {
 
     //Extras keys
     public static final String EXTRA_VIDEOID = "videoid";
+    public static final String EXTRA_VIDEOINFO = "videoinfo";
     public static final String EXTRA_CHANNELID = "channelid";
     public static final String EXTRA_CHANNELTITLE = "channeltitle";
     public static final String EXTRA_QUOTECOLOR = "quotecolor";
@@ -83,6 +85,7 @@ public abstract class Constants {
     public static final String EXTRA_QUOTEFADEOUT = "quotefadeout";
     public static final String EXTRA_QUOTETIME = "quotetime";
     public static final String EXTRA_QUOTENAME = "quotename";
+    public static final String EXTRA_QUOTEID = "quoteid";
 
     //JSON Keys search
     public static final String JSON_NEXTPAGE = "nextPageToken";
@@ -109,7 +112,7 @@ public abstract class Constants {
     public static final String QPYTHON_DL_URL = "https://klemek.fr/quotetube/qpython1.2.5.apk";
     public static final String QPYTHON_DL_PATH = DIR_BASE + "/qpython1.2.5.apk";
 
-    public static final long MAX_QPY_WAIT = 20 * 1000; //20 sec timeout
+    public static final long MAX_QPY_WAIT = 10 * 1000; //20 sec timeout
 
     public final static String QPYTHON_PACKAGE = "com.hipipal.qpyplus";//"org.qpython.qpy";
     public static final int QPYTHON_REQUIRED_VERSION = 127;
@@ -131,6 +134,7 @@ public abstract class Constants {
     https://github.com/rg3/youtube-dl/blob/master/README.md#embedding-youtube-dl
      */
 
+    public static final String QPY_SCRIPT_YTDL_CHECK_PATH = DIR_SCRIPTS+"ytdl_check.py";
     public static final String QPY_SCRIPT_YTDL_CHECK = "" +
             "#qpy:qpyapp\n" +
             "try:\n" +
@@ -138,6 +142,8 @@ public abstract class Constants {
             "    print('done')\n" +
             "except:\n" +
             "    print('not found')";
+
+    public static final String SCRIPT_YTDL_UPGR_PATH = DIR_SCRIPTS+"ytdl_upgrade.py";
     public static final String QPY_SCRIPT_YTDL_UPGR = "" +
             "#qpy:qpyapp\n" +
             "try:\n" +
@@ -146,6 +152,8 @@ public abstract class Constants {
             "    print('itisdone')\n" +
             "except:\n" +
             "    print('itiserror')\n";
+
+    public static final String SCRIPT_YTDL_INST_PATH = DIR_SCRIPTS+"ytdl_install.py";
     public static final String QPY_SCRIPT_YTDL_INST = "" +
             "#qpy:qpyapp\n" +
             "try:\n" +
@@ -154,9 +162,16 @@ public abstract class Constants {
             "    print('itisdone')\n" +
             "except:\n" +
             "    print('itiserror')\n";
-    public static final String QPY_INIT_SCRIPT = "" +
+
+    public static final String QPY_TEMP_SCRIPT_PATH = DIR_SCRIPTS+"temp.py";
+    public static final String QPY_FIRST_SCRIPT = "" +
             "#qpy:console";
-    public static final String QPY_SCRIPT_DL_VIDEO = "" +
+    public final static String QPY_INIT_SCRIPT = "" +
+            "#qpy:qpyapp\n" +
+            "print('itisdone')";
+
+    public static final String QPY_SCRIPT_YTDL_VIDEO_PATH = DIR_SCRIPTS+"ytdl.py";
+    public static final String QPY_SCRIPT_YTDL_VIDEO = "" +
             "from __future__ import unicode_literals\n" +
             "#qpy:qpyapp\n" +
             "try:\n" +
@@ -173,12 +188,6 @@ public abstract class Constants {
             "    print('itiserror')\n";
 
     public static final String QPY_SCRIPT_TAG_VIDEOID = "%VIDEOID%";
-
-    public static final String SCRIPT_YTDL_PATH = DIR_SCRIPTS+"ytdl.py";
-    public static final String SCRIPT_YTDL_CHECK_PATH = DIR_SCRIPTS+"ytdl_check.py";
-    public static final String SCRIPT_YTDL_INST_PATH = DIR_SCRIPTS+"ytdl_install.py";
-    public static final String SCRIPT_YTDL_UPGR_PATH = DIR_SCRIPTS+"ytdl_upgrade.py";
-    public static final String SCRIPT_TEMP_PATH = DIR_SCRIPTS+"temp.py";
 
     //Links
     public static final String QPYTHON_MARKET = "market://details?id=org.qpython.qpy";

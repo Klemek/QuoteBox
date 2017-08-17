@@ -1,5 +1,8 @@
 package fr.klemek.quotetube.utils;
 
+import android.os.Build;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -96,6 +99,15 @@ public abstract class Utils {
             }
         }
         return duration;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String source) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(source, Html.FROM_HTML_MODE_COMPACT);
+        } else {
+            return Html.fromHtml(source);
+        }
     }
 
 

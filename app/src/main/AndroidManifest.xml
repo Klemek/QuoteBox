@@ -24,26 +24,28 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".youtube.YoutubeSearchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize|keyboardHidden" >
-        </activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name=".quote.QuoteEditorActivity"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize|keyboardHidden" >
-        </activity>
+            android:name=".quote.QuoteCreationActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme" />
         <activity
-            android:name=".quote.QuoteFinishActivity"
-            android:theme="@style/AppTheme"
-            android:configChanges="orientation|screenSize|keyboardHidden" >
-        </activity>
-        <activity android:name=".quote.QuoteCreationActivity"
+            android:name=".quote.QuoteCreation2Activity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".quote.QuoteFactoryActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".quote.QuoteEditionActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,22 +15,16 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import fr.klemek.quotetube.quote.Quote;
 import fr.klemek.quotetube.quote.QuoteAdapter;
+import fr.klemek.quotetube.quote.QuoteEditionActivity;
 import fr.klemek.quotetube.quote.QuoteList;
 import fr.klemek.quotetube.utils.Constants;
 import fr.klemek.quotetube.utils.DataManager;
 import fr.klemek.quotetube.utils.FileUtils;
-import fr.klemek.quotetube.utils.Utils;
 import fr.klemek.quotetube.youtube.YoutubeSearchActivity;
-
-import static fr.klemek.quotetube.utils.Utils.debugLog;
 
 /**
  * Created by klemek on ? !
@@ -60,7 +53,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, YoutubeSearchActivity.class);
-                //Intent i = new Intent(MainActivity.this, QuoteEditorActivity.class);
+                //Intent i = new Intent(MainActivity.this, QuoteCreationActivity.class);
                 //i.putExtra(Constants.EXTRA_VIDEOID,"s5-nUCSXKac");
                 startActivity(i);
             }
@@ -69,15 +62,23 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.onResume();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
-        quotes = DataManager.getInstance(getApplicationContext()).getQuoteList();
+        quotes = DataManager.getInstance().getQuoteList();
 
         players = new SparseArray<>();
 
         if(!quotes.isEmpty())
             findViewById(R.id.quote_list_empty_tv).setVisibility(View.GONE);
+        else
+            findViewById(R.id.quote_list_empty_tv).setVisibility(View.VISIBLE);
 
         adapter = new QuoteAdapter(this,quotes);
 
@@ -115,22 +116,9 @@ public class MainActivity extends AppCompatActivity{
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final Quote q = quotes.get(i);
                 final int i2 = i;
-                new MaterialDialog.Builder(MainActivity.this)
-                        .title(R.string.delete_quote_title)
-                        .content(getResources().getString(R.string.delete_quote_content,q.getName()))
-                                .positiveText(R.string.dialog_yes)
-                                .negativeText(R.string.dialog_no)
-                                .cancelable(true)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        quotes.remove(i2);
-                                        adapter.notifyDataSetChanged();
-                                        FileUtils.tryDelete(q.getFile().getAbsolutePath());
-                                        DataManager.getInstance(getApplicationContext()).saveList(getApplicationContext());
-                                    }
-                                })
-                                .show();
+                Intent intent = new Intent(MainActivity.this, QuoteEditionActivity.class);
+                intent.putExtra(Constants.EXTRA_QUOTEID, i2);
+                startActivityForResult(intent,0);
                 return true;
             }
         });
