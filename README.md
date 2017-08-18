@@ -26,7 +26,7 @@ QuoteTube is a simple soundbox tool in which you can extract a part of a youtube
 ## Changelog
 ### Beta 1.4
 
-* You can now edit quote frome main list
+* You can now edit quote from main list
 * Some fixes
 
 ### Beta 1.3
