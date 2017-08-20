@@ -21,6 +21,7 @@ import fr.klemek.quotetube.quote.Quote;
 import fr.klemek.quotetube.quote.QuoteAdapter;
 import fr.klemek.quotetube.quote.QuoteEditionActivity;
 import fr.klemek.quotetube.quote.QuoteList;
+import fr.klemek.quotetube.utils.ConnectionUtils;
 import fr.klemek.quotetube.utils.Constants;
 import fr.klemek.quotetube.utils.DataManager;
 import fr.klemek.quotetube.utils.FileUtils;
@@ -33,8 +34,7 @@ import fr.klemek.quotetube.youtube.YoutubeSearchActivity;
 public class MainActivity extends AppCompatActivity{
 
     private QuoteList quotes;
-    private QuoteAdapter adapter;
-
+    private boolean firstLoad = true;
     private SparseArray<MediaPlayer> players;
 
     @Override
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity{
         else
             findViewById(R.id.quote_list_empty_tv).setVisibility(View.VISIBLE);
 
-        adapter = new QuoteAdapter(this,quotes);
+        QuoteAdapter adapter = new QuoteAdapter(this, quotes);
 
         final GridView gridview = (GridView) findViewById(R.id.quotelist);
         gridview.setAdapter(adapter);
@@ -100,7 +100,8 @@ public class MainActivity extends AppCompatActivity{
                         }
                     });
                     players.put(position, mp);}
-                    mp.prepareAsync();
+                    if(mp != null)
+                        mp.prepareAsync();
                     ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.play));
                 }else if(mp.isPlaying()){
                     mp.stop();
@@ -113,15 +114,17 @@ public class MainActivity extends AppCompatActivity{
         });
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final Quote q = quotes.get(i);
-                final int i2 = i;
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 Intent intent = new Intent(MainActivity.this, QuoteEditionActivity.class);
-                intent.putExtra(Constants.EXTRA_QUOTEID, i2);
+                intent.putExtra(Constants.EXTRA_QUOTEID, i);
                 startActivityForResult(intent,0);
                 return true;
             }
         });
+        if(firstLoad){
+            firstLoad = false;
+            ConnectionUtils.checkVersion(this);
+        }
     }
 
     @Override
@@ -135,8 +138,8 @@ public class MainActivity extends AppCompatActivity{
         switch (item.getItemId()) {
             case R.id.action_about:
                 new MaterialDialog.Builder(MainActivity.this)
-                        .title(R.string.about_title)
-                        .content(getResources().getString(R.string.about_content,
+                        .title(R.string.dialog_about_title)
+                        .content(getResources().getString(R.string.dialog_about_content,
                                 Constants.VERSION_ID))
                         .negativeText(R.string.dialog_close)
                         .cancelable(true)

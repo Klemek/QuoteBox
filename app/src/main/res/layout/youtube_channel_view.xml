@@ -2,6 +2,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -12,6 +13,7 @@
             android:layout_width="@dimen/thumbnail_height"
             android:layout_height="@dimen/thumbnail_height"
             android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:contentDescription="@string/desc_channel"
             app:srcCompat="@color/colorBackground" />
 
         <LinearLayout
@@ -27,7 +29,8 @@
                 android:text="Channel"
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/channel_desc"
@@ -35,7 +38,8 @@
                 android:layout_height="match_parent"
                 android:text="Description"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
-                android:textColor="@color/textColorTertiary"
-                android:textSize="12sp" />
+                android:textColor="@color/textColorSecondary"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
     </LinearLayout>

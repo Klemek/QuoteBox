@@ -25,10 +25,20 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="EditorTitleText" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/textColorTertiary</item>
+    <style name="EditorTitleText" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/textColorSecondary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="EditorBodyText" parent="@style/Base.TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/textColorTertiary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="EditorMediumText" parent="@style/Base.TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/textColorTertiary</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="QuoteText" parent="@android:style/TextAppearance">

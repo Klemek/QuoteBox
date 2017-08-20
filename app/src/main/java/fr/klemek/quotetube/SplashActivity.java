@@ -80,8 +80,10 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
         PERM_CHECK(0,R.string.splash_loading_perm,DIR_CHECK),
         START(-1,R.string.splash_loading_start,PERM_CHECK);
 
-        int percent, idtext;
-        LoadState next,jump;
+        final int percent;
+        final int idtext;
+        final LoadState next;
+        LoadState jump;
 
         LoadState(int percent,int idtext, LoadState next, LoadState jump){
             this.percent = percent;
@@ -108,7 +110,7 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
 
     private class SplashTask extends AsyncTask<Void, Void, Boolean>{
 
-        private LoadState state;
+        private final LoadState state;
 
         SplashTask(LoadState state){
             this.state = state;
@@ -165,7 +167,7 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
 
                             @Override
                             public void onFailure() {
-                                Utils.debugLog(this,"FFmpeg load failed");
+                                Utils.debugLog(SplashTask.this,"FFmpeg load failed");
                                 new MaterialDialog.Builder(SplashActivity.this)
                                         .title(R.string.error_noffmpeg_title)
                                         .content(R.string.error_noffmpeg_content)
@@ -182,7 +184,7 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
 
                             @Override
                             public void onSuccess() {
-                                Utils.debugLog(this,"FFmpeg load success");
+                                Utils.debugLog(SplashTask.this,"FFmpeg load success");
                                 task = new SplashTask(state.next);
                                 task.execute();
                             }

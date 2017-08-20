@@ -55,7 +55,8 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -83,7 +84,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         tquoteDuration = tquoteStop - tquoteStart;
                     update();
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -97,7 +98,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                     if(!play)
                         yp.pause(); //to prevent restart
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -113,7 +114,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         tquoteDuration = tquoteStop - tquoteStart;
                     update();
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -127,7 +128,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                     if(!play)
                         yp.pause(); //to prevent restart
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -142,7 +143,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-1000,0));
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -157,7 +158,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-1000,0));
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -172,7 +173,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-500,0));
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -187,7 +188,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+500,yp.getDurationMillis()));
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -202,7 +203,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+1000,yp.getDurationMillis()));
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -217,7 +218,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         yp.pause(); //to prevent restart
                     //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+1000,yp.getDurationMillis()));
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -249,7 +250,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_quote_duration,(Constants.MAX_QUOTE_DURATION / 1000f)), Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Utils.debugLog(this,"Not ready");
+                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
                 }
             }
         });
@@ -277,12 +278,13 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            getSupportActionBar().hide();
-        }
-        else{
-            getSupportActionBar().show();
-        }
+        if(getSupportActionBar() != null)
+            if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+                getSupportActionBar().hide();
+            }
+            else{
+                getSupportActionBar().show();
+            }
 
     }
 
@@ -295,8 +297,10 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
         else
             quote_current.setText(Utils.formatDuration(0, true));
         if (tquoteDuration <= 0 || tquoteDuration > Constants.MAX_QUOTE_DURATION) {
+            //noinspection deprecation
             quote_duration.setTextColor(getResources().getColor(R.color.textRed));
         } else {
+            //noinspection deprecation
             quote_duration.setTextColor(getResources().getColor(R.color.textGreen));
         }
 
@@ -365,10 +369,12 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
 
     @Override
     public void onPaused() {
+        ready = true;
     }
 
     @Override
     public void onStopped() {
+        ready = true;
     }
 
     @Override
@@ -377,6 +383,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
 
     @Override
     public void onSeekTo(int newPositionMillis) {
+        ready = true;
         quote_current.setText(Utils.formatDuration(newPositionMillis, true));
     }
 
@@ -448,12 +455,18 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
         @Override
         protected Void doInBackground(Void... voids) {
             yp.play();
-            while (ready && yp.getCurrentTimeMillis() + 400 - tquoteStop < 0 && trying) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            try {
+                while (ready && yp.getCurrentTimeMillis() + 400 - tquoteStop < 0 && trying) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+            }
+            catch(IllegalStateException e){
+                ready = false;
+                Utils.debugLog(QuoteCreationActivity.class,"Player released");
             }
 
             if(!ready)

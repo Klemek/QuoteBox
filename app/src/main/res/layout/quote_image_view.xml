@@ -8,8 +8,7 @@
     app:cardCornerRadius="@dimen/round_corner"
     android:innerRadius="0dp"
     android:shape="ring"
-    android:thicknessRatio="1.9"
-    android:id="@+id/quote_image_view">
+    android:thicknessRatio="1.9">
 
     <ImageView
         android:id="@+id/quote_image"
@@ -18,6 +17,7 @@
         app:srcCompat="@drawable/rounded_rect"
         android:adjustViewBounds="true"
         android:cropToPadding="false"
+        android:contentDescription="@string/desc_quote_image"
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,6 +29,7 @@
         android:id="@+id/quote_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/desc_quote_icon"
         android:layout_margin="@dimen/quote_border"
         app:srcCompat="@drawable/quotes" />
 

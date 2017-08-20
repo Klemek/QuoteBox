@@ -13,7 +13,7 @@ public class Quote implements Serializable{
 
     private int color;
     private String name;
-    private String soundFile;
+    private final String soundFile;
 
     private String[] videoInfo;
 

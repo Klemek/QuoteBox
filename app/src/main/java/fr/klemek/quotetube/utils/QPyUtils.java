@@ -12,27 +12,28 @@ import android.os.Bundle;
  * Created by klemek on 16/03/17 !
  */
 
+@SuppressWarnings("SameParameterValue")
 public abstract class QPyUtils {
 
-    public static int QPY_NOT_INSTALLED = 0;
-    public static int QPY_INSTALLED = 1;
-    public static int QPY_WRONG_VERSION = 2;
+    public static final int QPY_NOT_INSTALLED = 0;
+    public static final int QPY_INSTALLED = 1;
+    private static final int QPY_WRONG_VERSION = 2;
 
     public static int checkQPyInstalled(Context context) {
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(Constants.QPYTHON_PACKAGE, 0);
-            Utils.debugLog(QPyUtils.class,  "QPython "+pInfo.versionName+" ("+pInfo.versionCode+") installed",0);
+            Utils.debugLog(QPyUtils.class,  "QPython "+pInfo.versionName+" ("+pInfo.versionCode+") installed");
             if(pInfo.versionCode == Constants.QPYTHON_REQUIRED_VERSION)
                 return QPY_INSTALLED;
             else
                 return QPY_WRONG_VERSION;
         } catch (PackageManager.NameNotFoundException e) {
-            Utils.debugLog(QPyUtils.class,  "QPython not installed",0);
+            Utils.debugLog(QPyUtils.class,  "QPython not installed");
             return QPY_NOT_INSTALLED;
         }
     }
 
-    public static void QPyExec(int requestCode, Activity a, String script, boolean addHeader) {
+    /*private static void QPyExec(int requestCode, Activity a, String script, boolean addHeader) {
 
         Intent intent = new Intent();
         intent.setClassName(Constants.QPYTHON_PACKAGE, Constants.QPYTHON_CLASS);
@@ -51,7 +52,7 @@ public abstract class QPyUtils {
         intent.putExtras(mBundle);
 
         a.startActivityForResult(intent, requestCode);
-    }
+    }*/
 
     public static boolean QPyExecFile(int requestCode, Activity a, String file, String code, boolean rewrite) {
         if(FileUtils.writeFile(file,code, rewrite)) {
@@ -81,9 +82,9 @@ public abstract class QPyUtils {
         a.startActivityForResult(intent, requestCode);
     }
 
-    public static void QPyExec(int requestCode, Activity a, String script) {
+    /*public static void QPyExec(int requestCode, Activity a, String script) {
         QPyExec(requestCode,a,script, true);
-    }
+    }*/
 
     public static void getResult(int requestCode, OnQPyResultListener resultListener,Intent data){
         getResult(requestCode,resultListener,data,false);
@@ -100,7 +101,7 @@ public abstract class QPyUtils {
             }*/
             task.execute(resultFile);
         }else{
-            Utils.debugLog(QPyUtils.class,"Null results, checking default log file",0);
+            Utils.debugLog(QPyUtils.class,"Null results, checking default log file");
             task.execute(Constants.QPYTHON_DEFAULT_LOG_FILE);
         }
     }
@@ -111,9 +112,9 @@ public abstract class QPyUtils {
 
     private static class ResultTask extends AsyncTask<String, Void, String> {
 
-        private OnQPyResultListener listener;
-        private int requestCode;
-        private boolean endFlag;
+        private final OnQPyResultListener listener;
+        private final int requestCode;
+        private final boolean endFlag;
 
         ResultTask(int requestCode, OnQPyResultListener listener, boolean endFlag){
             this.listener = listener;

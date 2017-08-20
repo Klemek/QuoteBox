@@ -1,9 +1,7 @@
 package fr.klemek.quotetube.youtube;
 
-import java.util.Date;
-
 /**
- * Created by klemek on 19/03/17.
+ * Created by klemek on 19/03/17 !
  */
 
 public abstract class YoutubeElement {
@@ -17,9 +15,9 @@ public abstract class YoutubeElement {
     private String channelTitle;
     private String description;
     private String thumbURL;
-    private YoutubeElementType type;
+    private final YoutubeElementType type;
 
-    public YoutubeElement(YoutubeElementType type) {
+    YoutubeElement(YoutubeElementType type) {
         this.type = type;
     }
 

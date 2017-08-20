@@ -15,6 +15,7 @@
     <dimen name="text_spacing_h">5dp</dimen>
     <dimen name="thumbnail_width">128dp</dimen>
     <dimen name="thumbnail_height">72dp</dimen>
+    <dimen name="quote_small_text">8sp</dimen>
     <dimen name="editor_button_text">12sp</dimen>
     <dimen name="editor_button_width">60dp</dimen>
     <dimen name="editor_small_button_width">180dp</dimen>

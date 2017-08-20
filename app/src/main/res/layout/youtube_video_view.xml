@@ -2,6 +2,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -16,6 +17,7 @@
                 android:layout_width="@dimen/thumbnail_width"
                 android:layout_height="@dimen/thumbnail_height"
                 android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:contentDescription="@string/desc_video"
                 app:srcCompat="@color/colorBackground" />
 
             <TextView
@@ -27,7 +29,8 @@
                 android:background="@color/textAlphaBack"
                 android:padding="@dimen/quote_border"
                 android:text="00:00"
-                android:textColor="@color/textWhite" />
+                android:textColor="@color/textWhite"
+                tools:ignore="HardcodedText" />
         </RelativeLayout>
 
         <LinearLayout
@@ -43,7 +46,8 @@
                 android:text="Title"
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/video_channel"
@@ -52,8 +56,9 @@
                 android:maxLines="1"
                 android:text="Channel"
                 android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="12sp" />
+                android:textColor="@color/textColorSecondary"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,7 +74,8 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="12sp"
-                    android:textStyle="italic" />
+                    android:textStyle="italic"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/video_views"
@@ -80,7 +86,8 @@
                     android:textAllCaps="false"
                     android:textAppearance="@android:style/TextAppearance.Material.Small"
                     android:textColor="@color/textColorTertiary"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
             <LinearLayout
@@ -96,7 +103,8 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Small"
                     android:textColor="@color/textGreen"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/video_downvotes"
@@ -107,7 +115,8 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Small"
                     android:textColor="@color/textRed"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
 

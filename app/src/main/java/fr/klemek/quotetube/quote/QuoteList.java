@@ -2,6 +2,7 @@ package fr.klemek.quotetube.quote;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.klemek.quotetube.utils.Constants;
 
@@ -11,7 +12,7 @@ import fr.klemek.quotetube.utils.Constants;
 
 public class QuoteList implements Serializable{
 
-    private ArrayList<Quote> list;
+    private final ArrayList<Quote> list;
     private int version;
 
     public QuoteList() {
@@ -31,6 +32,10 @@ public class QuoteList implements Serializable{
         return list.get(i);
     }
 
+    public List<Quote> getAll(){
+        return list;
+    }
+
     public int size(){
         return list.size();
     }
@@ -42,4 +47,6 @@ public class QuoteList implements Serializable{
     public int getVersion() {
         return version;
     }
+
+    public void setVersion(int version){ this.version = version;}
 }

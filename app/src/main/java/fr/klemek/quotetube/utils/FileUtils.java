@@ -16,6 +16,7 @@ import static fr.klemek.quotetube.utils.Utils.debugLog;
  * Created by klemek on 30/03/17 !
  */
 
+@SuppressWarnings("SameParameterValue")
 public abstract class FileUtils {
 
     static String readFile(String path){
@@ -32,10 +33,10 @@ public abstract class FileUtils {
             }
             br.close();
             long dt = System.currentTimeMillis() - t0;
-            debugLog(FileUtils.class, f.getAbsolutePath() + " : " + f.length() + "B (" + dt + " ms read)", 0);
+            debugLog(FileUtils.class, f.getAbsolutePath() + " : " + f.length() + "B (" + dt + " ms read)");
         }
         catch (IOException e) {
-            debugLog(FileUtils.class,"IOException:"+e.getMessage(),0);
+            debugLog(FileUtils.class,"IOException:"+e.getMessage());
         }
 
         return text.toString();
@@ -52,10 +53,10 @@ public abstract class FileUtils {
                 bw.close();
                 return true;
             }else{
-                debugLog(FileUtils.class,"Couldnt create file :"+path,0);
+                debugLog(FileUtils.class,"Couldnt create file :"+path);
             }
         } catch (IOException e) {
-            debugLog(FileUtils.class,"IOException:"+e.getMessage(),0);
+            debugLog(FileUtils.class,"IOException:"+e.getMessage());
         }
         return false;
     }
@@ -69,7 +70,7 @@ public abstract class FileUtils {
         File f = new File(Constants.DIR_EXT_STORAGE +path.replace("/storage/emulated/0",""));
         if(!f.exists())
             return null;
-        debugLog(FileUtils.class,"Accessing : " + f.getAbsolutePath() + " ...",0);
+        debugLog(FileUtils.class,"Accessing : " + f.getAbsolutePath() + " ...");
         long t0 = System.currentTimeMillis();
         while(f.length() == 0 && System.currentTimeMillis()-t0<Constants.MAX_QPY_WAIT){
             try {
@@ -81,11 +82,11 @@ public abstract class FileUtils {
         }
         long dt = System.currentTimeMillis()-t0;
         if(dt>=Constants.MAX_QPY_WAIT) {
-            debugLog(FileUtils.class,f.getAbsolutePath()+ " : exceeded max wait",0);
+            debugLog(FileUtils.class,f.getAbsolutePath()+ " : exceeded max wait");
             return null;
         }
 
-        debugLog(FileUtils.class,f.getAbsolutePath()+ " : "+ f.length()+"B ("+dt+" ms access)",0);
+        debugLog(FileUtils.class,f.getAbsolutePath()+ " : "+ f.length()+"B ("+dt+" ms access)");
 
         try {
             text = new StringBuilder();
@@ -118,10 +119,10 @@ public abstract class FileUtils {
             }
             br.close();
             dt = System.currentTimeMillis() - t0;
-            debugLog(FileUtils.class, f.getAbsolutePath() + " : " + f.length() + "B (" + dt + " ms read)", 0);
+            debugLog(FileUtils.class, f.getAbsolutePath() + " : " + f.length() + "B (" + dt + " ms read)");
         }
         catch (IOException e) {
-            debugLog(FileUtils.class,"IOException:"+e.getMessage(),0);
+            debugLog(FileUtils.class,"IOException:"+e.getMessage());
         }
 
         return text.toString();
@@ -152,10 +153,10 @@ public abstract class FileUtils {
                 //mediaPlayer.prepareAsync();
                 return mediaPlayer;
             } catch (IOException e) {
-                debugLog(FileUtils.class,"IOException:"+e.getMessage(),0);
+                debugLog(FileUtils.class,"IOException:"+e.getMessage());
             }
         }else{
-            debugLog(FileUtils.class,"File "+soundFile.getAbsolutePath()+" doesn't exist",0);
+            debugLog(FileUtils.class,"File "+soundFile.getAbsolutePath()+" doesn't exist");
         }
         return null;
     }

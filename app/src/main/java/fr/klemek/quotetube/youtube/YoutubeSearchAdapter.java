@@ -1,7 +1,6 @@
 package fr.klemek.quotetube.youtube;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +9,21 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import fr.klemek.quotetube.R;
 import fr.klemek.quotetube.utils.ConnectionUtils;
-import fr.klemek.quotetube.utils.Constants;
-import fr.klemek.quotetube.utils.Utils;
 
 /**
- * Created by klemek on 17/03/17.
+ * Created by klemek on 17/03/17 !
  */
 
-public class YoutubeSearchAdapter extends BaseAdapter {
+class YoutubeSearchAdapter extends BaseAdapter {
 
-    private ArrayList<YoutubeElement> elements;
+    private final ArrayList<YoutubeElement> elements;
     private String nextPageToken;
-    private Context mContext;
-    private LoadRequestListener listener;
+    private final Context mContext;
+    private final LoadRequestListener listener;
 
     public YoutubeSearchAdapter(Context mContext, ArrayList<YoutubeElement> elements, LoadRequestListener listener) {
         this.elements = elements;
@@ -103,6 +99,6 @@ public class YoutubeSearchAdapter extends BaseAdapter {
     }
 
     public interface LoadRequestListener{
-        public void onLoadRequest();
+        void onLoadRequest();
     }
 }

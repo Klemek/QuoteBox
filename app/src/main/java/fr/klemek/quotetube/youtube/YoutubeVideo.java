@@ -5,21 +5,17 @@ import android.text.format.DateFormat;
 
 import java.util.Date;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.Duration;
-
 import fr.klemek.quotetube.R;
 import fr.klemek.quotetube.utils.Constants;
 import fr.klemek.quotetube.utils.Utils;
 
 /**
- * Created by klemek on 19/03/17.
+ * Created by klemek on 19/03/17 !
  */
 
-public class YoutubeVideo extends YoutubeElement{
+class YoutubeVideo extends YoutubeElement{
 
-    private String videoId;
+    private final String videoId;
     private String videoTitle;
     private int views;
     private int upvotes;
@@ -78,10 +74,6 @@ public class YoutubeVideo extends YoutubeElement{
 
     public void setDownvotes(int downvotes) {
         this.downvotes = downvotes;
-    }
-
-    public void setVideoId(String videoId) {
-        this.videoId = videoId;
     }
 
     public String getDuration() {

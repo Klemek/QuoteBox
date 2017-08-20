@@ -1,9 +1,6 @@
 package fr.klemek.quotetube.utils;
 
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.RequiresApi;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -18,14 +15,19 @@ public abstract class Constants {
     static final boolean DEBUG = true;
 
     public static final String APP_ID = "fr.klemek.quotetube";
-    public static final String VERSION_ID = "Beta 1.4";
-    public static final int VERSION = 1;
+    public static final String VERSION_ID = "Beta 1.5";
+    public static final int VERSION = 2;
     public static final int LIST_VERSION = 2;
 
-    public static final long MAX_QUOTE_DURATION = 20000L;
+    public static final String APP_INFO_URL = "https://www.klemek.fr/quotetube/app_info.json";
+    public static final String JSON_VERSION = "version";
+    public static final String JSON_UPDATE_URL = "update_url";
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yy");
+    public static final String PREFS_NAME = "fr.klemek.quotetube.prefs";
+    public static final String PREFS_VERSION = "fr.klemek.quotetube.prefs.version";
+    public static final String PREFS_SKIP_NEXT_UPDATE = "fr.klemek.quotetube.prefs.skip_update";
+
+    public static final long MAX_QUOTE_DURATION = 20000L;
 
     public static final DecimalFormat numFormatter = new DecimalFormat("###,###,###,###,##0");
 
@@ -74,6 +76,19 @@ public abstract class Constants {
 
     public static final String PARAM_ID = "id";
 
+    public static final String GET_SUGGEST_URL = "http://suggestqueries.google.com/complete/search";
+
+    public static HashMap<String,String> GET_SUGGEST_PARAMS(){
+        HashMap<String,String> out = new HashMap<>();
+        out.put("client","firefox");
+        out.put("ds","yt");
+        return out;
+    }
+
+    public static final String PARAM_QUERY = "q";
+
+    public static final int MAX_SUGGESTIONS_COUNT = 5;
+
     //Extras keys
     public static final String EXTRA_VIDEOID = "videoid";
     public static final String EXTRA_VIDEOINFO = "videoinfo";
@@ -112,7 +127,7 @@ public abstract class Constants {
     public static final String QPYTHON_DL_URL = "https://klemek.fr/quotetube/qpython1.2.5.apk";
     public static final String QPYTHON_DL_PATH = DIR_BASE + "/qpython1.2.5.apk";
 
-    public static final long MAX_QPY_WAIT = 10 * 1000; //20 sec timeout
+    public static final long MAX_QPY_WAIT = 20 * 1000; //20 sec timeout
 
     public final static String QPYTHON_PACKAGE = "com.hipipal.qpyplus";//"org.qpython.qpy";
     public static final int QPYTHON_REQUIRED_VERSION = 127;
@@ -123,7 +138,7 @@ public abstract class Constants {
     public final static String QPYTHON_ACTION = QPYTHON_PACKAGE + ".action.MPyApi";
     public final static String QPYTHON_BUNDLE_ACT = "onPyApi";
     public final static String QPYTHON_BUNDLE_FLAG = "onQPyExec";
-    public final static String QPYTHON_SCRIPT_HEADER = "#qpy:qpyapp\n";
+    //public final static String QPYTHON_SCRIPT_HEADER = "#qpy:qpyapp\n";
     public static final String QPY_LOG_END_FLAG = "itisdone";
     public static final String QPY_LOG_ERROR_FLAG = "itiserror";
     public static final String FILE_TIMEOUT_MSG = "timeout";
@@ -188,10 +203,6 @@ public abstract class Constants {
             "    print('itiserror')\n";
 
     public static final String QPY_SCRIPT_TAG_VIDEOID = "%VIDEOID%";
-
-    //Links
-    public static final String QPYTHON_MARKET = "market://details?id=org.qpython.qpy";
-    public static final String QPYTHON_WEBSITE = "http://qpython.com";
 
     //FFmpeg
 

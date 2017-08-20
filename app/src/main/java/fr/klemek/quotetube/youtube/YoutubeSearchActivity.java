@@ -1,13 +1,18 @@
 package fr.klemek.quotetube.youtube;
 
 import android.content.Intent;
+import android.database.MatrixCursor;
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +51,10 @@ public class YoutubeSearchActivity extends AppCompatActivity {
 
     private String queryText;
 
+    private String[] suggestions;
+    private SimpleCursorAdapter mAdapter;
+    private ConnectionUtils.AsyncGet suggestTask;
+
     private static final int QUOTE_CREATION_RESULT= 2;
 
     @Override
@@ -55,7 +64,8 @@ public class YoutubeSearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         setTitle(R.string.title_activity_search);
@@ -119,6 +129,15 @@ public class YoutubeSearchActivity extends AppCompatActivity {
             openSearch = true;
         }
 
+        final String[] from = new String[] {"suggestion"};
+        final int[] to = new int[] {R.id.text_entry};
+        mAdapter = new SimpleCursorAdapter(this,
+                R.layout.simple_text_item,
+                null,
+                from,
+                to,
+                CursorAdapter.NO_SELECTION);
+
     }
 
     @Override
@@ -156,11 +175,30 @@ public class YoutubeSearchActivity extends AppCompatActivity {
             }
         });
 
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionClick(int position) {
+                if(suggestions != null && position < suggestions.length){
+                    searchView.setQuery(suggestions[position], true);
+                    hint.setVisibility(View.GONE);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return true;
+            }
+        });
+
+        searchView.setSuggestionsAdapter(mAdapter);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query != null && query.length() > 0) {
                     progress.setVisibility(View.VISIBLE);
+                    hint.setText("");
                     hint.setVisibility(View.GONE);
                     elements.clear();
                     adapter.notifyDataSetChanged();
@@ -185,6 +223,33 @@ public class YoutubeSearchActivity extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
+                mAdapter.changeCursor(null);
+                if(suggestTask != null && suggestTask.getStatus() == AsyncTask.Status.RUNNING){
+                    suggestTask.cancel(true);
+                    Utils.debugLog(YoutubeSearchActivity.this, "Suggestion get canceled before result");
+                }
+                if(newText.length()>0){
+                    HashMap<String, String> params = Constants.GET_SUGGEST_PARAMS();
+                    params.put(Constants.PARAM_QUERY,newText);
+                    suggestTask = new ConnectionUtils.AsyncGet(getApplicationContext(), params, new ConnectionUtils.AsyncGetListener() {
+                        @Override
+                        public void taskFinished(String result) {
+                            try {
+                                JSONArray jarray = new JSONArray(result).getJSONArray(1);
+                                final MatrixCursor c = new MatrixCursor(new String[]{ BaseColumns._ID, "suggestion" });
+                                suggestions = new String[Math.min(jarray.length(), Constants.MAX_SUGGESTIONS_COUNT)];
+                                for(int i = 0; i  < suggestions.length; i++){
+                                    suggestions[i] = Html.fromHtml(jarray.getString(i)).toString();
+                                    c.addRow(new Object[] {i, suggestions[i]});
+                                }
+                                mAdapter.changeCursor(c);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    suggestTask.execute(Constants.GET_SUGGEST_URL);
+                }
                 return false;
             }
         });
@@ -240,6 +305,7 @@ public class YoutubeSearchActivity extends AppCompatActivity {
                             ye = new YoutubeChannel(Utils.JSONgetString(item, Constants.JSON_CHANNELID));
                         }
 
+                        assert ye != null;
                         ye.setChannelId(Utils.JSONgetString(item, Constants.JSON_CHANNELID));
                         ye.setChannelTitle(Utils.JSONgetString(item, Constants.JSON_CHANNELTITLE));
                         ye.setThumbURL(Utils.JSONgetString(item, Constants.JSON_THUMBURL));
@@ -254,9 +320,7 @@ public class YoutubeSearchActivity extends AppCompatActivity {
                     }
 
                     return true;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
+                } catch (JSONException | ParseException e) {
                     e.printStackTrace();
                 }
             }
@@ -270,6 +334,9 @@ public class YoutubeSearchActivity extends AppCompatActivity {
                 if(elements.isEmpty()){
                     hint.setVisibility(View.VISIBLE);
                     hint.setText(R.string.youtube_search_hint3);
+                }else{
+                    hint.setVisibility(View.GONE);
+                    hint.setText("");
                 }
             }else{
                 hint.setVisibility(View.VISIBLE);

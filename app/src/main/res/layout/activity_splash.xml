@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/activity_splash"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/title"
             android:id="@+id/quote_image"
+            android:contentDescription="@string/desc_title"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
 
@@ -36,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="TextView"
             android:textAppearance="@style/HintText"
             tools:text="@string/splash_loading_start" />
     </LinearLayout>
