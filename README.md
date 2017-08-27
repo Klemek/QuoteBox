@@ -32,6 +32,7 @@ QuoteTube is a simple soundbox tool in which you can extract a part of any Youtu
 * French translation
 * Multiline on quote name
 * Welcome and update messages
+* Update detection
 * Some fixes
 
 ### Beta 1.4
