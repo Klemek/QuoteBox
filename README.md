@@ -12,7 +12,7 @@ QuoteTube is a simple soundbox tool in which you can extract a part of any Youtu
 * Whole Youtube™ search
 * Customizable quote with color and name
 * Full editor interface
-  * Easy through video
+  * Easy navigation through video
   * Precises start and stop points placing
   * Try quote before creating
 * 1-20 seconds quotes
