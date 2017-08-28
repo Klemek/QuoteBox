@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.klemek.quotetube">
+    package="fr.klemek.quotebox">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name="fr.klemek.quotebox.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,29 +23,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="fr.klemek.quotebox.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".youtube.YoutubeSearchActivity"
+            android:name="fr.klemek.quotebox.youtube.YoutubeSearchActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="fr.klemek.quotebox.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".quote.QuoteCreationActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".quote.QuoteCreation2Activity"
+            android:name="fr.klemek.quotebox.quote.QuoteCreationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".quote.QuoteFactoryActivity"
+            android:name="fr.klemek.quotebox.quote.QuoteCreation2Activity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="fr.klemek.quotebox.quote.QuoteFactoryActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
-            android:name=".quote.QuoteEditionActivity"
+            android:name="fr.klemek.quotebox.quote.QuoteEditionActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
 </manifest>

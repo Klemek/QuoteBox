@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- App -->
-    <string name="app_name">QuoteTube Beta</string>
+    <string name="app_name">QuoteBox Beta</string>
 
     <!-- Activities titles -->
     <string name="title_activity_main">Your quotes</string>
@@ -92,7 +92,7 @@
     <!--dialog content-->
     <string name="dialog_delete_quote_title">Delete quote ?</string>
     <string name="dialog_delete_quote_content" formatted="false">Do you really want to delete the quote \'%s\' ?</string>
-    <string name="dialog_about_title">About QuoteTube</string>
+    <string name="dialog_about_title">About QuoteBox</string>
     <string name="dialog_about_content" formatted="false">
         Version : %s\n
         Developer : Klemek\n
@@ -107,12 +107,12 @@
     <string name="dialog_update_title">Update available</string>
     <string name="dialog_update_content">A new update is available, do you want to update now ?</string>
     <string name="dialog_update_negative">Don\'t show again</string>
-    <string name="dialog_welcome_title">Welcome to QuoteTube !</string>
-    <string name="dialog_welcome_content">QuoteTube is a simple soundbox app where you can extract a part of any Youtube video and play \"quotes\" (the extracted sound) indefinitely without Internet. Have fun !</string>
+    <string name="dialog_welcome_title">Welcome to QuoteBox !</string>
+    <string name="dialog_welcome_content">QuoteBox is a simple soundbox app where you can extract a part of any Youtube video and play \"quotes\" (the extracted sound) indefinitely without Internet. Have fun !</string>
     <string name="dialog_welcome_positive">Thanks</string>
-    <string name="dialog_updated_title">QuoteTube Beta 1.5</string>
+    <string name="dialog_updated_title">QuoteBox Beta 1.5</string>
     <string name="dialog_updated_content">
-        Thank you for updating QuoteTube !\n\n
+        Thank you for updating QuoteBox !\n\n
         Changelog :\n
         - Slightly changed colors\n
         - Suggestions in youtube searching
@@ -153,15 +153,15 @@
     <string name="error_unkown_content">An unexpected error has occured : %s</string>
 
     <string name="error_permission_title">Storage permission denied</string>
-    <string name="error_permission_content">QuoteTube need storage permission to store the quotes and execute Python scripts. Are you sure you want to deny this permission ?</string>
-    <string name="error_permission_content2">QuoteTube need storage permission to store the quotes and execute python scripts. Pease go to your settings to change it.</string>
+    <string name="error_permission_content">QuoteBox need storage permission to store the quotes and execute Python scripts. Are you sure you want to deny this permission ?</string>
+    <string name="error_permission_content2">QuoteBox need storage permission to store the quotes and execute python scripts. Pease go to your settings to change it.</string>
     <string name="error_permission_positive">Re-Try</string>
     <string name="error_permission_negative">I\'m sure</string>
 
     <string name="error_no_videoinfo">No video linked to this quote</string>
 
     <!-- image contentDescription -->
-    <string name="desc_title" translatable="false">QuoteTube title</string>
+    <string name="desc_title" translatable="false">QuoteBox title</string>
     <string name="desc_quote_image" translatable="false">Quote image</string>
     <string name="desc_quote_icon" translatable="false">Quote icon</string>
     <string name="desc_channel" translatable="false">Channel thumbnail</string>
