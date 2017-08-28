@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fr.klemek.quotebox.quote.QuoteCreationActivity"
+    tools:showIn="@layout/activity_quote_edition"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/edition_title1"
+                android:textAppearance="@style/EditorTitleText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/video_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/video_info"
+                    android:textAppearance="@style/EditorBodyText" />
+
+                <Button
+                    android:id="@+id/button_video_goto"
+                    android:layout_width="@dimen/editor_small_button_width"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/video_watch" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/edition_title2"
+                android:textAppearance="@style/EditorTitleText" />
+
+            <LinearLayout
+                android:id="@+id/quote_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <include layout="@layout/quote_image_view" />
+
+                <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+
+                <EditText
+                    android:id="@+id/quote_name_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="@string/null_quote_name"
+                    android:inputType="textPersonName"
+                    android:nextFocusLeft="@id/quote_name_preview"
+                    android:nextFocusUp="@id/quote_name_preview"
+                    android:textAppearance="@style/QuoteText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_quote_delete"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin2"
+                    android:text="@string/quote_delete"
+                    android:textColor="@color/textRed" />
+
+                <Button
+                    android:id="@+id/button_quote_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin2"
+                    android:text="@string/quote_save"
+                    tools:ignore="ButtonStyle" />
+            </LinearLayout>
+</LinearLayout>

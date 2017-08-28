@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.klemek.quotebox.quote.QuoteFactoryActivity">
+
+    <net.bohush.geometricprogressview.GeometricProgressView
+        android:id="@+id/creation_progress"
+        android:layout_width="@dimen/quote_progress_size"
+        android:layout_height="@dimen/quote_progress_size"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <FrameLayout
+        android:id="@+id/creation_quote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <include layout="@layout/quote_view" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/creating_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:text="@string/factory_start"
+        android:textAppearance="@style/HintText" />
+
+</RelativeLayout>

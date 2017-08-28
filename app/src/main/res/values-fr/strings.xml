@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuoteBox Beta</string>
+    <string name="action_about">A propos</string>
+    <string name="action_search">Rechercher une vidéo</string>
+    <string name="creation2_title1">Options</string>
+    <string name="creation2_title2">Aperçu du bouton</string>
+    <string name="creation_tip1">Quand vous essayer une quote, la position d\'arrêt du player peut ne pas être exacte.</string>
+    <string name="creation_title1">Limites</string>
+    <string name="dialog_about_content" formatted="false">
+        Version : %s\n
+        Developeur : Klemek\n
+        Icones : FontAwesome\n
+        Libs :\n
+        -GeometricProgressView (Bohush)\n
+        -FFmpegAndroid (Writingminds)\n
+        -Colorpicker (Jrummyapps)\n
+        -Material-dialogs (Afollestad)\n
+        -Picasso (Squareup)</string>
+    <string name="dialog_about_title">A propos de QuoteBox</string>
+    <string name="dialog_cancel">Annuler</string>
+    <string name="dialog_close">Fermer</string>
+    <string name="dialog_delete_quote_content" formatted="false">Voulez vous vraiment supprimer la quote \'%s\' ?</string>
+    <string name="dialog_delete_quote_title">Supprimer la quote ?</string>
+    <string name="dialog_no">Non</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_update_content">Une mise à jour est disponible, voulez vous mettre à jour l\'application ?</string>
+    <string name="dialog_update_negative">Ne plus montrer</string>
+    <string name="dialog_update_title">Mise à jour disponible</string>
+    <string name="dialog_updated_content">Merci de mettre à jour QuoteBox !\n
+        Changements  :\n
+        - Couleurs légèrement modifiées\n
+        - Suggestions lors de la recherche youtube\n
+        - Traduction française\n
+        - Nom de quote multi-ligne\n
+        - Messages de bienvenue et de mise à jour\n
+        - Moins de bugs\n
+    </string>
+    <string name="dialog_updated_title">QuoteBox Beta 1.5</string>
+    <string name="dialog_welcome_content">QuoteBox est une application \"soundbox\" simple où l\'on peut prendre n\'importe quel extrait audio (quote) de n\'importe quelle vidéo Youtube pour le jouer à l\'infini sans internet. Amuse-toi bien !</string>
+    <string name="dialog_welcome_positive">Merci</string>
+    <string name="dialog_welcome_title">Bienvenue dans QuoteBox !</string>
+    <string name="dialog_yes">Oui</string>
+    <string name="edition_title1">Vidéo source</string>
+    <string name="edition_title2">Apparence</string>
+    <string name="error_generic_content" formatted="false">Erreur %d :\n%s</string>
+    <string name="error_generic_title">Erreur</string>
+    <string name="error_no_videoinfo">Aucune vidéo liée à cette quote</string>
+    <string name="error_noffmpeg_content">Votre appareil ne supporte pas FFmpeg, vous ne pourrez pas créer de nouvelles quotes.</string>
+    <string name="error_noffmpeg_title">FFmpeg n\'a pas pu charger</string>
+    <string name="error_nointernet_content">Vous devez être connecté à Internet pour finir l\'installation</string>
+    <string name="error_nointernet_content2">Vous devez être connecté à Internet pour télécharger le son</string>
+    <string name="error_nointernet_title">Non connecté</string>
+    <string name="error_noqpy_content">Pour utiliser l\'application, vous devez installer une version spécifique de QPython qui va être téléchargée maintenant.</string>
+    <string name="error_noqpy_positive">Ok, vas-y !</string>
+    <string name="error_noqpy_title">QPython 1.2.5 non installé</string>
+    <string name="error_permission_content">QuoteBox a besoin des accès au stockage pour stocker les quotes et executer les scripts Python. Êtes-vous sûr que vous ne voulez pas l\'authoriser ?</string>
+    <string name="error_permission_content2">QuoteBox a besoin des accès au stockage pour stocker les quotes et executer les scripts Python. Allez dans vos paramètres pour l\'authoriser.</string>
+    <string name="error_permission_negative">Je suis sûr</string>
+    <string name="error_permission_positive">Réessayer</string>
+    <string name="error_permission_title">Accès au stockage refusé</string>
+    <string name="error_quote_duration" formatted="false">La taille d\'une quote doit être moins que %.1f s</string>
+    <string name="error_quote_name">Donnez un nom à votre quote</string>
+    <string name="error_unknown_title">Erreur inattendue</string>
+    <string name="error_unkown_content" formatted="false">Une erreur inattendue est arrivée : %s</string>
+    <string name="error_wrongqpy_content">Vous avez une autre version de QPython installée, désinstallez-la pour utiliser cette application. (Nous avons besoin de la version 1.2.5 qui va être téléchargée après)</string>
+    <string name="error_wrongqpy_negative">Jamais !</string>
+    <string name="error_wrongqpy_title">Mauvaise version de QPython</string>
+    <string name="error_ytdlfail_content">Vérifiez ces éléments:\n
+        -Vous êtes connecté à Internet.\n
+        -Vous avez assez de place sur votre appareil.</string>
+    <string name="error_ytdlfail_title">Installation de Youtube-dl échouée</string>
+    <string name="factory_clean">Nettoyage…</string>
+    <string name="factory_cutting">Découpage…</string>
+    <string name="factory_dl">Téléchargement…\n(Ceci peut prendre un moment)</string>
+    <string name="factory_done">Ajout à la liste…</string>
+    <string name="factory_extract">Extraction…</string>
+    <string name="factory_start">Création…</string>
+    <string name="null_quote_name">Nom</string>
+    <string name="quote_create">Créer la quote</string>
+    <string name="quote_current">Position :</string>
+    <string name="quote_delete">Supprimer</string>
+    <string name="quote_duration">Durée :</string>
+    <string name="quote_fade_out">Fondu 1 seconde avant la fin</string>
+    <string name="quote_goto_button">Aller</string>
+    <string name="quote_list_empty">Votre liste de quote est vide, essayer d\'en créer une nouvelle avec le bouton ci-dessous.</string>
+    <string name="quote_save">Sauvegarder</string>
+    <string name="quote_start">Démarre à :</string>
+    <string name="quote_start_button">Changer</string>
+    <string name="quote_stop">Arrête à :&#160;&#160;&#160;&#160;</string>
+    <string name="quote_stop_button">Changer</string>
+    <string name="quote_try">Essayer</string>
+    <string name="quote_try_2">Stop</string>
+    <string name="quote_validate">Valider les positions</string>
+    <string name="splash_loading_data">Chargement des données utilisateur</string>
+    <string name="splash_loading_dir">Vérification des dossiers</string>
+    <string name="splash_loading_done">Lancement…</string>
+    <string name="splash_loading_ffmpeg">Chargement de FFmpeg…</string>
+    <string name="splash_loading_perm">Vérification des permissions…</string>
+    <string name="splash_loading_qpy">Vérification de QPython</string>
+    <string name="splash_loading_qpy2">Téléchargement de QPython…</string>
+    <string name="splash_loading_qpy3">Désinstallez QPython</string>
+    <string name="splash_loading_qpy4">Installation de QPython…</string>
+    <string name="splash_loading_qpy5">Initialisation de QPython…</string>
+    <string name="splash_loading_start">Chargement…</string>
+    <string name="splash_loading_ytdl">Vérification de Youtube-dl… (long)</string>
+    <string name="splash_loading_ytdl2">Installation de Youtube-dl…</string>
+    <string name="splash_loading_ytdl3">Mise à jour de Youtube-dl…</string>
+    <string name="title_activity_main">Vos quotes</string>
+    <string name="title_activity_quote_creation">Créer une quote (1/2)</string>
+    <string name="title_activity_quote_creation2">Créer une quote (2/2)</string>
+    <string name="title_activity_quote_edition">Editer la quote</string>
+    <string name="title_activity_search">Recherche de vidéo</string>
+    <string name="video_views">%s vues</string>
+    <string name="video_info" formatted="false"><![CDATA[<p><b>Titre : </b>%s<br/><b>Auteur : </b>%s<br/><b>Date : </b>%s</p>]]></string>
+    <string name="video_watch">Aller</string>
+    <string name="youtube_search_hint1">Recherchez quelque-chose avec la barre du dessus</string>
+    <string name="youtube_search_hint2">Vous n\'avez pas l\'air connecté</string>
+    <string name="youtube_search_hint3">Aucun résultat pour cette recherche</string>
+</resources>

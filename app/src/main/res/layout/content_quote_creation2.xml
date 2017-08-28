@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fr.klemek.quotebox.quote.QuoteCreationActivity"
+    tools:showIn="@layout/activity_quote_creation2"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/creation2_title1"
+                android:textAppearance="@style/EditorTitleText" />
+
+    <CheckBox
+        android:id="@+id/quote_fade_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quote_fade_out"
+        android:textAppearance="@style/EditorBodyText"
+        android:textColor="@color/textColorTertiary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/creation2_title2"
+                android:textAppearance="@style/EditorTitleText" />
+
+            <LinearLayout
+                android:id="@+id/quote_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <include layout="@layout/quote_image_view" />
+
+                <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+
+                <EditText
+                    android:id="@+id/quote_name_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="@string/null_quote_name"
+                    android:inputType="textPersonName"
+                    android:nextFocusLeft="@id/quote_name_preview"
+                    android:nextFocusUp="@id/quote_name_preview"
+                    android:textAppearance="@style/QuoteText" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_quote_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin2"
+                android:text="@string/quote_create" />
+</LinearLayout>
