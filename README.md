@@ -4,7 +4,7 @@ QuoteTube is a simple soundbox tool in which you can extract a part of any Youtu
 
 [Youtube Presentation here (new name coming)](https://youtu.be/WnxyK6paluM)
 
-[Download APK here](https://www.klemek.fr/quotetube/quotetube-beta-1.5.apk)
+[Download APK here](https://www.klemek.fr/quotebox/quotebox-beta-1.5.1.apk)
 
 ## Current features
 
