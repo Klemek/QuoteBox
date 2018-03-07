@@ -4,7 +4,7 @@ QuoteTube is a simple soundbox tool in which you can extract a part of any Youtu
 
 [Youtube Presentation here](https://youtu.be/dq3tDnNDY18)
 
-[Download APK here](https://www.klemek.fr/quotebox/quotebox-beta-1.5.1.apk)
+[Download APK here](https://www.klemek.fr/quotebox/quotebox-beta-1.5.2.apk)
 
 *QuoteBox cannot be on the Google Play Store because of "misusing of API". meh.*
 
@@ -27,6 +27,14 @@ QuoteTube is a simple soundbox tool in which you can extract a part of any Youtu
 * Quote image taken from thumbnail or user's files (or video itself)
 
 ## Changelog
+### Beta 1.5.2
+
+* Switching from com.hypipal.qpyplus to org.qpython.qpy
+ * Sometimes stuck in splash (timeout to do)
+ * Cannot upgrade youtube_dl (pip cannot uninstall previous)
+ * Youtube_dl ssl certificate error
+* Fixed int overflow in video views or likes
+
 ### Beta 1.5.1
 
 * QuoteTube -> QuoteBox
