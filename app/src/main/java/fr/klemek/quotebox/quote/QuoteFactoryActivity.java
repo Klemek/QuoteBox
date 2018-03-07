@@ -35,6 +35,7 @@ import fr.klemek.quotebox.utils.Utils;
 
 public class QuoteFactoryActivity extends AppCompatActivity implements QPyUtils.OnQPyResultListener{
 
+    private static final int YTDL_SCRIPT_RESULT= 2;
     private int tquoteStart, tquoteStop, tquoteDuration, quotecolor;
     private boolean quotefadeout;
     private String videoid, quotename, dlext, soundfile;
@@ -43,8 +44,6 @@ public class QuoteFactoryActivity extends AppCompatActivity implements QPyUtils.
     private int nangles = 12;
     private Timer timeout;
     private String[] videoInfo;
-
-    private static final int YTDL_SCRIPT_RESULT= 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class QuoteFactoryActivity extends AppCompatActivity implements QPyUtils.
         quotefadeout =getIntent().getBooleanExtra(Constants.EXTRA_QUOTEFADEOUT,false);
         tquoteDuration = getIntent().getIntExtra(Constants.EXTRA_QUOTETIME,1000);
 
-        final GeometricProgressView progressView = (GeometricProgressView) findViewById(R.id.creation_progress);
+        final GeometricProgressView progressView = findViewById(R.id.creation_progress);
         progressView.setType(GeometricProgressView.TYPE.TRIANGLE);
         progressView.setNumberOfAngles(nangles);
         progressView.setColor(quotecolor);
@@ -87,6 +86,49 @@ public class QuoteFactoryActivity extends AppCompatActivity implements QPyUtils.
 
         task = new WorkTask(WorkState.START);
         task.execute();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case YTDL_SCRIPT_RESULT:
+                QPyUtils.getResult(YTDL_SCRIPT_RESULT,this,data,true);
+                timeout.cancel();
+                break;
+        }
+    }
+
+    @Override
+    public void onQPyResult(int requestCode, boolean success, String result) {
+        switch (requestCode) {
+            case YTDL_SCRIPT_RESULT:
+                if(success) {
+                    //[download] Destination: /storage/emulated/0/quotetube/quotes/temp.webm
+                    dlext = result.split("quotetube/quotes/temp", 2)[1].split(" ",2)[0].split("\n", 2)[0].trim();
+                    Utils.debugLog(this,"Donwloaded to temp"+ dlext);
+                    task = new WorkTask(WorkState.DOWNLOAD.next);
+                    task.execute();
+                }else{
+                    new MaterialDialog.Builder(QuoteFactoryActivity.this)
+                            .title(R.string.error_generic_title)
+                            .content(getResources().getString(R.string.error_generic_content,
+                                    Constants.ERROR_YTDL,
+                                    result))
+                            .positiveText(R.string.dialog_ok)
+                            .cancelable(false)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    finish();
+                                }
+                            }).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() { //disable cancel
     }
 
     private enum WorkState {
@@ -127,7 +169,9 @@ public class QuoteFactoryActivity extends AppCompatActivity implements QPyUtils.
                 case DOWNLOAD:
                     FileUtils.tryDelete(Constants.DIR_QUOTES+"temp"+Constants.FFMPEG_DEFAULT_EXT);
                     if(ConnectionUtils.isOnline(getApplicationContext())) {
-                        String script = Constants.QPY_SCRIPT_YTDL_VIDEO.replace(Constants.QPY_SCRIPT_TAG_VIDEOID,videoid);
+                        String script = Constants.QPY_SCRIPT_YTDL_VIDEO
+                                .replace(Constants.QPY_SCRIPT_TAG_VIDEOID,videoid)
+                                .replace(Constants.QPY_SCRIPT_TAG_REQUESTCODE,""+YTDL_SCRIPT_RESULT);
                         Utils.debugLog(this,"Creating script file");
                         if(FileUtils.writeFile(Constants.QPY_SCRIPT_YTDL_VIDEO_PATH,script,true)) {
                             Utils.debugLog(this, "Downloading "+videoid+" ...");
@@ -331,49 +375,6 @@ public class QuoteFactoryActivity extends AppCompatActivity implements QPyUtils.
                     break;
             }
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case YTDL_SCRIPT_RESULT:
-                QPyUtils.getResult(YTDL_SCRIPT_RESULT,this,data,true);
-                timeout.cancel();
-                break;
-        }
-    }
-
-    @Override
-    public void onQPyResult(int requestCode, boolean success, String result) {
-        switch (requestCode) {
-            case YTDL_SCRIPT_RESULT:
-                if(success) {
-                    //[download] Destination: /storage/emulated/0/quotetube/quotes/temp.webm
-                    dlext = result.split("quotetube/quotes/temp", 2)[1].split(" ",2)[0].split("\n", 2)[0].trim();
-                    Utils.debugLog(this,"Donwloaded to temp"+ dlext);
-                    task = new WorkTask(WorkState.DOWNLOAD.next);
-                    task.execute();
-                }else{
-                    new MaterialDialog.Builder(QuoteFactoryActivity.this)
-                            .title(R.string.error_generic_title)
-                            .content(getResources().getString(R.string.error_generic_content,
-                                    Constants.ERROR_YTDL,
-                                    result))
-                            .positiveText(R.string.dialog_ok)
-                            .cancelable(false)
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    finish();
-                                }
-                            }).show();
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onBackPressed() { //disable cancel
     }
 
 }

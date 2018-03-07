@@ -17,9 +17,9 @@ class YoutubeVideo extends YoutubeElement{
 
     private final String videoId;
     private String videoTitle;
-    private int views;
-    private int upvotes;
-    private int downvotes;
+    private long views;
+    private long upvotes;
+    private long downvotes;
     private Date publishedAt;
     private long duration;
 
@@ -44,19 +44,19 @@ class YoutubeVideo extends YoutubeElement{
         return publishedAt;
     }
 
-    public String getPublishedAt(Context c) {
-        return DateFormat.getDateFormat(c).format(publishedAt);
-    }
-
     public void setPublishedAt(Date publishedAt) {
         this.publishedAt = publishedAt;
+    }
+
+    public String getPublishedAt(Context c) {
+        return DateFormat.getDateFormat(c).format(publishedAt);
     }
 
     public String getViews(Context c) {
         return c.getResources().getString(R.string.video_views,Constants.numFormatter.format(views));
     }
 
-    public void setViews(int views) {
+    public void setViews(long views) {
         this.views = views;
     }
 
@@ -64,7 +64,7 @@ class YoutubeVideo extends YoutubeElement{
         return c.getResources().getString(R.string.video_upvotes,Constants.numFormatter.format(upvotes));
     }
 
-    public void setUpvotes(int upvotes) {
+    public void setUpvotes(long upvotes) {
         this.upvotes = upvotes;
     }
 
@@ -72,7 +72,7 @@ class YoutubeVideo extends YoutubeElement{
         return c.getResources().getString(R.string.video_downvotes,Constants.numFormatter.format(downvotes));
     }
 
-    public void setDownvotes(int downvotes) {
+    public void setDownvotes(long downvotes) {
         this.downvotes = downvotes;
     }
 

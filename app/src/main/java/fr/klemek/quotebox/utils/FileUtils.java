@@ -61,64 +61,72 @@ public abstract class FileUtils {
         return false;
     }
 
-    static String readFileForce(String path){
-        return readFileForce(path,null);
+    static String readFileForce(String path, String[] begin){
+        return readFileForce(path, begin, null, false);
     }
 
-    static String readFileForce(String path, String[] end){
+    static String readFileForce(String path, String[] begin, String[] end, boolean timeout){
         StringBuilder text = new StringBuilder();
         File f = new File(Constants.DIR_EXT_STORAGE +path.replace("/storage/emulated/0",""));
         if(!f.exists())
             return null;
         debugLog(FileUtils.class,"Accessing : " + f.getAbsolutePath() + " ...");
-        long t0 = System.currentTimeMillis();
-        while(f.length() == 0 && System.currentTimeMillis()-t0<Constants.MAX_QPY_WAIT){
-            try {
-                Thread.sleep(100);
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        long dt = System.currentTimeMillis()-t0;
-        if(dt>=Constants.MAX_QPY_WAIT) {
-            debugLog(FileUtils.class,f.getAbsolutePath()+ " : exceeded max wait");
-            return null;
-        }
+        boolean beg = begin == null;
+        String last = "";
 
-        debugLog(FileUtils.class,f.getAbsolutePath()+ " : "+ f.length()+"B ("+dt+" ms access)");
+        long t0;
 
         try {
-            text = new StringBuilder();
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            String line;
-            t0 = System.currentTimeMillis();
-            while ((line = br.readLine()) != null || (end != null)) {
-                if(line != null) {
-                    text.append(line);
-                    text.append('\n');
-                    if (end != null && end.length>0) {
-                        boolean quit = false;
-                        for (String ends : end){
-                            if (line.contains(ends)) {
-                                quit = true;
-                                break;
+            do{
+                text = new StringBuilder();
+                FileReader fr = new FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                t0 = System.currentTimeMillis();
+                while ((line = br.readLine()) != null || (end != null)) {
+                    if(!beg && timeout && System.currentTimeMillis() - t0 > Constants.MAX_QPY_WAIT)
+                        return null;
+                    if(line != null) {
+                        if(begin != null){
+                            for (String begs : begin){
+                                if (begs != null && line.contains(begs)) {
+                                    beg = true;
+                                }
                             }
                         }
-                        if(quit)
+                        if(!beg){
+                            if(!line.equals(last))
+                                debugLog(FileUtils.class,"=> wrong start : "+line);
+                            last = line;
                             break;
+                        }else{
+                            text.append(line);
+                            text.append('\n');
+                            if (beg && end != null && end.length>0) {
+                                boolean quit = false;
+                                for (String ends : end){
+                                    if (line.contains(ends)) {
+                                        quit = true;
+                                        break;
+                                    }
+                                }
+                                if(quit)
+                                    break;
+                            }
+                        }
+                    }
+                    while (!br.ready()) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-                while (!br.ready()) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            br.close();
-            dt = System.currentTimeMillis() - t0;
+                br.close();
+            }while(!beg);
+            long dt = System.currentTimeMillis() - t0;
             debugLog(FileUtils.class, f.getAbsolutePath() + " : " + f.length() + "B (" + dt + " ms read)");
         }
         catch (IOException e) {

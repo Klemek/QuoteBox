@@ -40,28 +40,23 @@ import fr.klemek.quotebox.utils.Utils;
 
 public class YoutubeSearchActivity extends AppCompatActivity {
 
+    private static final int QUOTE_CREATION_RESULT= 2;
     private YoutubeSearchAdapter adapter;
     private ArrayList<YoutubeElement> elements;
     private ProgressBar progress;
     private TextView hint;
-
     private boolean openSearch;
-
     private String channelId, channelTitle;
-
     private String queryText;
-
     private String[] suggestions;
     private SimpleCursorAdapter mAdapter;
     private ConnectionUtils.AsyncGet suggestTask;
-
-    private static final int QUOTE_CREATION_RESULT= 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar() != null)
@@ -79,7 +74,7 @@ public class YoutubeSearchActivity extends AppCompatActivity {
             }
         });
 
-        ListView listview = (ListView) findViewById(R.id.youtube_video_list);
+        ListView listview = findViewById(R.id.youtube_video_list);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -110,10 +105,10 @@ public class YoutubeSearchActivity extends AppCompatActivity {
             }
         });
 
-        progress = (ProgressBar)findViewById(R.id.search_progress);
+        progress = findViewById(R.id.search_progress);
         progress.setIndeterminate(true);
         progress.setVisibility(View.GONE);
-        hint = (TextView)findViewById(R.id.search_hint);
+        hint = findViewById(R.id.search_hint);
 
         queryText = "";
 
@@ -296,9 +291,9 @@ public class YoutubeSearchActivity extends AppCompatActivity {
                             String result2 = ConnectionUtils.getServerData(Constants.GET_VIDEO_URL,getParams2,getApplicationContext());
                             if(result2 != null){
                                 JSONObject item2 = new JSONObject(result2).getJSONArray("items").getJSONObject(0);
-                                ((YoutubeVideo) ye).setViews(Integer.parseInt(Utils.JSONgetString(item2,Constants.JSON_VIEWCOUNT)));
-                                ((YoutubeVideo) ye).setUpvotes(Integer.parseInt(Utils.JSONgetString(item2,Constants.JSON_LIKECOUNT)));
-                                ((YoutubeVideo) ye).setDownvotes(Integer.parseInt(Utils.JSONgetString(item2,Constants.JSON_DISLIKECOUNT)));
+                                ((YoutubeVideo) ye).setViews(Long.parseLong(Utils.JSONgetString(item2,Constants.JSON_VIEWCOUNT)));
+                                ((YoutubeVideo) ye).setUpvotes(Long.parseLong(Utils.JSONgetString(item2,Constants.JSON_LIKECOUNT)));
+                                ((YoutubeVideo) ye).setDownvotes(Long.parseLong(Utils.JSONgetString(item2,Constants.JSON_DISLIKECOUNT)));
                                 ((YoutubeVideo) ye).setDuration(Utils.getDuration(Utils.JSONgetString(item2,Constants.JSON_DURATION)));
                             }
                         }else if(kind.equals(Constants.JSON_KIND_CHANNEL)){

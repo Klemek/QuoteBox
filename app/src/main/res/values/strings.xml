@@ -19,7 +19,7 @@
     <string name="splash_loading_qpy5">Initializing QPython…</string>
     <string name="splash_loading_dir">Checking folders</string>
     <string name="splash_loading_data">Loading user\'s data</string>
-    <string name="splash_loading_ytdl">Checking Youtube-dl… (long)</string>
+    <string name="splash_loading_ytdl">Checking Youtube-dl…</string>
     <string name="splash_loading_ytdl2">Installing Youtube-dl…</string>
     <string name="splash_loading_ytdl3">Upgrading Youtube-dl…</string>
     <string name="splash_loading_ffmpeg">Loading FFmpeg…</string>
@@ -123,9 +123,8 @@
     </string>
 
     <!-- Errors dialogs and toasts -->
-    <string name="error_noqpy_title">QPython 1.2.5 not installed</string>
-    <string name="error_noqpy_content">In order to run this app you must install a specific version of QPython that will be downloaded now.</string>
-    <string name="error_noqpy_positive">Ok, do it !</string>
+    <string name="error_noqpy_title">QPythonnot installed</string>
+    <string name="error_noqpy_content">In order to run this app you must install QPython, you will be redirected to its download page.</string>
 
     <string name="error_nointernet_title">Not connected</string>
     <string name="error_nointernet_content">You need to be connected to the Internet to finish installing</string>
@@ -144,10 +143,6 @@
 
     <string name="error_generic_title">Error</string>
     <string name="error_generic_content" formatted="false">Error %d : \n%s</string>
-
-    <string name="error_wrongqpy_content">You have another version of QPython, please uninstall it in order to use this app. (We need the version 1.2.5 that will be downloaded after)</string>
-    <string name="error_wrongqpy_title">Wrong version of QPython</string>
-    <string name="error_wrongqpy_negative">Never !</string>
 
     <string name="error_unknown_title">Unexpected error</string>
     <string name="error_unkown_content">An unexpected error has occured : %s</string>

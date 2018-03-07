@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">QuoteBox Beta</string>
     <string name="action_about">A propos</string>
     <string name="action_search">Rechercher une vidéo</string>
@@ -51,9 +51,9 @@
     <string name="error_nointernet_content">Vous devez être connecté à Internet pour finir l\'installation</string>
     <string name="error_nointernet_content2">Vous devez être connecté à Internet pour télécharger le son</string>
     <string name="error_nointernet_title">Non connecté</string>
-    <string name="error_noqpy_content">Pour utiliser l\'application, vous devez installer une version spécifique de QPython qui va être téléchargée maintenant.</string>
+    <string name="error_noqpy_content">Pour utiliser l\'application, vous devez installer QPython. Vous allez être redirigé vers la page d\'installation.</string>
     <string name="error_noqpy_positive">Ok, vas-y !</string>
-    <string name="error_noqpy_title">QPython 1.2.5 non installé</string>
+    <string name="error_noqpy_title">QPython non installé</string>
     <string name="error_permission_content">QuoteBox a besoin des accès au stockage pour stocker les quotes et executer les scripts Python. Êtes-vous sûr que vous ne voulez pas l\'authoriser ?</string>
     <string name="error_permission_content2">QuoteBox a besoin des accès au stockage pour stocker les quotes et executer les scripts Python. Allez dans vos paramètres pour l\'authoriser.</string>
     <string name="error_permission_negative">Je suis sûr</string>
@@ -63,9 +63,6 @@
     <string name="error_quote_name">Donnez un nom à votre quote</string>
     <string name="error_unknown_title">Erreur inattendue</string>
     <string name="error_unkown_content" formatted="false">Une erreur inattendue est arrivée : %s</string>
-    <string name="error_wrongqpy_content">Vous avez une autre version de QPython installée, désinstallez-la pour utiliser cette application. (Nous avons besoin de la version 1.2.5 qui va être téléchargée après)</string>
-    <string name="error_wrongqpy_negative">Jamais !</string>
-    <string name="error_wrongqpy_title">Mauvaise version de QPython</string>
     <string name="error_ytdlfail_content">Vérifiez ces éléments:\n
         -Vous êtes connecté à Internet.\n
         -Vous avez assez de place sur votre appareil.</string>
@@ -103,11 +100,11 @@
     <string name="splash_loading_qpy4">Installation de QPython…</string>
     <string name="splash_loading_qpy5">Initialisation de QPython…</string>
     <string name="splash_loading_start">Chargement…</string>
-    <string name="splash_loading_ytdl">Vérification de Youtube-dl… (long)</string>
+    <string name="splash_loading_ytdl">Vérification de Youtube-dl…</string>
     <string name="splash_loading_ytdl2">Installation de Youtube-dl…</string>
     <string name="splash_loading_ytdl3">Mise à jour de Youtube-dl…</string>
     <string name="title_activity_main">Vos quotes</string>
-    <string name="title_activity_quote_creation">Créer une quote (1/2)</string>
+    <string name="title_activity_quote_creation" tools:ignore="TypographyFractions">Créer une quote (1/2)</string>
     <string name="title_activity_quote_creation2">Créer une quote (2/2)</string>
     <string name="title_activity_quote_edition">Editer la quote</string>
     <string name="title_activity_search">Recherche de vidéo</string>
