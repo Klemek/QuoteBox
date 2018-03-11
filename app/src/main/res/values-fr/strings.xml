@@ -52,7 +52,6 @@
     <string name="error_nointernet_content2">Vous devez être connecté à Internet pour télécharger le son</string>
     <string name="error_nointernet_title">Non connecté</string>
     <string name="error_noqpy_content">Pour utiliser l\'application, vous devez installer QPython. Vous allez être redirigé vers la page d\'installation.</string>
-    <string name="error_noqpy_positive">Ok, vas-y !</string>
     <string name="error_noqpy_title">QPython non installé</string>
     <string name="error_permission_content">QuoteBox a besoin des accès au stockage pour stocker les quotes et executer les scripts Python. Êtes-vous sûr que vous ne voulez pas l\'authoriser ?</string>
     <string name="error_permission_content2">QuoteBox a besoin des accès au stockage pour stocker les quotes et executer les scripts Python. Allez dans vos paramètres pour l\'authoriser.</string>
@@ -114,4 +113,6 @@
     <string name="youtube_search_hint1">Recherchez quelque-chose avec la barre du dessus</string>
     <string name="youtube_search_hint2">Vous n\'avez pas l\'air connecté</string>
     <string name="youtube_search_hint3">Aucun résultat pour cette recherche</string>
+    <string name="error_qpyerr_title">QPython non initialisé</string>
+    <string name="error_qpyerr_content">Pour utiliser cette app, vous devez lancer QPython au moins une fois.</string>
 </resources>

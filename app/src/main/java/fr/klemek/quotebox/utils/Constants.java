@@ -13,8 +13,8 @@ import java.util.Locale;
 public abstract class Constants {
 
     public static final String APP_ID = "fr.klemek.quotebox";
-    public static final String VERSION_ID = "Beta 1.5.2";
-    public static final int VERSION = 4;
+    public static final String VERSION_ID = "Beta 1.5.3";
+    public static final int VERSION = 5;
     public static final int LIST_VERSION = 2;
     public static final String APP_INFO_URL = "https://www.klemek.fr/quotebox/app_info.json";
     public static final String JSON_VERSION = "version";
@@ -95,7 +95,7 @@ public abstract class Constants {
             "#qpy:qpyapp\n" +
             "print('script %REQUEST_CODE%')\n"+
             "try:\n" +
-            "    print('checking youtube-dl')\n" +
+            "    print('checking youtube-dl...')\n" +
             "    import youtube_dl\n"+
             "    print('"+QPY_LOG_END_FLAG+"')\n" +
             "except:\n" +
@@ -108,7 +108,7 @@ public abstract class Constants {
             "#qpy:qpyapp\n" +
             "print('script %REQUEST_CODE%')\n"+
             "try:\n" +
-            "    print('upgrading youtube-dl')\n" +
+            "    print('upgrading youtube-dl...')\n" +
             "    import pip\n" +
             "    pip.main(['install','--upgrade','youtube_dl'])\n" +
             "    print('"+QPY_LOG_END_FLAG+"')\n" +
@@ -128,7 +128,7 @@ public abstract class Constants {
             "#qpy:qpyapp\n" +
             "print('script %REQUEST_CODE%')\n"+
             "try:\n" +
-            "    print('installing youtube-dl')\n" +
+            "    print('installing youtube-dl...')\n" +
             "    import pip\n" +
             "    pip.main(['install','youtube_dl'])\n" +
             "    print('"+QPY_LOG_END_FLAG+"')\n" +
@@ -138,29 +138,23 @@ public abstract class Constants {
             "    print('"+QPY_LOG_ERROR_FLAG+"')\n" +
             "exit()";
     public static final String QPY_TEMP_SCRIPT_PATH = DIR_SCRIPTS+"temp.py";
-    public static final String QPY_FIRST_SCRIPT = "" +
-            "#qpy:console";
-    public final static String QPY_INIT_SCRIPT = "" +
-            "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n"+
-            "print('"+QPY_LOG_END_FLAG+"')\n" +
-            "exit()";
     public static final String QPY_SCRIPT_YTDL_VIDEO_PATH = DIR_SCRIPTS+"ytdl.py";
     public static final String QPY_SCRIPT_YTDL_VIDEO = "" +
             "from __future__ import unicode_literals\n" +
             "#qpy:qpyapp\n" +
             "print('script %REQUEST_CODE%')\n"+
             "try:\n" +
-            "    print('downloading video')\n" +
+            "    print('downloading video...')\n" +
             "    import youtube_dl\n" +
             "    ydl_opts = {\n" +
             "        'format': 'bestaudio/best',\n" +
             "        'outtmpl' : '"+DIR_QUOTES+"temp.%(ext)s',\n" +
-            "        'no-continue':'',\n" +
-            "        'prefer-insecure':'',\n" +
+            "        'nocheckcertificate':'True',\n" +
+            "        'no-continue':'True',\n" +
+            "        'prefer_insecure':'True',\n" +
             "    }\n" +
             "    with youtube_dl.YoutubeDL(ydl_opts) as ydl:\n" +
-            "        ydl.download(['https://www.youtube.com/watch?v=%VIDEOID%'])\n" +
+            "        ydl.download(['http://www.youtube.com/watch?v=%VIDEOID%'])\n" +
             "    print('"+QPY_LOG_END_FLAG+"')\n" +
             "except:\n" +
             "    import sys\n" +

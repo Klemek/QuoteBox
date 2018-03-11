@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -173,9 +172,28 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                     task.execute();
                 } else { //Contains 'ReferenceTable' : python libs not initialized, launching console once
                     Utils.debugLog(this, "Python libs not initialized");
-                    //QPyUtils.QPyExec(FIRST_SCRIPT_RESULT,SplashActivity.this,Constants.QPY_FIRST_SCRIPT,false);
-                    if (!QPyUtils.QPyExecFile(FIRST_SCRIPT_RESULT, SplashActivity.this, Constants.QPY_TEMP_SCRIPT_PATH, Constants.QPY_FIRST_SCRIPT, true))
-                        Utils.debugLog(this, "Could not create first script file");
+                    new MaterialDialog.Builder(SplashActivity.this)
+                            .title(R.string.error_qpyerr_title)
+                            .content(R.string.error_qpyerr_content)
+                            .positiveText(R.string.dialog_ok)
+                            .negativeText(R.string.dialog_cancel)
+                            .cancelable(false)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage(Constants.QPYTHON_PACKAGE);
+                                    if (launchIntent != null) {
+                                        startActivity(launchIntent);
+                                    }
+                                    finish();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    finish();
+                                }
+                            }).show();
                 }
                 break;
             case UPGR_YTDL_RESULT:
@@ -225,12 +243,10 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
     private enum LoadState {
         DONE(100, R.string.splash_loading_done, null),
         DATA_LOAD(95, R.string.splash_loading_data, DONE),
-        YTDL_INST(75, R.string.splash_loading_ytdl2, DATA_LOAD),
-        YTDL_UPGR(75, R.string.splash_loading_ytdl3, DATA_LOAD),
-        YTDL_CHECK(55, R.string.splash_loading_ytdl, DATA_LOAD, YTDL_UPGR),
-        QPY_INIT(50, R.string.splash_loading_qpy5, YTDL_CHECK),
-        QPY_CHECK(15, R.string.splash_loading_qpy, QPY_INIT),
-        FFMPEG_LOAD(10, R.string.splash_loading_ffmpeg, QPY_CHECK, DATA_LOAD),
+        YTDL_INST(60, R.string.splash_loading_ytdl2, DATA_LOAD),
+        YTDL_UPGR(60, R.string.splash_loading_ytdl3, DATA_LOAD),
+        YTDL_CHECK(30, R.string.splash_loading_ytdl, DATA_LOAD, YTDL_UPGR),
+        FFMPEG_LOAD(10, R.string.splash_loading_ffmpeg, YTDL_CHECK, DATA_LOAD),
         DIR_CHECK(5, R.string.splash_loading_dir, FFMPEG_LOAD),
         PERM_CHECK(0, R.string.splash_loading_perm, DIR_CHECK),
         START(-1, R.string.splash_loading_start, PERM_CHECK);
@@ -283,11 +299,6 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
         protected Boolean doInBackground(Void... params) {
             switch (state) {
                 case START:
-                    /*try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }*/
                     return true;
                 case PERM_CHECK:
                     // Here, thisActivity is the current activity
@@ -347,23 +358,6 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                         Utils.debugLog(this, "FFmpeg load error");
                         return false;
                     }
-                case QPY_CHECK:
-                    return QPyUtils.checkQPyInstalled(getApplicationContext());
-                case QPY_INIT:
-                    if (QPyUtils.QPyExecFile(QPY_INIT_RESULT, SplashActivity.this, Constants.QPY_TEMP_SCRIPT_PATH, Constants.QPY_INIT_SCRIPT, true)) {
-                        timeout = new Timer();
-                        timeout.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                task = new SplashTask(state);
-                                task.execute();
-                            }
-                        }, Constants.MAX_QPY_WAIT);
-                        return true;
-                    } else {
-                        Utils.debugLog(this, "Could not create qpy init script file");
-                        return false;
-                    }
                 case YTDL_CHECK:
                     if (QPyUtils.QPyExecFile(CHECK_YTDL_RESULT, SplashActivity.this, Constants.QPY_SCRIPT_YTDL_CHECK_PATH, Constants.QPY_SCRIPT_YTDL_CHECK, false)) {
                         timeout = new Timer();
@@ -379,8 +373,6 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                         Utils.debugLog(this, "Could not create ytdl check script file");
                         return false;
                     }
-                    //QPyUtils.QPyExec(CHECK_YTDL_RESULT,SplashActivity.this, Constants.QPY_SCRIPT_YTDL_CHECK);
-                    //return true;
                 case YTDL_UPGR:
                     if (ConnectionUtils.isOnline(getApplicationContext())) {
                         if (QPyUtils.QPyExecFile(UPGR_YTDL_RESULT, SplashActivity.this, Constants.SCRIPT_YTDL_UPGR_PATH, Constants.QPY_SCRIPT_YTDL_UPGR, false)) {
@@ -415,8 +407,6 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                             Utils.debugLog(this, "Could not create ytdl inst script file");
                             return false;
                         }
-                        //QPyUtils.QPyExec(INST_YTDL_RESULT, SplashActivity.this, Constants.QPY_SCRIPT_YTDL_INST);
-                        //return true;
                     } else {
                         return false;
                     }
@@ -476,11 +466,6 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                     DataManager.getInstance();
                     return true;
                 case DONE:
-                    /*try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }*/
                     return true;
             }
             return false;
@@ -516,45 +501,6 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                         return;
                     }
                     break;
-                case QPY_CHECK:
-                    if (!result) {
-                        info.setText(R.string.splash_loading_qpy2);
-                        new MaterialDialog.Builder(SplashActivity.this)
-                                .title(R.string.error_noqpy_title)
-                                .content(R.string.error_noqpy_content)
-                                .negativeText(R.string.dialog_cancel)
-                                .positiveText(R.string.dialog_ok)
-                                .cancelable(false)
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        System.exit(0);
-                                    }
-                                })
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        try {
-                                            Uri uLink = Uri.parse(Constants.QPYTHON_MARKET);
-                                            Intent intent = new Intent(Intent.ACTION_VIEW, uLink);
-                                            startActivity(intent);
-                                            System.exit(0);
-                                        } catch (Exception e) {
-                                            Uri uLink = Uri.parse(Constants.QPYTHON_WEBSITE);
-                                            Intent intent = new Intent(Intent.ACTION_VIEW, uLink);
-                                            startActivity(intent);
-                                            System.exit(0);
-                                        }
-                                    }
-                                }).show();
-                        return;
-                    } else {
-                        task = new SplashTask(state.next);
-                        task.execute();
-                    }
-                    break;
-                case QPY_INIT:
-                    return;
                 case YTDL_CHECK:
                     return;
                 case YTDL_UPGR:
@@ -584,8 +530,6 @@ public class SplashActivity extends AppCompatActivity implements QPyUtils.OnQPyR
                     break;
                 case DONE:
                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                    /*i = new Intent(SplashActivity.this, QuoteCreationActivity.class);
-                    i.putExtra(Constants.EXTRA_VIDEOID,"s5-nUCSXKac");*/
                     startActivity(i);
                     finish();
                     break;

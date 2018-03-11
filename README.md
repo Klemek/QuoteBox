@@ -1,10 +1,10 @@
 # QuoteBox Beta 1.5
 ## Description
-QuoteTube is a simple soundbox tool in which you can extract a part of any Youtube™ video and play "quotes" (the extracted sound) indefinitely without Internet. QuoteBox doesn't use a server for processing the different steps but will use instead Youtube-dl (through QPython app using) and FFmpeg libs.
+QuoteBox is a simple soundbox tool in which you can extract a part of any Youtube™ video and play "quotes" (the extracted sound) indefinitely without Internet. QuoteBox doesn't use a server for processing the different steps but will use instead Youtube-dl (through QPython app using) and FFmpeg libs.
 
 [Youtube Presentation here](https://youtu.be/dq3tDnNDY18)
 
-[Download APK here](https://www.klemek.fr/quotebox/quotebox-beta-1.5.2.apk)
+[Download APK here](https://www.klemek.fr/quotebox/quotebox-beta-1.5.3.apk)
 
 *QuoteBox cannot be on the Google Play Store because of "misusing of API". meh.*
 
@@ -27,6 +27,11 @@ QuoteTube is a simple soundbox tool in which you can extract a part of any Youtu
 * Quote image taken from thumbnail or user's files (or video itself)
 
 ## Changelog
+### Beta 1.5.3
+
+* Fixed Youtube_dl ssl certificate error
+* Added timeout to avoid stuck in splash
+
 ### Beta 1.5.2
 
 * Switching from com.hypipal.qpyplus to org.qpython.qpy

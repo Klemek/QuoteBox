@@ -42,10 +42,11 @@ public abstract class FileUtils {
         return text.toString();
     }
 
-    public static boolean writeFile(String path,String content,boolean replace){
+    public static boolean writeFile(String path,String content,boolean forcereplace){
         File f = new File(Constants.DIR_EXT_STORAGE +path.replace("/storage/emulated/0",""));
-        if(f.exists() && !replace)
+        if(f.exists() && !forcereplace && content.equals(readFile(path))){
             return true;
+        }
         try {
             if(f.exists() || f.createNewFile()) {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(f));

@@ -123,8 +123,11 @@
     </string>
 
     <!-- Errors dialogs and toasts -->
-    <string name="error_noqpy_title">QPythonnot installed</string>
+    <string name="error_noqpy_title">QPython not installed</string>
     <string name="error_noqpy_content">In order to run this app you must install QPython, you will be redirected to its download page.</string>
+
+    <string name="error_qpyerr_title">QPython not initialized</string>
+    <string name="error_qpyerr_content">In order to run this app you must launch QPython at least once.</string>
 
     <string name="error_nointernet_title">Not connected</string>
     <string name="error_nointernet_content">You need to be connected to the Internet to finish installing</string>

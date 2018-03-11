@@ -103,8 +103,8 @@ public class QuoteFactoryActivity extends AppCompatActivity implements QPyUtils.
         switch (requestCode) {
             case YTDL_SCRIPT_RESULT:
                 if(success) {
-                    //[download] Destination: /storage/emulated/0/quotetube/quotes/temp.webm
-                    dlext = result.split("quotetube/quotes/temp", 2)[1].split(" ",2)[0].split("\n", 2)[0].trim();
+                    //[download] Destination: /storage/emulated/0/quotebox/quotes/temp.webm
+                    dlext = result.split("quotebox/quotes/temp", 2)[1].split(" ",2)[0].split("\n", 2)[0].trim();
                     Utils.debugLog(this,"Donwloaded to temp"+ dlext);
                     task = new WorkTask(WorkState.DOWNLOAD.next);
                     task.execute();
