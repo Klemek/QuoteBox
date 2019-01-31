@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>QuoteBox</title>
+      <link rel="stylesheet" href="../css/bootstrap.min.css">
+      <link rel="stylesheet" href="../css/font-awesome.min.css">
+      <link rel="stylesheet" href="css/style.css">
+   </head>
+   <body>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <script src="../js/bootstrap.min.js"></script>
+      <script>
+         function fixPlayerHeight() {
+             $("#yt-player").height($("#yt-player").width() * 9 / 16);
+         }
+         
+         $(document).ready(fixPlayerHeight);
+         
+         $(window).resize(fixPlayerHeight);
+         
+         function apkClick(){
+         	window.location = "https://www.klemek.fr/quotebox/quotebox-beta-1.5.3.apk";
+         }
+		 
+		 function playClick(){
+			alert("Not yet");
+		 }
+		 
+      </script>
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+               <div class="jumbotron shadow">
+                  <div class="row">
+                     <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+                        <img class="img-responsive" src="img/title-alt.png" />
+                     </div>
+                  </div>
+                  <iframe id="yt-player" width="98%" height="315" src="https://www.youtube.com/embed/WnxyK6paluM?rel=0&amp;showinfo=0&amp;start=3" frameborder="0" scrolling="no" allowfullscreen></iframe>
+                  <br/><br/>
+                  <h4>QuoteBox is a simple soundbox app where you can extract a part of any Youtube™ video and play "quotes" (the extracted sound) indefinitely without Internet.</h4>
+                  <div class="row">
+					  <div class="col-md-6 col-sm-6 col-xs-12">
+						<button type="button" class="btn btn-default btn-md" onClick="playClick()">
+						   <i class="fa fa-4x fa-play" aria-hidden="true"></i>
+						   <h4>Google Play</h4>
+						</button>
+					 </div>
+                     <div class="col-md-6 col-sm-6 col-xs-12">
+                        <button type="button" class="btn btn-default btn-md" onClick="apkClick()">
+                           <i class="fa fa-4x fa-download" aria-hidden="true"></i>
+                           <h4>Download APK</h4>
+                        </button>
+                     </div>
+                  </div>
+                  <hr/>
+                  <h3>Current features</h3>
+                  <ul>
+                     <li>Offline use of created quotes</li>
+                     <li>Whole Youtube™ search</li>
+                     <li>Customizable quote with color and name</li>
+                     <li>Full editor interface</li>
+                     <ul>
+                        <li>Easy navigation through video</li>
+                        <li>Precises start and stop points placing</li>
+                        <li>Try quote before creating</li>
+                     </ul>
+                     <li>1-20 seconds quotes</li>
+                     <li>Fade-out option</li>
+                  </ul>
+                  <hr/>
+                  <h3>Future features (soon)</h3>
+                  <ul>
+                     <li>Quote organization with drag-n-drop</li>
+                     <li>Quote marketplace for sharing and downloading other's quotes</li>
+                     <li>Quote image taken from thumbnail or user's files (or video itself)</li>
+                  </ul>
+                  <hr/>
+                  <h4 class="text-center" style="margin-bottom: 0;">
+					<a title="Not yet" target="_blank" href=""><i class="fa fa-2x fa-youtube-play" aria-hidden="true"></i></a>&emsp;
+					<a title="See repo on GitHub" target="_blank" href="https://github.com/Klemek/QuoteBox"><i class="fa  fa-2x fa-github" aria-hidden="true"></i></a>&emsp;
+					<a title="Download APK" target="_blank" href="https://www.klemek.fr/quotebox/quotebox-beta-1.5.3.apk"><i class="fa fa-2x fa-download" aria-hidden="true"></i></a>&emsp;
+					<a title="Not yet" target="_blank" href=""><i class="fa fa-2x fa-play" aria-hidden="true"></i></a>&emsp;
+					</h4>
+               </div>
+               <h5 class="text-center">2017 - <a href="https://www.klemek.fr">Klemek.fr</a></h5>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

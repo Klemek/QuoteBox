@@ -1,0 +1,214 @@
+https://developers.google.com/youtube/
+https://developers.google.com/youtube/android/player/
+https://developers.google.com/youtube/v3/getting-started
+https://developers.google.com/youtube/v3/docs/search/list
+
+https://console.developers.google.com/apis/dashboard
+
+https://developers.google.com/youtube/android/player/register
+
+python youtube-dl
+https://www.arulraj.net/2015/11/download-any-videos-in-android-using-youtube-dl.html
+https://github.com/qpython-android/app-call-qpython-api
+
+QuoteBox
+
+key	
+AIzaSyDnJ7wPRMUMnW4kVmqZS3wEv23HXMbKOP4
+
+
+
+GET https://www.googleapis.com/youtube/v3/search
+
+constants :
+part=snippet
+eventType=completed
+type=video
+order=relevance
+videoSyndicated=true
+key=AIzaSyDnJ7wPRMUMnW4kVmqZS3wEv23HXMbKOP4
+
+changing=:
+maxResults
+pageToken
+q
+channelId ?
+
+
+{
+ "kind": "youtube#searchListResponse",
+ "etag": "\"uQc-MPTsstrHkQcRXL3IWLmeNsM/61bnxYb5ofFAyaITDWwJ852sZpI\"",
+ "nextPageToken": "CAUQAA",
+ "regionCode": "FR",
+ "pageInfo": {
+  "totalResults": 1000000,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"uQc-MPTsstrHkQcRXL3IWLmeNsM/JdQrUUJbzHU0AQ_YKt0tb5OdeL8\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "q4y0KOeXViI"
+   },
+   "snippet": {
+    "publishedAt": "2016-10-04T17:37:35.000Z",
+    "channelId": "UCK8sQmJBp8GCxrOtXWBpyEA",
+    "title": "#madebygoogle",
+    "description": "Something new to love on Oct. 4. Get in the know at https://madeby.google.com/",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/q4y0KOeXViI/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/q4y0KOeXViI/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/q4y0KOeXViI/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Google",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"uQc-MPTsstrHkQcRXL3IWLmeNsM/U75AChV6O5lxD-wVsl03XiL9aeQ\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "862r3XS2YB0"
+   },
+   "snippet": {
+    "publishedAt": "2016-05-18T21:15:33.000Z",
+    "channelId": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+    "title": "Google I/O 2016 - Keynote",
+    "description": "Watch the entire Google I/O Keynote here. Some highlights include the new messaging app Allo, the Video calling app Duo, the latest in Developer Platform ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/862r3XS2YB0/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/862r3XS2YB0/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/862r3XS2YB0/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Google Developers",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"uQc-MPTsstrHkQcRXL3IWLmeNsM/9x9fqKzhVeu-MFgbWIIiknD5Cbk\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "E-SL2FxqyOg"
+   },
+   "snippet": {
+    "publishedAt": "2017-02-23T01:09:59.000Z",
+    "channelId": "UCKmlxQVs0vHtaLldRIQ8lsA",
+    "title": "ROBLOX: LA F?BRICA DE GOOGLE | Google Factory Tycoon",
+    "description": "No olvides suscribirte!: http://bit.ly/2dShrQJ M?s Roblox aqu?: https://www.youtube.com/playlist?list=PLjP1J2wV_1fHSVTygxxbjMZpb2KJPmHuu Holaaaa ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/E-SL2FxqyOg/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/E-SL2FxqyOg/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/E-SL2FxqyOg/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "iTownGamePlay ?Terror&Diversi?n?",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"uQc-MPTsstrHkQcRXL3IWLmeNsM/OhJj0VHJKfK323H7jGyxJvCIAxk\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "Lnija496-yI"
+   },
+   "snippet": {
+    "publishedAt": "2017-03-08T21:08:44.000Z",
+    "channelId": "UCkCM0LZScRa6Jq962K01ScA",
+    "title": "Google Cloud Live Talks - Espa?ol",
+    "description": "Google Cloud inicia la serie de Live Talks de este a?o presentando el contenido de Next San Francisco 2017, el mayor evento global de Google sobre las ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/Lnija496-yI/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/Lnija496-yI/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/Lnija496-yI/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Google para seu Neg?cio",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"uQc-MPTsstrHkQcRXL3IWLmeNsM/uXDD4effekLd9jvqQFLVfLhkp48\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "j_K1YoMHpbk"
+   },
+   "snippet": {
+    "publishedAt": "2017-03-09T03:21:06.000Z",
+    "channelId": "UCJS9pqu9BzkAMNTmzNMNhvg",
+    "title": "Google Cloud Next '17 - Day 1 Keynote",
+    "description": "Hear from Diane Greene, SVP of Google Cloud; Sundar Pichai, CEO of Google; Eric Schmidt, Chairman of Alphabet and Fei-Fei Li, Chief Scientist for Google ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/j_K1YoMHpbk/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/j_K1YoMHpbk/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/j_K1YoMHpbk/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Google Cloud",
+    "liveBroadcastContent": "none"
+   }
+  }
+ ]
+}
