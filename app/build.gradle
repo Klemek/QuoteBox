@@ -6,8 +6,8 @@ android {
         applicationId "fr.klemek.quotebox"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 6
-        versionName "Beta 1.6.0"
+        versionCode 7
+        versionName "Beta 1.6.1"
         buildConfigField 'boolean', "ShouldCheckUpdates", "true"
     }
     buildTypes {
