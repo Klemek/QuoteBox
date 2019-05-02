@@ -16,7 +16,6 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -67,42 +66,34 @@ public class YoutubeSearchActivity extends AppCompatActivity {
 
         elements = new ArrayList<>();
 
-        adapter = new YoutubeSearchAdapter(getApplicationContext(), elements, new YoutubeSearchAdapter.LoadRequestListener() {
-            @Override
-            public void onLoadRequest() {
-                new AsyncLoad().execute(adapter.getNextPageToken());
-            }
-        });
+        adapter = new YoutubeSearchAdapter(getApplicationContext(), elements, () -> new AsyncLoad().execute(adapter.getNextPageToken()));
 
         ListView listview = findViewById(R.id.youtube_video_list);
         listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i<elements.size()) {
-                    YoutubeElement e = elements.get(i);
-                    Intent intent = null;
-                    switch(e.getType()){
-                        case VIDEO:
-                            intent = new Intent(YoutubeSearchActivity.this, QuoteCreationActivity.class);
-                            intent.putExtra(Constants.EXTRA_VIDEOID,((YoutubeVideo)e).getVideoId());
-                            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
-                            String[] videoInfo = new String[]{((YoutubeVideo) e).getVideoId(),
-                                    ((YoutubeVideo)e).getVideoTitle(),
-                                    e.getChannelTitle(),
-                                    dateFormat.format(((YoutubeVideo)e).getPublishedAt())};
-                            intent.putExtra(Constants.EXTRA_VIDEOINFO, videoInfo);
-                            break;
-                        case CHANNEL:
-                            intent = new Intent(YoutubeSearchActivity.this, YoutubeSearchActivity.class);
-                            intent.putExtra(Constants.EXTRA_CHANNELID,e.getChannelId());
-                            intent.putExtra(Constants.EXTRA_CHANNELTITLE,e.getChannelTitle());
-                            break;
-                    }
-                    startActivityForResult(intent,QUOTE_CREATION_RESULT);
+        listview.setOnItemClickListener((adapterView, view, i, l) -> {
+            if(i<elements.size()) {
+                YoutubeElement e = elements.get(i);
+                Intent intent = null;
+                switch(e.getType()){
+                    case VIDEO:
+                        intent = new Intent(YoutubeSearchActivity.this, QuoteCreationActivity.class);
+                        intent.putExtra(Constants.EXTRA_VIDEOID,((YoutubeVideo)e).getVideoId());
+                        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                        String[] videoInfo = new String[]{((YoutubeVideo) e).getVideoId(),
+                                ((YoutubeVideo)e).getVideoTitle(),
+                                e.getChannelTitle(),
+                                dateFormat.format(((YoutubeVideo)e).getPublishedAt())};
+                        intent.putExtra(Constants.EXTRA_VIDEOINFO, videoInfo);
+                        break;
+                    case CHANNEL:
+                        intent = new Intent(YoutubeSearchActivity.this, YoutubeSearchActivity.class);
+                        intent.putExtra(Constants.EXTRA_CHANNELID,e.getChannelId());
+                        intent.putExtra(Constants.EXTRA_CHANNELTITLE,e.getChannelTitle());
+                        break;
                 }
-
+                startActivityForResult(intent,QUOTE_CREATION_RESULT);
             }
+
         });
 
         progress = findViewById(R.id.search_progress);
@@ -145,10 +136,9 @@ public class YoutubeSearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -163,12 +153,7 @@ public class YoutubeSearchActivity extends AppCompatActivity {
         final SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(searchItem);
 
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchView.setQuery(queryText,false);
-            }
-        });
+        searchView.setOnSearchClickListener(view -> searchView.setQuery(queryText,false));
 
         searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
@@ -226,21 +211,18 @@ public class YoutubeSearchActivity extends AppCompatActivity {
                 if(newText.length()>0){
                     HashMap<String, String> params = Constants.GET_SUGGEST_PARAMS();
                     params.put(Constants.PARAM_QUERY,newText);
-                    suggestTask = new ConnectionUtils.AsyncGet(getApplicationContext(), params, new ConnectionUtils.AsyncGetListener() {
-                        @Override
-                        public void taskFinished(String result) {
-                            try {
-                                JSONArray jarray = new JSONArray(result).getJSONArray(1);
-                                final MatrixCursor c = new MatrixCursor(new String[]{ BaseColumns._ID, "suggestion" });
-                                suggestions = new String[Math.min(jarray.length(), Constants.MAX_SUGGESTIONS_COUNT)];
-                                for(int i = 0; i  < suggestions.length; i++){
-                                    suggestions[i] = Html.fromHtml(jarray.getString(i)).toString();
-                                    c.addRow(new Object[] {i, suggestions[i]});
-                                }
-                                mAdapter.changeCursor(c);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                    suggestTask = new ConnectionUtils.AsyncGet(getApplicationContext(), params, result -> {
+                        try {
+                            JSONArray jarray = new JSONArray(result).getJSONArray(1);
+                            final MatrixCursor c = new MatrixCursor(new String[]{ BaseColumns._ID, "suggestion" });
+                            suggestions = new String[Math.min(jarray.length(), Constants.MAX_SUGGESTIONS_COUNT)];
+                            for(int i = 0; i  < suggestions.length; i++){
+                                suggestions[i] = Html.fromHtml(jarray.getString(i)).toString();
+                                c.addRow(new Object[] {i, suggestions[i]});
                             }
+                            mAdapter.changeCursor(c);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     });
                     suggestTask.execute(Constants.GET_SUGGEST_URL);

@@ -8,7 +8,6 @@ import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -42,7 +41,7 @@ public class QuoteCreation2Activity extends AppCompatActivity implements ColorPi
 
         setTitle(R.string.title_activity_quote_creation2);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar() != null)
@@ -58,46 +57,39 @@ public class QuoteCreation2Activity extends AppCompatActivity implements ColorPi
         quote_color = Color.argb(255, r.nextInt(256), r.nextInt(256), r.nextInt(256));
         ((ImageView) findViewById(R.id.quote_image)).setColorFilter(quote_color);
 
-        findViewById(R.id.button_quote_create).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String quotename = ((EditText)findViewById(R.id.quote_name_preview)).getText().toString();
-                if(!quotename.equals("")) {
-                    Intent i = new Intent(QuoteCreation2Activity.this, QuoteFactoryActivity.class);
-                    i.putExtra(Constants.EXTRA_VIDEOID, videoId);
-                    i.putExtra(Constants.EXTRA_VIDEOINFO, videoInfo);
-                    i.putExtra(Constants.EXTRA_QUOTENAME, quotename);
-                    i.putExtra(Constants.EXTRA_QUOTECOLOR, quote_color);
-                    i.putExtra(Constants.EXTRA_QUOTESTART, tquoteStart);
-                    i.putExtra(Constants.EXTRA_QUOTESTOP, tquoteStop);
-                    i.putExtra(Constants.EXTRA_QUOTETIME, tquoteDuration);
-                    i.putExtra(Constants.EXTRA_QUOTEFADEOUT, ((CheckBox)findViewById(R.id.quote_fade_out)).isChecked());
-                    startActivityForResult(i, QUOTE_CREATION_RESULT);
-                }else{
-                    Toast.makeText(getApplicationContext(), R.string.error_quote_name, Toast.LENGTH_SHORT).show();
-                }
+        findViewById(R.id.button_quote_create).setOnClickListener(view -> {
+            String quotename = ((EditText)findViewById(R.id.quote_name_preview)).getText().toString();
+            if(!quotename.equals("")) {
+                Intent i = new Intent(QuoteCreation2Activity.this, QuoteFactoryActivity.class);
+                i.putExtra(Constants.EXTRA_VIDEOID, videoId);
+                i.putExtra(Constants.EXTRA_VIDEOINFO, videoInfo);
+                i.putExtra(Constants.EXTRA_QUOTENAME, quotename);
+                i.putExtra(Constants.EXTRA_QUOTECOLOR, quote_color);
+                i.putExtra(Constants.EXTRA_QUOTESTART, tquoteStart);
+                i.putExtra(Constants.EXTRA_QUOTESTOP, tquoteStop);
+                i.putExtra(Constants.EXTRA_QUOTETIME, tquoteDuration);
+                i.putExtra(Constants.EXTRA_QUOTEFADEOUT, ((CheckBox)findViewById(R.id.quote_fade_out)).isChecked());
+                startActivityForResult(i, QUOTE_CREATION_RESULT);
+            }else{
+                Toast.makeText(getApplicationContext(), R.string.error_quote_name, Toast.LENGTH_SHORT).show();
             }
         });
 
-        findViewById(R.id.quote_preview).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        findViewById(R.id.quote_preview).setOnClickListener(view -> {
 
-                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-                ColorPickerDialog.newBuilder().setColor(quote_color).show(QuoteCreation2Activity.this);
-            }
+            ColorPickerDialog.newBuilder().setColor(quote_color).show(QuoteCreation2Activity.this);
         });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                setResult(RESULT_CANCELED);
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            setResult(RESULT_CANCELED);
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

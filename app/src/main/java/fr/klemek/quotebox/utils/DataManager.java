@@ -28,21 +28,18 @@ public class DataManager {
         }else{
             quoteList = new Gson().fromJson(quotesjson,QuoteList.class);
             if(quoteList.getVersion() != Constants.LIST_VERSION){
-                switch(quoteList.getVersion()){
-                    case 1: //Update from v1 -> v2
-                        Utils.debugLog(DataManager.class, "Updating quote liste : v1 -> v2");
-                        for(Quote q:quoteList.getAll())
-                            q.setVideoInfo(new String[] {
-                                    null, "Unknown", "Unknown", "Unknown"
-                            });
-                        quoteList.setVersion(2);
-                        break;
-                    default:
-                        //Clean old quote list
-                        for(Quote q:quoteList.getAll())
-                            FileUtils.tryDelete(q.getFile().getAbsolutePath());
-                        quoteList = new QuoteList();
-                        break;
+                //Update from v1 -> v2
+                if (quoteList.getVersion() == 1) {
+                    Utils.debugLog(DataManager.class, "Updating quote liste : v1 -> v2");
+                    for (Quote q : quoteList.getAll())
+                        q.setVideoInfo(new String[]{
+                                null, "Unknown", "Unknown", "Unknown"
+                        });
+                    quoteList.setVersion(2);
+                } else {//Clean old quote list
+                    for (Quote q : quoteList.getAll())
+                        FileUtils.tryDelete(q.getFile().getAbsolutePath());
+                    quoteList = new QuoteList();
                 }
 
             }

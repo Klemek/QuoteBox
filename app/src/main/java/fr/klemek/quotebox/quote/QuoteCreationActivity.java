@@ -6,21 +6,19 @@ import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
+import fr.klemek.quotebox.BuildConfig;
 import fr.klemek.quotebox.R;
 import fr.klemek.quotebox.utils.Constants;
 import fr.klemek.quotebox.utils.Utils;
@@ -52,7 +50,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
 
         setTitle(R.string.title_activity_quote_creation);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar() != null)
@@ -66,192 +64,156 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
         tquoteDuration = 1000;
         tquoteStop = tquoteStart + tquoteDuration;
 
-        quote_start = (TextView) findViewById(R.id.quote_start);
-        quote_stop = (TextView) findViewById(R.id.quote_stop);
-        quote_duration = (TextView) findViewById(R.id.quote_duration);
-        quote_current = (TextView) findViewById(R.id.quote_current);
+        quote_start = findViewById(R.id.quote_start);
+        quote_stop = findViewById(R.id.quote_stop);
+        quote_duration = findViewById(R.id.quote_duration);
+        quote_current = findViewById(R.id.quote_current);
 
         update();
 
-        findViewById(R.id.button_quote_start).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    tquoteStart = yp.getCurrentTimeMillis();
-                    if (tquoteStart > tquoteStop)
-                        tquoteStop = Math.min(tquoteStart + tquoteDuration, yp.getDurationMillis());
-                    else
-                        tquoteDuration = tquoteStop - tquoteStart;
-                    update();
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_quote_start).setOnClickListener(view -> {
+            if (ready && !trying) {
+                tquoteStart = yp.getCurrentTimeMillis();
+                if (tquoteStart > tquoteStop)
+                    tquoteStop = Math.min(tquoteStart + tquoteDuration, yp.getDurationMillis());
+                else
+                    tquoteDuration = tquoteStop - tquoteStart;
+                update();
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_quote_tostart).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    boolean play = yp.isPlaying();
-                    yp.seekToMillis(tquoteStart);
-                    if(!play)
-                        yp.pause(); //to prevent restart
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_quote_tostart).setOnClickListener(view -> {
+            if (ready && !trying) {
+                boolean play = yp.isPlaying();
+                yp.seekToMillis(tquoteStart);
+                if(!play)
+                    yp.pause(); //to prevent restart
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_quote_stop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    tquoteStop = yp.getCurrentTimeMillis();
-                    if (tquoteStart > tquoteStop)
-                        tquoteStart = Math.max(tquoteStop - tquoteDuration, 0);
-                    else
-                        tquoteDuration = tquoteStop - tquoteStart;
-                    update();
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_quote_stop).setOnClickListener(view -> {
+            if (ready && !trying) {
+                tquoteStop = yp.getCurrentTimeMillis();
+                if (tquoteStart > tquoteStop)
+                    tquoteStart = Math.max(tquoteStop - tquoteDuration, 0);
+                else
+                    tquoteDuration = tquoteStop - tquoteStart;
+                update();
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_quote_tostop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    boolean play = yp.isPlaying();
-                    yp.seekToMillis(tquoteStop);
-                    if(!play)
-                        yp.pause(); //to prevent restart
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_quote_tostop).setOnClickListener(view -> {
+            if (ready && !trying) {
+                boolean play = yp.isPlaying();
+                yp.seekToMillis(tquoteStop);
+                if(!play)
+                    yp.pause(); //to prevent restart
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_back_3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    boolean play = yp.isPlaying();
-                    yp.seekRelativeMillis(-1000);
-                    if(!play)
-                        yp.pause(); //to prevent restart
-                    //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-1000,0));
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_back_3).setOnClickListener(view -> {
+            if (ready && !trying) {
+                boolean play = yp.isPlaying();
+                yp.seekRelativeMillis(-1000);
+                if(!play)
+                    yp.pause(); //to prevent restart
+                //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-1000,0));
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_back_2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    boolean play = yp.isPlaying();
-                    yp.seekRelativeMillis(-500);
-                    if(!play)
-                        yp.pause(); //to prevent restart
-                    //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-1000,0));
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_back_2).setOnClickListener(view -> {
+            if (ready && !trying) {
+                boolean play = yp.isPlaying();
+                yp.seekRelativeMillis(-500);
+                if(!play)
+                    yp.pause(); //to prevent restart
+                //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-1000,0));
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_back_1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    boolean play = yp.isPlaying();
-                    yp.seekRelativeMillis(-200);
-                    if(!play)
-                        yp.pause(); //to prevent restart
-                    //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-500,0));
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_back_1).setOnClickListener(view -> {
+            if (ready && !trying) {
+                boolean play = yp.isPlaying();
+                yp.seekRelativeMillis(-200);
+                if(!play)
+                    yp.pause(); //to prevent restart
+                //yp.seekToMillis(Math.max(yp.getCurrentTimeMillis()-500,0));
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_forw_1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    boolean play = yp.isPlaying();
-                    yp.seekRelativeMillis(200);
-                    if(!play)
-                        yp.pause(); //to prevent restart
-                    //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+500,yp.getDurationMillis()));
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_forw_1).setOnClickListener(view -> {
+            if (ready && !trying) {
+                boolean play = yp.isPlaying();
+                yp.seekRelativeMillis(200);
+                if(!play)
+                    yp.pause(); //to prevent restart
+                //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+500,yp.getDurationMillis()));
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_forw_2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    boolean play = yp.isPlaying();
-                    yp.seekRelativeMillis(500);
-                    if(!play)
-                        yp.pause(); //to prevent restart
-                    //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+1000,yp.getDurationMillis()));
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_forw_2).setOnClickListener(view -> {
+            if (ready && !trying) {
+                boolean play = yp.isPlaying();
+                yp.seekRelativeMillis(500);
+                if(!play)
+                    yp.pause(); //to prevent restart
+                //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+1000,yp.getDurationMillis()));
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_forw_3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    boolean play = yp.isPlaying();
-                    yp.seekRelativeMillis(1000);
-                    if(!play)
-                        yp.pause(); //to prevent restart
-                    //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+1000,yp.getDurationMillis()));
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
-                }
+        findViewById(R.id.button_forw_3).setOnClickListener(view -> {
+            if (ready && !trying) {
+                boolean play = yp.isPlaying();
+                yp.seekRelativeMillis(1000);
+                if(!play)
+                    yp.pause(); //to prevent restart
+                //yp.seekToMillis(Math.min(yp.getCurrentTimeMillis()+1000,yp.getDurationMillis()));
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
 
-        findViewById(R.id.button_quote_try).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    new AsyncTry().execute();
-                }else if(trying){
-                    trying = false;
-                }
+        findViewById(R.id.button_quote_try).setOnClickListener(view -> {
+            if (ready && !trying) {
+                new AsyncTry().execute();
+            }else if(trying){
+                trying = false;
             }
         });
 
-        findViewById(R.id.button_quote_create).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ready && !trying) {
-                    if (tquoteDuration <= Constants.MAX_QUOTE_DURATION) {
-                        Intent i = new Intent(QuoteCreationActivity.this, QuoteCreation2Activity.class);
-                        i.putExtra(Constants.EXTRA_VIDEOID, videoId);
-                        i.putExtra(Constants.EXTRA_QUOTESTART, tquoteStart);
-                        i.putExtra(Constants.EXTRA_QUOTESTOP, tquoteStop);
-                        i.putExtra(Constants.EXTRA_QUOTETIME, tquoteDuration);
-                        i.putExtra(Constants.EXTRA_VIDEOINFO, videoInfo);
-                        startActivityForResult(i, QUOTE_CREATION_RESULT);
-                    } else {
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_quote_duration,(Constants.MAX_QUOTE_DURATION / 1000f)), Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Utils.debugLog(QuoteCreationActivity.this,"Not ready");
+        findViewById(R.id.button_quote_create).setOnClickListener(view -> {
+            if (ready && !trying) {
+                if (tquoteDuration <= Constants.MAX_QUOTE_DURATION) {
+                    Intent i = new Intent(QuoteCreationActivity.this, QuoteCreation2Activity.class);
+                    i.putExtra(Constants.EXTRA_VIDEOID, videoId);
+                    i.putExtra(Constants.EXTRA_QUOTESTART, tquoteStart);
+                    i.putExtra(Constants.EXTRA_QUOTESTOP, tquoteStop);
+                    i.putExtra(Constants.EXTRA_QUOTETIME, tquoteDuration);
+                    i.putExtra(Constants.EXTRA_VIDEOINFO, videoInfo);
+                    startActivityForResult(i, QUOTE_CREATION_RESULT);
+                } else {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_quote_duration,(Constants.MAX_QUOTE_DURATION / 1000f)), Toast.LENGTH_SHORT).show();
                 }
+            }else{
+                Utils.debugLog(QuoteCreationActivity.this,"Not ready");
             }
         });
     }
@@ -261,16 +223,15 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
         super.onResume();
         YouTubePlayerSupportFragment frag =
                 (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
-        frag.initialize(Constants.GOOGLE_API_KEY, this);
+        frag.initialize(BuildConfig.GoogleApiKey, this);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                setResult(RESULT_CANCELED);
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            setResult(RESULT_CANCELED);
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -343,12 +304,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                         errorReason.name()))
                 .positiveText(R.string.dialog_ok)
                 .cancelable(false)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        finish();
-                    }
-                }).show();
+                .onPositive((dialog, which) -> finish()).show();
     }
 
     @Override
@@ -394,12 +350,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
             if (!wasRestored) {
                 yp.loadVideo(videoId);
                 yp.setPlaybackEventListener(this);
-                yp.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
-                    @Override
-                    public void onFullscreen(boolean b) {
-                        yp.pause();
-                    }
-                });
+                yp.setOnFullscreenListener(b -> yp.pause());
 
                 yp.setPlayerStateChangeListener(this);
             }
@@ -412,7 +363,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
         if(youTubeInitializationResult.isUserRecoverableError()){
             YouTubePlayerSupportFragment frag =
                     (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
-            frag.initialize(Constants.GOOGLE_API_KEY, this);
+            frag.initialize(BuildConfig.GoogleApiKey, this);
             yp = null;
             ready = false;
         }else{
@@ -425,12 +376,7 @@ public class QuoteCreationActivity extends AppCompatActivity implements YouTubeP
                             ""))
                     .positiveText(R.string.dialog_ok)
                     .cancelable(false)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            finish();
-                        }
-                    }).show();
+                    .onPositive((dialog, which) -> finish()).show();
         }
     }
 

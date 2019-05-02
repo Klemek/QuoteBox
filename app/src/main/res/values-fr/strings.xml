@@ -13,12 +13,12 @@
         Icones : FontAwesome\n
         Libs :\n
         -GeometricProgressView (Bohush)\n
+        -YoutubeDL-Android (Yausername)\n
         -FFmpegAndroid (Writingminds)\n
         -Colorpicker (Jrummyapps)\n
         -Material-dialogs (Afollestad)\n
         -Picasso (Squareup)</string>
     <string name="dialog_about_title">A propos de QuoteBox</string>
-    <string name="dialog_cancel">Annuler</string>
     <string name="dialog_close">Fermer</string>
     <string name="dialog_delete_quote_content" formatted="false">Voulez vous vraiment supprimer la quote \'%s\' ?</string>
     <string name="dialog_delete_quote_title">Supprimer la quote ?</string>
@@ -29,14 +29,10 @@
     <string name="dialog_update_title">Mise à jour disponible</string>
     <string name="dialog_updated_content">Merci de mettre à jour QuoteBox !\n
         Changements  :\n
-        - Couleurs légèrement modifiées\n
-        - Suggestions lors de la recherche youtube\n
-        - Traduction française\n
-        - Nom de quote multi-ligne\n
-        - Messages de bienvenue et de mise à jour\n
+        - Optimisation de Youtube-DL\n
         - Moins de bugs\n
     </string>
-    <string name="dialog_updated_title">QuoteBox Beta 1.5</string>
+    <string name="dialog_updated_title">QuoteBox Beta 1.6.0</string>
     <string name="dialog_welcome_content">QuoteBox est une application \"soundbox\" simple où l\'on peut prendre n\'importe quel extrait audio (quote) de n\'importe quelle vidéo Youtube pour le jouer à l\'infini sans internet. Amuse-toi bien !</string>
     <string name="dialog_welcome_positive">Merci</string>
     <string name="dialog_welcome_title">Bienvenue dans QuoteBox !</string>
@@ -48,11 +44,8 @@
     <string name="error_no_videoinfo">Aucune vidéo liée à cette quote</string>
     <string name="error_noffmpeg_content">Votre appareil ne supporte pas FFmpeg, vous ne pourrez pas créer de nouvelles quotes.</string>
     <string name="error_noffmpeg_title">FFmpeg n\'a pas pu charger</string>
-    <string name="error_nointernet_content">Vous devez être connecté à Internet pour finir l\'installation</string>
     <string name="error_nointernet_content2">Vous devez être connecté à Internet pour télécharger le son</string>
     <string name="error_nointernet_title">Non connecté</string>
-    <string name="error_noqpy_content">Pour utiliser l\'application, vous devez installer QPython. Vous allez être redirigé vers la page d\'installation.</string>
-    <string name="error_noqpy_title">QPython non installé</string>
     <string name="error_permission_content">QuoteBox a besoin des accès au stockage pour stocker les quotes et executer les scripts Python. Êtes-vous sûr que vous ne voulez pas l\'authoriser ?</string>
     <string name="error_permission_content2">QuoteBox a besoin des accès au stockage pour stocker les quotes et executer les scripts Python. Allez dans vos paramètres pour l\'authoriser.</string>
     <string name="error_permission_negative">Je suis sûr</string>
@@ -65,10 +58,10 @@
     <string name="error_ytdlfail_content">Vérifiez ces éléments:\n
         -Vous êtes connecté à Internet.\n
         -Vous avez assez de place sur votre appareil.</string>
-    <string name="error_ytdlfail_title">Installation de Youtube-dl échouée</string>
+    <string name="error_ytdlfail_title">Mise à jour de Youtube-dl échouée</string>
     <string name="factory_clean">Nettoyage…</string>
     <string name="factory_cutting">Découpage…</string>
-    <string name="factory_dl">Téléchargement…\n(Ceci peut prendre un moment)</string>
+    <string name="factory_dl">Téléchargement…</string>
     <string name="factory_done">Ajout à la liste…</string>
     <string name="factory_extract">Extraction…</string>
     <string name="factory_start">Création…</string>
@@ -93,15 +86,8 @@
     <string name="splash_loading_done">Lancement…</string>
     <string name="splash_loading_ffmpeg">Chargement de FFmpeg…</string>
     <string name="splash_loading_perm">Vérification des permissions…</string>
-    <string name="splash_loading_qpy">Vérification de QPython</string>
-    <string name="splash_loading_qpy2">Téléchargement de QPython…</string>
-    <string name="splash_loading_qpy3">Désinstallez QPython</string>
-    <string name="splash_loading_qpy4">Installation de QPython…</string>
-    <string name="splash_loading_qpy5">Initialisation de QPython…</string>
     <string name="splash_loading_start">Chargement…</string>
-    <string name="splash_loading_ytdl">Vérification de Youtube-dl…</string>
-    <string name="splash_loading_ytdl2">Installation de Youtube-dl…</string>
-    <string name="splash_loading_ytdl3">Mise à jour de Youtube-dl…</string>
+    <string name="splash_loading_ytdl">Initialisation de Youtube-dl…</string>
     <string name="title_activity_main">Vos quotes</string>
     <string name="title_activity_quote_creation" tools:ignore="TypographyFractions">Créer une quote (1/2)</string>
     <string name="title_activity_quote_creation2">Créer une quote (2/2)</string>
@@ -113,6 +99,6 @@
     <string name="youtube_search_hint1">Recherchez quelque-chose avec la barre du dessus</string>
     <string name="youtube_search_hint2">Vous n\'avez pas l\'air connecté</string>
     <string name="youtube_search_hint3">Aucun résultat pour cette recherche</string>
-    <string name="error_qpyerr_title">QPython non initialisé</string>
-    <string name="error_qpyerr_content">Pour utiliser cette app, vous devez lancer QPython au moins une fois.</string>
+    <string name="splash_loading_ytdl2">Mise à jour de Youtube-dl…</string>
+    <string name="factory_dl2">Téléchargement… (%d%%)</string>
 </resources>

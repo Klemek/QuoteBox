@@ -12,16 +12,10 @@
     <!-- Splash texts -->
     <string name="splash_loading_start">Loading…</string>
     <string name="splash_loading_perm">Checking permissions…</string>
-    <string name="splash_loading_qpy">Checking QPython…</string>
-    <string name="splash_loading_qpy2">Downloading QPython…</string>
-    <string name="splash_loading_qpy3">Please uninstall QPython</string>
-    <string name="splash_loading_qpy4">Installing QPython…</string>
-    <string name="splash_loading_qpy5">Initializing QPython…</string>
     <string name="splash_loading_dir">Checking folders</string>
     <string name="splash_loading_data">Loading user\'s data</string>
-    <string name="splash_loading_ytdl">Checking Youtube-dl…</string>
-    <string name="splash_loading_ytdl2">Installing Youtube-dl…</string>
-    <string name="splash_loading_ytdl3">Upgrading Youtube-dl…</string>
+    <string name="splash_loading_ytdl">Initialising Youtube-dl…</string>
+    <string name="splash_loading_ytdl2">Updating Youtube-dl…</string>
     <string name="splash_loading_ffmpeg">Loading FFmpeg…</string>
     <string name="splash_loading_done">Launching…</string>
 
@@ -68,7 +62,8 @@
 
     <!-- Quote factory texts -->
     <string name="factory_start">Creating…</string>
-    <string name="factory_dl">Downloading…\n(This might take a while)</string>
+    <string name="factory_dl">Downloading…</string>
+    <string name="factory_dl2">Downloading… (%d%%)</string>
     <string name="factory_extract">Extracting…</string>
     <string name="factory_cutting">Cutting…</string>
     <string name="factory_clean">Cleaning…</string>
@@ -85,7 +80,6 @@
     <!--dialog buttons-->
     <string name="dialog_close">Close</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">Cancel</string>
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
 
@@ -99,6 +93,7 @@
         Icons : FontAwesome\n
         Libs : \n
         -GeometricProgressView (Bohush)\n
+        -YoutubeDL-Android (Yausername)\n
         -FFmpegAndroid (Writingminds)\n
         -Colorpicker (Jrummyapps)\n
         -Material-dialogs (Afollestad)\n
@@ -110,33 +105,22 @@
     <string name="dialog_welcome_title">Welcome to QuoteBox !</string>
     <string name="dialog_welcome_content">QuoteBox is a simple soundbox app where you can extract a part of any Youtube video and play \"quotes\" (the extracted sound) indefinitely without Internet. Have fun !</string>
     <string name="dialog_welcome_positive">Thanks</string>
-    <string name="dialog_updated_title">QuoteBox Beta 1.5</string>
     <string name="dialog_updated_content">
         Thank you for updating QuoteBox !\n\n
         Changelog :\n
-        - Slightly changed colors\n
-        - Suggestions in youtube searching
-        - French translation
-        - Multiline on quote name
-        - Welcome and update messages\n
+        - Youtube-DL optimization\n
         - Some fixes\n
     </string>
 
     <!-- Errors dialogs and toasts -->
-    <string name="error_noqpy_title">QPython not installed</string>
-    <string name="error_noqpy_content">In order to run this app you must install QPython, you will be redirected to its download page.</string>
-
-    <string name="error_qpyerr_title">QPython not initialized</string>
-    <string name="error_qpyerr_content">In order to run this app you must launch QPython at least once.</string>
 
     <string name="error_nointernet_title">Not connected</string>
-    <string name="error_nointernet_content">You need to be connected to the Internet to finish installing</string>
     <string name="error_nointernet_content2">You need to be connected to the Internet to download the sound</string>
 
     <string name="error_noffmpeg_title">FFmpeg failed loading</string>
     <string name="error_noffmpeg_content">Your device does not support FFmpeg, you will not be able to create new quotes.</string>
 
-    <string name="error_ytdlfail_title">Youtube-dl installation failed</string>
+    <string name="error_ytdlfail_title">Youtube-dl update failed</string>
     <string name="error_ytdlfail_content">Please check the following:\n
         -You are connected to the Internet.\n
         -You have enough space on your device.</string>
@@ -164,4 +148,5 @@
     <string name="desc_quote_icon" translatable="false">Quote icon</string>
     <string name="desc_channel" translatable="false">Channel thumbnail</string>
     <string name="desc_video" translatable="false">Video thumbnail</string>
+    <string name="dialog_updated_title">QuoteBox Beta 1.6.0</string>
 </resources>

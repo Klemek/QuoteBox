@@ -8,33 +8,27 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.klemek.quotebox.BuildConfig;
 import fr.klemek.quotebox.R;
 
 /**
@@ -53,46 +47,37 @@ public abstract class ConnectionUtils {
         final SharedPreferences.Editor editor = settings.edit();
         final boolean skipUpdate = settings.getBoolean(Constants.PREFS_SKIP_NEXT_UPDATE, false);
         if(isOnline(ctx) && !skipUpdate){
-            AsyncGet task = new AsyncGet(ctx, new AsyncGetListener() {
-                @Override
-                public void taskFinished(String app_info) {
-                    try {
-                        JSONObject app_info_json = new JSONObject(app_info);
-                        int lastVersion = app_info_json.getInt(Constants.JSON_VERSION);
-                        if(lastVersion > Constants.VERSION){
-                            Utils.debugLog(ConnectionUtils.class, "Update available");
-                            //update available
-                            final String updateUrl = app_info_json.getString(Constants.JSON_UPDATE_URL);
-                            new MaterialDialog.Builder(a)
-                                    .title(R.string.dialog_update_title)
-                                    .content(R.string.dialog_update_content)
-                                    .positiveText(R.string.dialog_yes)
-                                    .neutralText(R.string.dialog_no)
-                                    .negativeText(R.string.dialog_update_negative)
-                                    .cancelable(true)
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            Uri uLink = Uri.parse(updateUrl);
-                                            Intent intent = new Intent(Intent.ACTION_VIEW, uLink);
-                                            a.startActivity(intent);
-                                            a.finish();
-                                        }
-                                    })
-                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            editor.putBoolean(Constants.PREFS_SKIP_NEXT_UPDATE, true);
-                                            editor.apply();
-                                        }
-                                    })
-                                    .show();
-                        }else{
-                            Utils.showWelcomeDialog(a);
-                        }
-                    } catch (JSONException e) {
-                        Utils.debugLog(ConnectionUtils.class, "Error in reading app_info.json");
+            AsyncGet task = new AsyncGet(ctx, app_info -> {
+                try {
+                    JSONObject app_info_json = new JSONObject(app_info);
+                    int lastVersion = app_info_json.getInt(Constants.JSON_VERSION);
+                    if(lastVersion > BuildConfig.VERSION_CODE){
+                        Utils.debugLog(ConnectionUtils.class, "Update available");
+                        //update available
+                        final String updateUrl = app_info_json.getString(Constants.JSON_UPDATE_URL);
+                        new MaterialDialog.Builder(a)
+                                .title(R.string.dialog_update_title)
+                                .content(R.string.dialog_update_content)
+                                .positiveText(R.string.dialog_yes)
+                                .neutralText(R.string.dialog_no)
+                                .negativeText(R.string.dialog_update_negative)
+                                .cancelable(true)
+                                .onPositive((dialog, which) -> {
+                                    Uri uLink = Uri.parse(updateUrl);
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, uLink);
+                                    a.startActivity(intent);
+                                    a.finish();
+                                })
+                                .onNegative((dialog, which) -> {
+                                    editor.putBoolean(Constants.PREFS_SKIP_NEXT_UPDATE, true);
+                                    editor.apply();
+                                })
+                                .show();
+                    }else{
+                        Utils.showWelcomeDialog(a);
                     }
+                } catch (JSONException e) {
+                    Utils.debugLog(ConnectionUtils.class, "Error in reading app_info.json");
                 }
             });
             task.execute(Constants.APP_INFO_URL);
@@ -132,10 +117,12 @@ public abstract class ConnectionUtils {
                     if (responseCode == HttpURLConnection.HTTP_OK) {
                         String line;
                         result = "";
-                        BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "UTF-8"));
+                        BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
+                        StringBuilder resultBuilder = new StringBuilder(result);
                         while ((line = br.readLine()) != null) {
-                            result += line;
+                            resultBuilder.append(line);
                         }
+                        result = resultBuilder.toString();
                         Utils.debugLog(ConnectionUtils.class,"server response : ("+responseCode+") "+ result);
                     }else{
                         Utils.debugLog(ConnectionUtils.class,"server response : ("+responseCode+")");
@@ -184,50 +171,6 @@ public abstract class ConnectionUtils {
         }
     }
 
-    public static boolean downloadFile(String strUrl, String path){
-        int count;
-        try {
-            Utils.debugLog(ConnectionUtils.class,"Downloading file from "+strUrl);
-
-            File f = new File(path);
-            if(!f.exists()) {
-
-                URL url = new URL(strUrl);
-                URLConnection conection = url.openConnection();
-                conection.connect();
-
-                // download the file
-                InputStream input = new BufferedInputStream(url.openStream(),
-                        8192);
-
-                // Output stream
-                OutputStream output = new FileOutputStream(path);
-
-                byte data[] = new byte[1024];
-
-                while ((count = input.read(data)) != -1) {
-
-                    // writing data to file
-                    output.write(data, 0, count);
-                }
-
-                // flushing output
-                output.flush();
-
-                // closing streams
-                output.close();
-                input.close();
-                Utils.debugLog(ConnectionUtils.class,"File successfully downloaded");
-            }else{
-                Utils.debugLog(ConnectionUtils.class,"File already downloaded");
-            }
-            return true;
-        } catch (Exception e) {
-            Utils.debugLog(ConnectionUtils.class,e.getMessage());
-            return false;
-        }
-    }
-
     public interface AsyncGetListener{
         void taskFinished(String result);
     }
@@ -238,7 +181,7 @@ public abstract class ConnectionUtils {
         private final HashMap<String, String> params;
         private final Context ctx;
 
-        public AsyncGet(Context ctx, AsyncGetListener l){
+        AsyncGet(Context ctx, AsyncGetListener l){
             this(ctx, null, l);
         }
 

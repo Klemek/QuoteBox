@@ -42,31 +42,29 @@ public abstract class FileUtils {
         return text.toString();
     }
 
-    public static boolean writeFile(String path,String content,boolean forcereplace){
+    public static void writeFile(String path, String content, boolean forcereplace){
         File f = new File(Constants.DIR_EXT_STORAGE +path.replace("/storage/emulated/0",""));
         if(f.exists() && !forcereplace && content.equals(readFile(path))){
-            return true;
+            return;
         }
         try {
             if(f.exists() || f.createNewFile()) {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(f));
                 bw.write(content);
                 bw.close();
-                return true;
             }else{
                 debugLog(FileUtils.class,"Couldnt create file :"+path);
             }
         } catch (IOException e) {
             debugLog(FileUtils.class,"IOException:"+e.getMessage());
         }
-        return false;
     }
 
     static String readFileForce(String path, String[] begin){
         return readFileForce(path, begin, null, false);
     }
 
-    static String readFileForce(String path, String[] begin, String[] end, boolean timeout){
+    private static String readFileForce(String path, String[] begin, String[] end, boolean timeout){
         StringBuilder text = new StringBuilder();
         File f = new File(Constants.DIR_EXT_STORAGE +path.replace("/storage/emulated/0",""));
         if(!f.exists())
@@ -143,22 +141,17 @@ public abstract class FileUtils {
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mediaPlayer.setDataSource(soundFile.getAbsolutePath());
-                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mediaPlayer) {
-                        mediaPlayer.start();
-                        //debugLog(FileUtils.class,"playing",0);
-                        /*
-                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                            @Override
-                            public void onCompletion(MediaPlayer mediaPlayer) {
-                                //mediaPlayer.release();
-                                mediaPlayer.stop();
-                            }
-                        });
-                         */
-                    }
-                });
+                //debugLog(FileUtils.class,"playing",0);
+/*
+mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        //mediaPlayer.release();
+        mediaPlayer.stop();
+    }
+});
+ */
+                mediaPlayer.setOnPreparedListener(MediaPlayer::start);
                 //mediaPlayer.prepareAsync();
                 return mediaPlayer;
             } catch (IOException e) {

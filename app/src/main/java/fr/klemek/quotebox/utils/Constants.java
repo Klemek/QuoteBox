@@ -14,9 +14,6 @@ import fr.klemek.quotebox.BuildConfig;
 
 public abstract class Constants {
 
-    public static final String APP_ID = "fr.klemek.quotebox";
-    public static final String VERSION_ID = "Beta 1.5.3";
-    public static final int VERSION = 5;
     public static final int LIST_VERSION = 2;
     public static final String APP_INFO_URL = "https://klemek.github.io/QuoteBox/app_info.json";
     public static final String JSON_VERSION = "version";
@@ -77,94 +74,9 @@ public abstract class Constants {
     public static final String JSON_THUMBURL = "snippet.thumbnails.medium.url";
     public static final String JSON_PUBLISHEDAT = "snippet.publishedAt";
     public static final long MAX_QPY_WAIT = 5 * 1000; //5 sec timeout
-    public static final String QPYTHON_MARKET = "market://details?id=org.qpython.qpy";
-    public static final String QPYTHON_WEBSITE = "http://qpy.io/";
-    public final static String QPYTHON_PACKAGE = "org.qpython.qpy";
-
-    //QPython API
-    public static final String QPYTHON_DEFAULT_LOG_FILE = DIR_EXT_STORAGE + "/log/last.log";//"/qpython/.run/.run.log";
-    public final static String QPYTHON_CLASS = "org.qpython.qpylib.MPyApi";
-    public final static String QPYTHON_ACTION = QPYTHON_PACKAGE + ".action.MPyApi";
-    public final static String QPYTHON_BUNDLE_ACT = "onPyApi";
-    public final static String QPYTHON_BUNDLE_FLAG = "onQPyExec";
-    //public final static String QPYTHON_SCRIPT_HEADER = "#qpy:qpyapp\n";
-    public static final String QPY_LOG_END_FLAG = "itisdone";
-    public static final String QPY_LOG_ERROR_FLAG = "itiserror";
-    public static final String FILE_TIMEOUT_MSG = "timeout";
-    public static final String QPY_SCRIPT_YTDL_CHECK_PATH = DIR_SCRIPTS + "ytdl_check.py";
-    public static final String QPY_SCRIPT_YTDL_CHECK = "" +
-            "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n" +
-            "try:\n" +
-            "    print('checking youtube-dl...')\n" +
-            "    import youtube_dl\n" +
-            "    print('" + QPY_LOG_END_FLAG + "')\n" +
-            "except:\n" +
-            "    import sys\n" +
-            "    print(sys.exc_info()[0])\n" +
-            "    print('" + QPY_LOG_ERROR_FLAG + "')\n" +
-            "exit()";
-    public static final String SCRIPT_YTDL_UPGR_PATH = DIR_SCRIPTS + "ytdl_upgrade.py";
-    public static final String QPY_SCRIPT_YTDL_UPGR = "" +
-            "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n" +
-            "try:\n" +
-            "    print('upgrading youtube-dl...')\n" +
-            "    import pip\n" +
-            "    pip.main(['install','--upgrade','youtube_dl'])\n" +
-            "    print('" + QPY_LOG_END_FLAG + "')\n" +
-            "except:\n" +
-            "    import sys\n" +
-            "    print(sys.exc_info()[0])\n" +
-            "    print('" + QPY_LOG_ERROR_FLAG + "')\n" +
-            "exit()";
 
     //Python scripts
 
-    /*
-    https://github.com/rg3/youtube-dl/blob/master/README.md#embedding-youtube-dl
-     */
-    public static final String SCRIPT_YTDL_INST_PATH = DIR_SCRIPTS + "ytdl_install.py";
-    public static final String QPY_SCRIPT_YTDL_INST = "" +
-            "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n" +
-            "try:\n" +
-            "    print('installing youtube-dl...')\n" +
-            "    import pip\n" +
-            "    pip.main(['install','youtube_dl'])\n" +
-            "    print('" + QPY_LOG_END_FLAG + "')\n" +
-            "except:\n" +
-            "    import sys\n" +
-            "    print(sys.exc_info()[0])\n" +
-            "    print('" + QPY_LOG_ERROR_FLAG + "')\n" +
-            "exit()";
-    public static final String QPY_TEMP_SCRIPT_PATH = DIR_SCRIPTS + "temp.py";
-    public static final String QPY_SCRIPT_YTDL_VIDEO_PATH = DIR_SCRIPTS + "ytdl.py";
-    public static final String QPY_SCRIPT_YTDL_VIDEO = "" +
-            "from __future__ import unicode_literals\n" +
-            "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n" +
-            "try:\n" +
-            "    print('downloading video...')\n" +
-            "    import youtube_dl\n" +
-            "    ydl_opts = {\n" +
-            "        'format': 'bestaudio/best',\n" +
-            "        'outtmpl' : '" + DIR_QUOTES + "temp.%(ext)s',\n" +
-            "        'nocheckcertificate':'True',\n" +
-            "        'no-continue':'True',\n" +
-            "        'prefer_insecure':'True',\n" +
-            "    }\n" +
-            "    with youtube_dl.YoutubeDL(ydl_opts) as ydl:\n" +
-            "        ydl.download(['http://www.youtube.com/watch?v=%VIDEOID%'])\n" +
-            "    print('" + QPY_LOG_END_FLAG + "')\n" +
-            "except:\n" +
-            "    import sys\n" +
-            "    print(sys.exc_info()[0])\n" +
-            "    print('" + QPY_LOG_ERROR_FLAG + "')\n" +
-            "exit()";
-    public static final String QPY_SCRIPT_TAG_VIDEOID = "%VIDEOID%";
-    public static final String QPY_SCRIPT_TAG_REQUESTCODE = "%REQUEST_CODE%";
-    public static final String FFMPEG_DEFAULT_EXT = ".webm";
     public static final String FFMPEG_CONVERT = "-y -i %s %s";
     public static final String FFMPEG_CUT = "-y -i %s -ss %s -t %s -strict -2%s %s";
     public static final String FFMPEG_FADE_OUT = " -af afade=t=out:st=%s:d=1";
@@ -173,12 +85,11 @@ public abstract class Constants {
     public static final int ERROR_FFMPEG_CUT = 11;
     public static final int ERROR_FFMPEG_EXTRACT = 12;
     public static final int ERROR_FFMPEG_RUNNING = 13;
-    public static final int ERROR_YTDL = 21;
 
     //Errors
     public static final int ERROR_YTFRAG_INIT = 31;
     public static final int ERROR_YTFRAG = 32;
-    public static final int ERROR_QPY_TIMEOUT = 41;
+    public static final int ERROR_YOUTUBEDL_EXCEPTION = 41;
     static final boolean DEBUG = true;
 
     public static HashMap<String, String> GET_SEARCH_PARAMS() {

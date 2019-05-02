@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
+import fr.klemek.quotebox.BuildConfig;
 import fr.klemek.quotebox.R;
 
 /**
@@ -35,7 +36,7 @@ public abstract class Utils {
         SharedPreferences settings = ctx.getSharedPreferences(Constants.PREFS_NAME, 0);
         final SharedPreferences.Editor editor = settings.edit();
         int version = settings.getInt(Constants.PREFS_VERSION, 0);
-        Utils.debugLog(ConnectionUtils.class, "Last version : "+version + " " + "Running version : " + Constants.VERSION);
+        Utils.debugLog(ConnectionUtils.class, "Last version : "+version + " " + "Running version : " + BuildConfig.VERSION_CODE);
         if(version == 0){
             Utils.debugLog(ConnectionUtils.class, "Welcome message");
             //Show welcome message
@@ -45,7 +46,7 @@ public abstract class Utils {
                     .positiveText(R.string.dialog_welcome_positive)
                     .cancelable(true)
                     .show();
-        }else if(version < Constants.VERSION){
+        }else if(version < BuildConfig.VERSION_CODE){
             editor.putBoolean(Constants.PREFS_SKIP_NEXT_UPDATE, false);
             Utils.debugLog(ConnectionUtils.class, "Changelog message");
             //Show update message
@@ -56,7 +57,7 @@ public abstract class Utils {
                     .cancelable(true)
                     .show();
         }
-        editor.putInt(Constants.PREFS_VERSION, Constants.VERSION);
+        editor.putInt(Constants.PREFS_VERSION, BuildConfig.VERSION_CODE);
         editor.apply();
     }
 
@@ -71,6 +72,18 @@ public abstract class Utils {
     public static void debugLog(Class c,String msg){
         if(Constants.DEBUG)
             Log.d(Constants.LOG_ID+":"+c.getSimpleName(),"\t"+msg);
+    }
+
+    public static void errorLog(AsyncTask a,String msg, Throwable e){
+        errorLog(a.getClass(),msg,e);
+    }
+
+    public static void errorLog(Activity a,String msg, Throwable e){
+        errorLog(a.getClass(),msg,e);
+    }
+
+    private static void errorLog(Class c, String msg, Throwable e){
+        Log.e(Constants.LOG_ID+":"+c.getSimpleName(),"\t"+msg+"\n"+e.getMessage());
     }
 
     public static String JSONgetString(JSONObject obj,String path) throws JSONException {

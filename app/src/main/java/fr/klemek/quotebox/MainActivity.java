@@ -11,7 +11,6 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -25,6 +24,7 @@ import fr.klemek.quotebox.utils.ConnectionUtils;
 import fr.klemek.quotebox.utils.Constants;
 import fr.klemek.quotebox.utils.DataManager;
 import fr.klemek.quotebox.utils.FileUtils;
+import fr.klemek.quotebox.utils.Utils;
 import fr.klemek.quotebox.youtube.YoutubeSearchActivity;
 
 /**
@@ -41,22 +41,19 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         setTitle(R.string.title_activity_main);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, YoutubeSearchActivity.class);
-                //Intent i = new Intent(MainActivity.this, QuoteCreationActivity.class);
-                //i.putExtra(Constants.EXTRA_VIDEOID,"s5-nUCSXKac");
-                startActivity(i);
-            }
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            Intent i = new Intent(MainActivity.this, YoutubeSearchActivity.class);
+            //Intent i = new Intent(MainActivity.this, QuoteCreationActivity.class);
+            //i.putExtra(Constants.EXTRA_VIDEOID,"s5-nUCSXKac");
+            startActivity(i);
         });
 
     }
@@ -82,46 +79,42 @@ public class MainActivity extends AppCompatActivity{
 
         QuoteAdapter adapter = new QuoteAdapter(this, quotes);
 
-        final GridView gridview = (GridView) findViewById(R.id.quotelist);
+        final GridView gridview = findViewById(R.id.quotelist);
         gridview.setAdapter(adapter);
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, final View v,
-                                    int position, long id) {
-                Quote q = quotes.get(position);
-                MediaPlayer mp = players.get(position);
-                if(mp == null) {
+        gridview.setOnItemClickListener((parent, v, position, id) -> {
+            Quote q = quotes.get(position);
+            MediaPlayer mp = players.get(position);
+            try {
+                if (mp == null) {
                     mp = FileUtils.loadSound(q.getFile());
-                    if(mp != null){
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mediaPlayer) {
+                    if (mp != null) {
+                        mp.setOnCompletionListener(mediaPlayer -> {
                             mediaPlayer.stop();
-                            ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.quotes));
-                        }
-                    });
-                    players.put(position, mp);}
-                    if(mp != null)
+                            ((ImageView) v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.quotes));
+                        });
+                        players.put(position, mp);
+                    }
+                    if (mp != null)
                         mp.prepareAsync();
-                    ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.play));
-                }else if(mp.isPlaying()){
+                    ((ImageView) v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.play));
+                } else if (mp.isPlaying()) {
                     mp.stop();
-                    ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.quotes));
-                }else{
+                    ((ImageView) v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.quotes));
+                } else {
                     mp.prepareAsync();
-                    ((ImageView)v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.play));
+                    ((ImageView) v.findViewById(R.id.quote_icon)).setImageDrawable(getDrawable(R.drawable.play));
                 }
+            }catch(IllegalStateException e){
+                Utils.errorLog(MainActivity.this,"Cannot play sound",e);
             }
         });
-        gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                Intent intent = new Intent(MainActivity.this, QuoteEditionActivity.class);
-                intent.putExtra(Constants.EXTRA_QUOTEID, i);
-                startActivityForResult(intent,0);
-                return true;
-            }
+        gridview.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(MainActivity.this, QuoteEditionActivity.class);
+            intent.putExtra(Constants.EXTRA_QUOTEID, i);
+            startActivityForResult(intent,0);
+            return true;
         });
-        if(firstLoad){
+        if(BuildConfig.ShouldCheckUpdates && firstLoad){
             firstLoad = false;
             ConnectionUtils.checkVersion(this);
         }
@@ -135,16 +128,15 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                new MaterialDialog.Builder(MainActivity.this)
-                        .title(R.string.dialog_about_title)
-                        .content(getResources().getString(R.string.dialog_about_content,
-                                Constants.VERSION_ID))
-                        .negativeText(R.string.dialog_close)
-                        .cancelable(true)
-                        .show();
-                return true;
+        if (item.getItemId() == R.id.action_about) {
+            new MaterialDialog.Builder(MainActivity.this)
+                    .title(R.string.dialog_about_title)
+                    .content(getResources().getString(R.string.dialog_about_content,
+                            BuildConfig.VERSION_NAME))
+                    .negativeText(R.string.dialog_close)
+                    .cancelable(true)
+                    .show();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

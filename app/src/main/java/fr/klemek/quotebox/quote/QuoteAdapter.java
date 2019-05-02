@@ -49,11 +49,11 @@ public class QuoteAdapter extends BaseAdapter {
             } else {
                 v = convertView;
             }
-            ImageView img = (ImageView) v.findViewById(R.id.quote_image);
+            ImageView img = v.findViewById(R.id.quote_image);
             img.clearColorFilter();
             img.setImageDrawable(ctx.getDrawable(R.drawable.rounded_rect));
             img.setColorFilter(q.getColor());
-            TextView tvName = ((TextView)v.findViewById(R.id.quote_name));
+            TextView tvName = v.findViewById(R.id.quote_name);
             tvName.setText(q.getName());
 
             int lineCount = Utils.getLineCount(tvName, q.getName(), (int) ctx.getResources().getDimension(R.dimen.quote_size));

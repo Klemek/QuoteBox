@@ -1,13 +1,13 @@
-# QuoteBox Beta 1.5
+# QuoteBox Beta 1.6
 
-## /!\ Project currently on hold for not being accepted by Google Play and depending on another app behavior /!\
+## /!\ Project currently on hold for not being accepted by Google Play /!\
 
 ## Description
-QuoteBox is a simple soundbox tool in which you can extract a part of any Youtube™ video and play "quotes" (the extracted sound) indefinitely without Internet. QuoteBox doesn't use a server for processing the different steps but will use instead Youtube-dl (through QPython app using) and FFmpeg libs.
+QuoteBox is a simple soundbox tool in which you can extract a part of any Youtube™ video and play "quotes" (the extracted sound) indefinitely without Internet. QuoteBox doesn't use a server for processing the different steps but will use instead Youtube-dl and FFmpeg libs.
 
 [Youtube Presentation here](https://youtu.be/dq3tDnNDY18)
 
-[Download APK here](https://www.klemek.fr/quotebox/quotebox-beta-1.5.3.apk)
+[Download APK here](https://github.com/Klemek/QuoteBox/releases/download/v1.6.0-beta/quotebox-beta-1.6.0.apk)
 
 *QuoteBox cannot be on the Google Play Store because of "misusing of API". meh.*
 
@@ -30,6 +30,11 @@ QuoteBox is a simple soundbox tool in which you can extract a part of any Youtub
 * Quote image taken from thumbnail or user's files (or video itself)
 
 ## Changelog
+### Beta 1.6.0
+
+* Got rid of QPython thanks to yausername's youtubedl-android
+* Fixed API key misuse
+
 ### Beta 1.5.3
 
 * Fixed Youtube_dl ssl certificate error
@@ -73,6 +78,7 @@ QuoteBox is a simple soundbox tool in which you can extract a part of any Youtub
 
 * [FFmpeg Android](http://writingminds.github.io/ffmpeg-android-java/)
 * [youtube-dl](https://rg3.github.io/youtube-dl/)
+* [youtubedl-android](https://github.com/yausername/youtubedl-android)
 * [GeometricProgressView](https://android-arsenal.com/details/1/5376)
 * [ColorPicker](https://android-arsenal.com/details/1/5067)
 * [MaterialDialog](https://github.com/afollestad/material-dialogs)

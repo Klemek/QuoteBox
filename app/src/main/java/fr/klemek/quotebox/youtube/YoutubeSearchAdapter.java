@@ -66,7 +66,7 @@ class YoutubeSearchAdapter extends BaseAdapter {
                     } else {
                         v = view;
                     }
-                    ImageView img = (ImageView) v.findViewById(R.id.video_thumbnail);
+                    ImageView img = v.findViewById(R.id.video_thumbnail);
                     ConnectionUtils.loadImage(mContext,yv.getThumbURL(),R.drawable.thumbnail_placeholder,R.drawable.thumbnail_placeholder,img);
                     ((TextView)v.findViewById(R.id.video_title)).setText(yv.getVideoTitle());
                     ((TextView)v.findViewById(R.id.video_channel)).setText(yv.getChannelTitle());
@@ -84,7 +84,7 @@ class YoutubeSearchAdapter extends BaseAdapter {
                     } else {
                         v = view;
                     }
-                    ImageView img2 = (ImageView) v.findViewById(R.id.channel_thumbnail);
+                    ImageView img2 = v.findViewById(R.id.channel_thumbnail);
                     ConnectionUtils.loadImage(mContext,yc.getThumbURL(),R.drawable.thumbnail_placeholder,R.drawable.thumbnail_placeholder,img2);
                     ((TextView)v.findViewById(R.id.channel_title)).setText(yc.getChannelTitle());
                     ((TextView)v.findViewById(R.id.channel_desc)).setText(yc.getDescription());
