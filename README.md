@@ -1,6 +1,11 @@
 # QuoteBox Beta 1.6
 
-[![Get it on Google play](google-play.png)](https://play.google.com/store/apps/details?id=fr.klemek.quotebox)
+[![Get it on Google play](img/google-play.png)](https://play.google.com/store/apps/details?id=fr.klemek.quotebox)
+
+[![screen 1](img/screen-en-01-sd.png)](img/screen-en-01.png)
+[![screen 2](img/screen-en-02-sd.png)](img/screen-en-02.png)
+[![screen 3](img/screen-en-03-sd.png)](img/screen-en-03.png)
+[![screen 4](img/screen-en-04-sd.png)](img/screen-en-04.png)
 
 ## Description
 QuoteBox is a simple soundbox tool in which you can extract a part of any Youtube™ video and play "quotes" (the extracted sound) indefinitely without Internet. QuoteBox doesn't use a server for processing the different steps but will use instead Youtube-dl and FFmpeg libs.
