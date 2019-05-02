@@ -108,6 +108,7 @@
     <string name="dialog_updated_content">
         Thank you for updating QuoteBox !\n\n
         Changelog :\n
+        - New icon\n
         - Youtube-DL optimization\n
         - Some fixes\n
     </string>
@@ -148,5 +149,5 @@
     <string name="desc_quote_icon" translatable="false">Quote icon</string>
     <string name="desc_channel" translatable="false">Channel thumbnail</string>
     <string name="desc_video" translatable="false">Video thumbnail</string>
-    <string name="dialog_updated_title">QuoteBox Beta 1.6.0</string>
+    <string name="dialog_updated_title">QuoteBox Beta 1.6.1</string>
 </resources>

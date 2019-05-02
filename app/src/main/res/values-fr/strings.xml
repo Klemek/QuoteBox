@@ -29,10 +29,11 @@
     <string name="dialog_update_title">Mise à jour disponible</string>
     <string name="dialog_updated_content">Merci de mettre à jour QuoteBox !\n
         Changements  :\n
+        - Nouvelle icone\n
         - Optimisation de Youtube-DL\n
         - Moins de bugs\n
     </string>
-    <string name="dialog_updated_title">QuoteBox Beta 1.6.0</string>
+    <string name="dialog_updated_title">QuoteBox Beta 1.6.1</string>
     <string name="dialog_welcome_content">QuoteBox est une application \"soundbox\" simple où l\'on peut prendre n\'importe quel extrait audio (quote) de n\'importe quelle vidéo Youtube pour le jouer à l\'infini sans internet. Amuse-toi bien !</string>
     <string name="dialog_welcome_positive">Merci</string>
     <string name="dialog_welcome_title">Bienvenue dans QuoteBox !</string>

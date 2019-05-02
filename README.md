@@ -7,7 +7,7 @@ QuoteBox is a simple soundbox tool in which you can extract a part of any Youtub
 
 [Youtube Presentation here](https://youtu.be/dq3tDnNDY18)
 
-[Download APK here](https://github.com/Klemek/QuoteBox/releases/download/v1.6.0-beta/quotebox-beta-1.6.0.apk)
+[Download APK here](https://github.com/Klemek/QuoteBox/releases/download/v1.6.1-beta/quotebox-beta-1.6.1.apk)
 
 *QuoteBox cannot be on the Google Play Store because of "misusing of API". meh.*
 
@@ -30,6 +30,10 @@ QuoteBox is a simple soundbox tool in which you can extract a part of any Youtub
 * Quote image taken from thumbnail or user's files (or video itself)
 
 ## Changelog
+### Beta 1.6.1
+
+* New icon
+
 ### Beta 1.6.0
 
 * Got rid of QPython thanks to yausername's youtubedl-android
