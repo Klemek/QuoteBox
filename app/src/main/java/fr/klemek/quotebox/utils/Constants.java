@@ -6,6 +6,8 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Locale;
 
+import fr.klemek.quotebox.BuildConfig;
+
 /**
  * Created by klemek on 14/03/17 !
  */
@@ -16,7 +18,7 @@ public abstract class Constants {
     public static final String VERSION_ID = "Beta 1.5.3";
     public static final int VERSION = 5;
     public static final int LIST_VERSION = 2;
-    public static final String APP_INFO_URL = "https://www.klemek.fr/quotebox/app_info.json";
+    public static final String APP_INFO_URL = "https://klemek.github.io/QuoteBox/app_info.json";
     public static final String JSON_VERSION = "version";
     public static final String JSON_UPDATE_URL = "update_url";
     public static final String PREFS_NAME = "fr.klemek.quotebox.prefs";
@@ -27,12 +29,11 @@ public abstract class Constants {
     public static final String LOG_ID = "QuoteBox";
     //Folders
     public static final String DIR_EXT_STORAGE = Environment.getExternalStorageDirectory().getPath();
-    public static final String DIR_BASE = DIR_EXT_STORAGE +"/quotebox/";
-    public static final String DIR_QUOTES = DIR_BASE+"quotes/";
-    public static final String DIR_SCRIPTS = DIR_BASE+"scripts/";
-    public static final String DIR_LOGS = DIR_BASE+"logs/";
-    public static final String LIST_FILE = DIR_QUOTES+"list.json";
-    public static final String GOOGLE_API_KEY = "AIzaSyDnJ7wPRMUMnW4kVmqZS3wEv23HXMbKOP4";
+    public static final String DIR_BASE = DIR_EXT_STORAGE + "/quotebox/";
+    public static final String DIR_QUOTES = DIR_BASE + "quotes/";
+    public static final String DIR_SCRIPTS = DIR_BASE + "scripts/";
+    public static final String DIR_LOGS = DIR_BASE + "logs/";
+    public static final String LIST_FILE = DIR_QUOTES + "list.json";
     //POST params
     public static final String GET_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
     public static final String PARAM_PAGETOKEN = "pageToken";
@@ -90,32 +91,32 @@ public abstract class Constants {
     public static final String QPY_LOG_END_FLAG = "itisdone";
     public static final String QPY_LOG_ERROR_FLAG = "itiserror";
     public static final String FILE_TIMEOUT_MSG = "timeout";
-    public static final String QPY_SCRIPT_YTDL_CHECK_PATH = DIR_SCRIPTS+"ytdl_check.py";
+    public static final String QPY_SCRIPT_YTDL_CHECK_PATH = DIR_SCRIPTS + "ytdl_check.py";
     public static final String QPY_SCRIPT_YTDL_CHECK = "" +
             "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n"+
+            "print('script %REQUEST_CODE%')\n" +
             "try:\n" +
             "    print('checking youtube-dl...')\n" +
-            "    import youtube_dl\n"+
-            "    print('"+QPY_LOG_END_FLAG+"')\n" +
+            "    import youtube_dl\n" +
+            "    print('" + QPY_LOG_END_FLAG + "')\n" +
             "except:\n" +
             "    import sys\n" +
             "    print(sys.exc_info()[0])\n" +
-            "    print('"+QPY_LOG_ERROR_FLAG+"')\n" +
+            "    print('" + QPY_LOG_ERROR_FLAG + "')\n" +
             "exit()";
-    public static final String SCRIPT_YTDL_UPGR_PATH = DIR_SCRIPTS+"ytdl_upgrade.py";
+    public static final String SCRIPT_YTDL_UPGR_PATH = DIR_SCRIPTS + "ytdl_upgrade.py";
     public static final String QPY_SCRIPT_YTDL_UPGR = "" +
             "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n"+
+            "print('script %REQUEST_CODE%')\n" +
             "try:\n" +
             "    print('upgrading youtube-dl...')\n" +
             "    import pip\n" +
             "    pip.main(['install','--upgrade','youtube_dl'])\n" +
-            "    print('"+QPY_LOG_END_FLAG+"')\n" +
+            "    print('" + QPY_LOG_END_FLAG + "')\n" +
             "except:\n" +
             "    import sys\n" +
             "    print(sys.exc_info()[0])\n" +
-            "    print('"+QPY_LOG_ERROR_FLAG+"')\n" +
+            "    print('" + QPY_LOG_ERROR_FLAG + "')\n" +
             "exit()";
 
     //Python scripts
@@ -123,43 +124,43 @@ public abstract class Constants {
     /*
     https://github.com/rg3/youtube-dl/blob/master/README.md#embedding-youtube-dl
      */
-    public static final String SCRIPT_YTDL_INST_PATH = DIR_SCRIPTS+"ytdl_install.py";
+    public static final String SCRIPT_YTDL_INST_PATH = DIR_SCRIPTS + "ytdl_install.py";
     public static final String QPY_SCRIPT_YTDL_INST = "" +
             "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n"+
+            "print('script %REQUEST_CODE%')\n" +
             "try:\n" +
             "    print('installing youtube-dl...')\n" +
             "    import pip\n" +
             "    pip.main(['install','youtube_dl'])\n" +
-            "    print('"+QPY_LOG_END_FLAG+"')\n" +
+            "    print('" + QPY_LOG_END_FLAG + "')\n" +
             "except:\n" +
             "    import sys\n" +
             "    print(sys.exc_info()[0])\n" +
-            "    print('"+QPY_LOG_ERROR_FLAG+"')\n" +
+            "    print('" + QPY_LOG_ERROR_FLAG + "')\n" +
             "exit()";
-    public static final String QPY_TEMP_SCRIPT_PATH = DIR_SCRIPTS+"temp.py";
-    public static final String QPY_SCRIPT_YTDL_VIDEO_PATH = DIR_SCRIPTS+"ytdl.py";
+    public static final String QPY_TEMP_SCRIPT_PATH = DIR_SCRIPTS + "temp.py";
+    public static final String QPY_SCRIPT_YTDL_VIDEO_PATH = DIR_SCRIPTS + "ytdl.py";
     public static final String QPY_SCRIPT_YTDL_VIDEO = "" +
             "from __future__ import unicode_literals\n" +
             "#qpy:qpyapp\n" +
-            "print('script %REQUEST_CODE%')\n"+
+            "print('script %REQUEST_CODE%')\n" +
             "try:\n" +
             "    print('downloading video...')\n" +
             "    import youtube_dl\n" +
             "    ydl_opts = {\n" +
             "        'format': 'bestaudio/best',\n" +
-            "        'outtmpl' : '"+DIR_QUOTES+"temp.%(ext)s',\n" +
+            "        'outtmpl' : '" + DIR_QUOTES + "temp.%(ext)s',\n" +
             "        'nocheckcertificate':'True',\n" +
             "        'no-continue':'True',\n" +
             "        'prefer_insecure':'True',\n" +
             "    }\n" +
             "    with youtube_dl.YoutubeDL(ydl_opts) as ydl:\n" +
             "        ydl.download(['http://www.youtube.com/watch?v=%VIDEOID%'])\n" +
-            "    print('"+QPY_LOG_END_FLAG+"')\n" +
+            "    print('" + QPY_LOG_END_FLAG + "')\n" +
             "except:\n" +
             "    import sys\n" +
             "    print(sys.exc_info()[0])\n" +
-            "    print('"+QPY_LOG_ERROR_FLAG+"')\n" +
+            "    print('" + QPY_LOG_ERROR_FLAG + "')\n" +
             "exit()";
     public static final String QPY_SCRIPT_TAG_VIDEOID = "%VIDEOID%";
     public static final String QPY_SCRIPT_TAG_REQUESTCODE = "%REQUEST_CODE%";
@@ -180,29 +181,29 @@ public abstract class Constants {
     public static final int ERROR_QPY_TIMEOUT = 41;
     static final boolean DEBUG = true;
 
-    public static HashMap<String,String> GET_SEARCH_PARAMS(){
-        HashMap<String,String> out = new HashMap<>();
-        out.put("part","snippet");
-        out.put("type","channel,video");
-        out.put("order","relevance");
+    public static HashMap<String, String> GET_SEARCH_PARAMS() {
+        HashMap<String, String> out = new HashMap<>();
+        out.put("part", "snippet");
+        out.put("type", "channel,video");
+        out.put("order", "relevance");
         out.put("relevanceLanguage", Locale.getDefault().getLanguage());
-        out.put("maxResults","10");
-        out.put("key",GOOGLE_API_KEY);
+        out.put("maxResults", "10");
+        out.put("key", BuildConfig.GoogleApiKey);
         return out;
     }
 
-    public static HashMap<String,String> GET_VIDEO_PARAMS(){
-        HashMap<String,String> out = new HashMap<>();
-        out.put("part","contentDetails,statistics");
-        out.put("maxResults","1");
-        out.put("key",GOOGLE_API_KEY);
+    public static HashMap<String, String> GET_VIDEO_PARAMS() {
+        HashMap<String, String> out = new HashMap<>();
+        out.put("part", "contentDetails,statistics");
+        out.put("maxResults", "1");
+        out.put("key", BuildConfig.GoogleApiKey);
         return out;
     }
 
-    public static HashMap<String,String> GET_SUGGEST_PARAMS(){
-        HashMap<String,String> out = new HashMap<>();
-        out.put("client","firefox");
-        out.put("ds","yt");
+    public static HashMap<String, String> GET_SUGGEST_PARAMS() {
+        HashMap<String, String> out = new HashMap<>();
+        out.put("client", "firefox");
+        out.put("ds", "yt");
         return out;
     }
 
