@@ -14,8 +14,6 @@ QuoteBox is a simple soundbox tool in which you can extract a part of any Youtub
 
 [Download APK here](https://github.com/Klemek/QuoteBox/releases/download/v1.6.1-beta/quotebox-beta-1.6.1.apk)
 
-*QuoteBox cannot be on the Google Play Store because of "misusing of API". meh.*
-
 ## Current features
 
 * Offline use of created quotes
