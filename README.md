@@ -1,3 +1,6 @@
+[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/Klemek/QuoteBox.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Klemek/QuoteBox/context:java)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/Klemek/QuoteBox.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Klemek/QuoteBox/alerts/)
+
 # QuoteBox Beta 1.6
 
 [![Get it on Google play](img/google-play.png)](https://play.google.com/store/apps/details?id=fr.klemek.quotebox)
