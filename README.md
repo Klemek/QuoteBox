@@ -1,3 +1,4 @@
+[![Scc Count Badge](https://sloc.xyz/github/klemek/quotebox/?category=code)](https://github.com/boyter/scc/#badges-beta)
 [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/Klemek/QuoteBox.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Klemek/QuoteBox/context:java)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/Klemek/QuoteBox.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Klemek/QuoteBox/alerts/)
 
